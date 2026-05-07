@@ -1,0 +1,45 @@
+#:schema node_modules/wrangler/config-schema.json
+# Configuração do Cloudflare Worker para o Labirinto de Fármacos.
+
+name = "labirinto-farmacos"
+main = "worker/index.js"
+compatibility_date = "2025-05-01"
+
+# Servir o site estático (index.html, /images de fallback) através do Worker.
+# O Worker continua a controlar /api/* e /images/* via R2; tudo o resto é
+# servido a partir do diretório raiz do repositório como assets estáticos.
+[assets]
+directory = "."
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# ─── D1 ─────────────────────────────────────────────────────────────────
+# Substituir database_id pelo ID real após criar a base de dados:
+#   wrangler d1 create labirinto-db
+[[d1_databases]]
+binding = "DB"
+database_name = "labirinto-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# ─── R2 ─────────────────────────────────────────────────────────────────
+# Bucket para servir as imagens do website. Criar com:
+#   wrangler r2 bucket create labirinto-images
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "labirinto-images"
+
+# ─── Observabilidade ────────────────────────────────────────────────────
+[observability]
+enabled = true
+
+# ─── Ambientes ──────────────────────────────────────────────────────────
+# Exemplo de override para preview/staging — descomentar e ajustar IDs.
+# [env.preview]
+# name = "labirinto-farmacos-preview"
+# [[env.preview.d1_databases]]
+# binding = "DB"
+# database_name = "labirinto-db-preview"
+# database_id = "REPLACE_WITH_PREVIEW_D1_ID"
+# [[env.preview.r2_buckets]]
+# binding = "IMAGES"
+# bucket_name = "labirinto-images-preview"

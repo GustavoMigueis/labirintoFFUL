@@ -1,0 +1,45 @@
+# Cloudflare Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
+wrangler.toml.local
+.mf/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Build / cache
+dist/
+build/
+.cache/
+.parcel-cache/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Secrets
+secrets.json
+*.pem
+*.key
