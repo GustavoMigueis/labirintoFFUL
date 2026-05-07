@@ -530,8 +530,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
     <div class="d-row"><div class="d-vis" style="background:#ede9fe;min-height:220px"></div><div class="d-inf">
       <h2 style="color:#6d28d9">Epilepsia</h2>
       <p>Doença neurológica crónica caracterizada por crises epilépticas recorrentes, resultantes de descargas elétricas anormais nos neurónios cerebrais. Afeta cerca de 70 milhões de pessoas em todo o mundo. Com tratamento adequado, cerca de 70% dos doentes conseguem controlo completo das crises.</p>
-      <div style="background:#ede9fe;border-radius:10px;padding:12px 16px;font-size:13px;color:#6d28d9;margin-bottom:14px">Conteúdo detalhado e quiz terapêutico em desenvolvimento.</div>
-      <button class="btn-purple" style="background:#6d28d9;opacity:0.5;cursor:not-allowed">Em breve</button>
+      <button class="btn-purple" style="background:#6d28d9" onclick="openDisease('epilepsia')">Saber Mais</button>
     </div></div>
     <div class="d-row rev"><div class="d-inf">
       <h2 style="color:#6d28d9">Alzheimer e Demências</h2>
@@ -705,6 +704,7 @@ var DIMG = {
   ansiedade: '',
   depressao: '',
   hipotiroidismo: '',
+  epilepsia: '',
   hta: "/images/img_hta.png",
   eam: "/images/img_eam.png",
   ic:  "/images/img_ic.png",
@@ -712,8 +712,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DINTRO = {
   dm2: [
     'A diabetes mellitus tipo 2 é uma doença metabólica crónica caracterizada por níveis elevados de glicose no sangue, resultantes de uma combinação de resistência à insulina e diminuição progressiva da secreção desta hormona pelo pâncreas. É a forma mais comum de diabetes, estando frequentemente associada a fatores como obesidade, sedentarismo e envelhecimento.',
@@ -762,6 +762,11 @@ var DINTRO = {
     'O hipotiroidismo é uma doença endócrina caracterizada pela <strong>produção insuficiente de hormonas tiroideias</strong> pela glândula tiroide, levando a uma diminuição generalizada do metabolismo. A causa mais frequente é a <strong>tiroidite de Hashimoto</strong>, uma doença autoimune, embora também possa resultar de cirurgia da tiroide, défice de iodo ou efeito de determinados medicamentos. Afeta sobretudo mulheres e aumenta de prevalência com a idade.',
     'Os sintomas desenvolvem-se de forma lenta e insidiosa, podendo incluir <strong>fadiga, aumento de peso, intolerância ao frio, pele seca, obstipação, cabelo quebradiço e lentificação geral</strong>. Em muitos casos, os sintomas são inespecíficos, o que pode atrasar o diagnóstico durante anos. O diagnóstico confirma-se com doseamento de TSH e T4 livre.',
     'O tratamento é geralmente <strong>simples e altamente eficaz</strong>, consistindo na reposição da hormona tiroideia em falta com levotiroxina (T4 sintética). A <strong>forma correta de administração é fundamental</strong> para garantir a absorção adequada. Quando bem tratado, o hipotiroidismo permite uma vida completamente normal. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
+  ],
+  epilepsia: [
+    'A epilepsia é uma <strong>doença neurológica crónica</strong> caracterizada pela ocorrência de crises epiléticas recorrentes, resultantes de atividade elétrica anormal no cérebro. Estas crises podem manifestar-se de diferentes formas, desde episódios breves de ausência até convulsões generalizadas com perda de consciência.',
+    'A doença pode ter diversas causas, incluindo <strong>fatores genéticos, lesões cerebrais, infeções ou alterações do desenvolvimento neurológico</strong>, embora em muitos casos a causa permaneça desconhecida. A frequência e gravidade das crises variam significativamente entre doentes.',
+    'Apesar de não existir cura definitiva na maioria dos casos, a epilepsia pode ser <strong>eficazmente controlada com terapêutica adequada</strong>, permitindo que muitos doentes tenham uma vida normal. O tratamento tem como principal objetivo prevenir crises, sendo frequentemente necessário um acompanhamento prolongado e individualizado. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
   ]
 };
 
@@ -891,7 +896,16 @@ var Qu = {
   ht_cardiac: q('ht_cardiac', 'Tem doença cardíaca (angina, arritmia, insuficiência cardíaca)?', [o('A','Sim',{ht_cardiac:true}),o('B','Não',{ht_cardiac:false})]),
   ht_meds:    q('ht_meds',    'Já toma levotiroxina?', [o('A','Não, ainda não faço medicação',{ht_meds:'none'}),o('B','Sim, com dose estável e bom controlo',{ht_meds:'stable'}),o('C','Sim, mas os sintomas persistem',{ht_meds:'uncontrolled'})]),
   ht_fasting: q('ht_fasting', 'Toma a levotiroxina em jejum, 30–60 minutos antes do pequeno-almoço?', [o('A','Sim, tomo sempre em jejum',{ht_fasting:true}),o('B','Não, ou nem sempre',{ht_fasting:false})], function(t){ return t.ht_meds==='stable'||t.ht_meds==='uncontrolled'; }),
-  ht_interact:q('ht_interact','Toma outros medicamentos ou suplementos (ex: ferro, cálcio, antiácidos, colestiramina)?', [o('A','Sim',{ht_interact:true}),o('B','Não',{ht_interact:false})])
+  ht_interact:q('ht_interact','Toma outros medicamentos ou suplementos (ex: ferro, cálcio, antiácidos, colestiramina)?', [o('A','Sim',{ht_interact:true}),o('B','Não',{ht_interact:false})]),
+  ep_diag:     q('ep_diag',     'Já teve crises epiléticas diagnosticadas?', [o('A','Sim',{ep_diag:true}),o('B','Não',{ep_diag:false})]),
+  ep_type:     q('ep_type',     'As crises envolvem perda de consciência ou convulsões?', [o('A','Sim',{ep_type:true}),o('B','Não',{ep_type:false})]),
+  ep_freq:     q('ep_freq',     'As crises são frequentes?', [o('A','Raras (esporádicas, controladas)',{ep_freq:'rare'}),o('B','Frequentes (várias por mês ou não controladas)',{ep_freq:'frequent'})]),
+  ep_preg:     q('ep_preg',     'Está grávida ou pode engravidar?', [o('A','Sim',{ep_preg:true}),o('B','Não',{ep_preg:false})]),
+  ep_age65:    q('ep_age65',    'Tem mais de 65 anos?', [o('A','Sim',{ep_age65:true}),o('B','Não',{ep_age65:false})]),
+  ep_liver:    q('ep_liver',    'Tem doenças hepáticas?', [o('A','Sim',{ep_liver:true}),o('B','Não',{ep_liver:false})]),
+  ep_meds:     q('ep_meds',     'Já toma medicação para epilepsia?', [o('A','Não',{ep_meds:'none'}),o('B','Sim',{ep_meds:'yes'})]),
+  ep_adverse:  q('ep_adverse',  'Já teve efeitos adversos com medicação antiepilética?', [o('A','Sim',{ep_adverse:true}),o('B','Não',{ep_adverse:false})]),
+  ep_adherence:q('ep_adherence','Tem dificuldade em tomar medicação diariamente?', [o('A','Sim',{ep_adherence:true}),o('B','Não',{ep_adherence:false})])
 };
 
 var DQ = {
@@ -906,7 +920,8 @@ var DQ = {
   tvp: ['age','sex','preg','tvpLoc','tvpProv','tvpRec','tvpBleed','renal','cost'],
   ansiedade: ['ax_freq','ax_control','ax_physical','ax_sleep','ax_daily','ax_diag','ax_meds','ax_alcohol'],
   depressao:      ['dep_sad','dep_anhed','dep_fatigue','dep_sleep','dep_appetite','dep_concent','dep_diag','dep_suicidal'],
-  hipotiroidismo: ['ht_diag','ht_symptoms','ht_preg','ht_age65','ht_cardiac','ht_meds','ht_fasting','ht_interact']
+  hipotiroidismo: ['ht_diag','ht_symptoms','ht_preg','ht_age65','ht_cardiac','ht_meds','ht_fasting','ht_interact'],
+  epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence']
 };
 
 function tags() {
@@ -986,6 +1001,7 @@ function getOutcome() {
   if (id==='ansiedade') return ansiedadeO(t);
   if (id==='depressao') return depressaoO(t);
   if (id==='hipotiroidismo') return hipotiroidismoO(t);
+  if (id==='epilepsia') return epilepsiaO(t);
 }
 
 
@@ -2191,6 +2207,197 @@ function tvpO(t) {
     {elderly:'Doentes com mais de 75 anos: apixabano tem melhor perfil de segurança. Maior risco de hemorragia intracraniana com rivaroxabano.',
      costNote: hb?'Euro, Varfarina muito barata mas com custo indireto de monitorização frequente de INR.':t.cost==='low'?'Euro-Euro, NOACs sao mais convenientes. Varfarina e mais barata mas requer análises de INR regulares (custo indireto consideravel).':'Euro-Euro, NOACs eliminam necessidade de monitorização de INR.'},
     t.tvpLoc==='PE'?'ATENCAO: TEP confirmado. Avaliar estabilidade hemodinamica imediatamente. Se instavel: fibrinólise sistemica urgente.':'');
+}
+
+function epilepsiaO(t) {
+  var hasType      = (t.ep_type      === true);
+  var freqFreq     = (t.ep_freq      === 'frequent');
+  var medsNone     = (t.ep_meds      === 'none');
+  var medsYes      = (t.ep_meds      === 'yes');
+  var isPreg       = (t.ep_preg      === true);
+  var isOld        = (t.ep_age65     === true);
+  var hasLiver     = (t.ep_liver     === true);
+  var hadAdverse   = (t.ep_adverse   === true);
+  var hardAdhere   = (t.ep_adherence === true);
+
+  /* Resultado 5 — Crise aguda / estado de mal epiléptico */
+  if (hasType && freqFreq && medsNone) return res(
+    'Resultado 5: Crise Aguda / Estado de Mal Epiléptico',
+    'Benzodiazepinas — emergência médica',
+    [drug(
+      'Diazepam / Lorazepam',
+      'Benzodiazepina — agonista GABA-A',
+      'As benzodiazepinas potenciam o efeito inibitório do GABA no sistema nervoso central, terminando rapidamente a atividade epilética sustentada. São o <strong>tratamento de primeira linha</strong> em qualquer crise com mais de 5 minutos de duração ou em crises consecutivas sem recuperação da consciência (estado de mal epiléptico — <strong>emergência médica</strong> com mortalidade significativa). A escolha entre diazepam e lorazepam depende da disponibilidade e da via de acesso; o midazolam intranasal ou bucal é uma alternativa eficaz no contexto pré-hospitalar.',
+      'Diazepam: 10 mg IV ou 10–20 mg via retal · Lorazepam: 4 mg IV (pode repetir aos 5–10 min) · Midazolam: 10 mg intranasal/bucal',
+      'Apenas em contexto de emergência — IV em meio hospitalar; via retal/intranasal/bucal no pré-hospitalar',
+      'Administrar imediatamente perante crise prolongada ou repetida. Após estabilização, iniciar antiepilético de manutenção (levetiracetam, valproato ou fenitoína IV).',
+      'Custo baixo (genéricos amplamente disponíveis pelo SNS)',
+      'USO DE EMERGÊNCIA APENAS — não para tratamento crónico. Risco de sedação profunda e <strong>depressão respiratória</strong> (sobretudo em doses repetidas ou associação com opióides/álcool). Garantir acesso a suporte ventilatório e monitorização cardiorrespiratória contínua. Tolerância rápida com uso prolongado.'
+    )],
+    ['Midazolam intranasal ou bucal — alternativa eficaz no pré-hospitalar quando IV indisponível',
+     'Após estabilização: iniciar antiepilético de manutenção (levetiracetam IV 60 mg/kg ou valproato IV 40 mg/kg)',
+     'Fenitoína IV (15–20 mg/kg, máx. 50 mg/min com monitorização ECG) se refratário'],
+    ['Uso crónico de benzodiazepinas para profilaxia de crises — tolerância rápida e dependência',
+     'Administrar em doente sem monitorização ventilatória disponível',
+     'Atrasar transporte para meio hospitalar'],
+    'Uso pontual de emergência. Após resolução, iniciar terapêutica de manutenção sob orientação neurológica.',
+    ['Após o episódio: identificar e evitar fatores precipitantes (privação de sono, álcool, esquecimento de medicação)',
+     'Garantir adesão estrita à medicação de manutenção que vier a ser prescrita',
+     'Pulseira ou cartão de identificação médica — informar familiares sobre manobras de primeiros socorros'],
+    ['Avaliação neurológica urgente após qualquer crise prolongada',
+     'EEG, TC ou RM cerebral para investigação etiológica',
+     'Doseamento de glicemia, ionograma, função hepática e renal — excluir causas reversíveis',
+     'Monitorização cardiorrespiratória contínua durante a administração'],
+    {costNote: 'Diazepam e lorazepam são genéricos de baixo custo. O custo principal é o transporte de emergência e o internamento para investigação etiológica.'},
+    'EMERGÊNCIA MÉDICA: crise com mais de 5 minutos ou 2 crises sem recuperação = estado de mal epiléptico. Ligar 112 imediatamente. Não introduzir nada na boca durante a crise; proteger a cabeça e colocar o doente em posição lateral de segurança.'
+  );
+
+  /* Resultado 3 — Gravidez (valproato contraindicado, substituir) */
+  if (isPreg) return res(
+    'Resultado 3: Epilepsia na Gravidez — Valproato CONTRAINDICADO',
+    'Substituir obrigatoriamente por lamotrigina ou levetiracetam',
+    [drug(
+      'Valproato (a EVITAR na gravidez)',
+      'Antiepilético — múltiplos mecanismos (potenciação do GABA, bloqueio de canais de sódio e cálcio)',
+      'O valproato é um dos antiepiléticos mais eficazes em crises generalizadas e mioclónicas, atuando por mecanismos múltiplos. <strong>Está, no entanto, formalmente contraindicado na gravidez</strong>: o risco de malformações major (espinha bífida, defeitos cardíacos, fenda palatina) é cerca de 10% e o risco de défice cognitivo / perturbação do espetro do autismo na descendência ronda os 30–40%. Em mulheres em idade fértil, só pode ser prescrito ao abrigo do <strong>Programa de Prevenção da Gravidez</strong> com contraceção altamente eficaz. Perante gravidez confirmada ou planeada, deve ser substituído por lamotrigina ou levetiracetam — <strong>nunca interromper bruscamente</strong> sem alternativa em curso, sob risco de descompensação.',
+      '500–1000 mg/dia divididos em 2 tomas (forma retard 1x/dia) — APENAS fora da gravidez',
+      'Oral, 1 a 2 vezes/dia com as refeições',
+      'NA GRAVIDEZ: substituir progressivamente por lamotrigina ou levetiracetam, com sobreposição e ajuste de doses sob orientação neurológica especializada. Suplementar com ácido fólico 5 mg/dia (dose alta) idealmente desde antes da conceção e durante o 1.º trimestre.',
+      'Custo baixo a médio (genérico)',
+      'CONTRAINDICADO NA GRAVIDEZ — risco teratogénico elevado (espinha bífida, malformações cardíacas, défice cognitivo / autismo). Outros riscos: <strong>hepatotoxicidade</strong> (sobretudo no 1.º ano de tratamento), aumento de peso, alopecia, tremor, trombocitopenia, hiperamoniemia. Monitorização hepática obrigatória.'
+    )],
+    ['<strong>Lamotrigina</strong> — opção mais segura na gravidez; titulação muito lenta para evitar rash; clearance aumenta na gravidez (pode ser preciso ajustar dose ao trimestre)',
+     '<strong>Levetiracetam</strong> — alternativa segura, sem indução enzimática, sem interferência com contracetivos; clearance também aumenta na gravidez',
+     'Ácido fólico 5 mg/dia idealmente 3 meses antes da conceção e durante todo o 1.º trimestre',
+     'Vitamina K 10 mg/dia oral no último mês para prevenir doença hemorrágica do recém-nascido (sobretudo com indutores enzimáticos)'],
+    ['Manter valproato durante a gravidez sem reavaliação',
+     'Interromper abruptamente o antiepilético — risco de crises e estado de mal',
+     'Topiramato (risco de fenda palatina) e fenitoína / fenobarbital (teratogénicos) como primeira linha em mulher fértil',
+     'Amamentação enquanto sob valproato em alta dose (relativamente segura em monoterapia, mas requer avaliação caso a caso)'],
+    'Toda a gravidez e peri-parto. Reavaliar dose 6–8 semanas após o parto (a clearance volta ao normal e pode ser necessário reduzir dose).',
+    ['Suplementação com ácido fólico 5 mg/dia idealmente pré-concecional',
+     'Sono regular e evicção de álcool (precipitantes major de crises)',
+     'Plano de parto coordenado com obstetrícia e neurologia',
+     'Não conduzir até pelo menos 6–12 meses sem crises (varia conforme legislação)'],
+    ['Doseamento sérico de lamotrigina ou levetiracetam a cada trimestre — clearance aumenta',
+     'Ecografia morfológica detalhada às 18–22 semanas (Programa Nacional de Vigilância da Gravidez)',
+     'Avaliação neurológica trimestral',
+     'Função hepática se exposição a valproato pré-substituição'],
+    {pregnancy: 'PRIORIDADE ABSOLUTA: substituir valproato por lamotrigina ou levetiracetam ANTES da conceção sempre que possível. Se gravidez já confirmada sob valproato, contactar imediatamente neurologia para transição rápida e segura.',
+     costNote: 'Lamotrigina e levetiracetam têm genéricos disponíveis. Os doseamentos séricos são o custo principal — comparticipados como análises clínicas no SNS.'},
+    'CRÍTICO: o valproato é teratogénico. Em mulher em idade fértil que possa engravidar, qualquer prescrição deve seguir o Programa de Prevenção da Gravidez (contraceção eficaz + consentimento informado anual + revisão por especialista).'
+  );
+
+  /* Resultado 4 — Crises focais, sem hepatopatia, com efeitos adversos prévios */
+  if (!hasLiver && medsYes && hadAdverse) return res(
+    'Resultado 4: Crises Focais — Substituir por Carbamazepina',
+    'Carbamazepina — alternativa em crises focais sem doença hepática',
+    [drug(
+      'Carbamazepina',
+      'Antiepilético — bloqueador de canais de sódio dependentes da voltagem',
+      'A carbamazepina inibe a propagação de potenciais de ação repetitivos ao bloquear canais de sódio dependentes da voltagem, sendo particularmente eficaz em <strong>crises focais com ou sem generalização secundária</strong>. É também tratamento de primeira linha na nevralgia do trigémeo. Tem indução enzimática potente do CYP3A4 e do seu próprio metabolismo (autoindução), o que provoca uma <strong>queda dos níveis séricos nas primeiras 4 a 6 semanas</strong> e exige ajuste posterior. Não é eficaz nas crises generalizadas idiopáticas (ausências, mioclónicas) e pode mesmo agravá-las.',
+      'Início: 100–200 mg 2x/dia · Aumentar gradualmente (200 mg/semana) até 400–800 mg/dia em 2–3 tomas (forma retard preferível)',
+      'Oral, com as refeições para reduzir tonturas e diplopia iniciais',
+      'Iniciar com dose baixa e titular lentamente. Forma retard reduz picos e melhora tolerabilidade. Não suspender abruptamente. Doseamento sérico após 4 semanas (alvo: 4–12 mg/L).',
+      'Custo baixo (genérico amplamente comparticipado pelo SNS)',
+      'Indução enzimática potente — reduz eficácia de <strong>contracetivos orais, anticoagulantes orais, outros antiepiléticos, corticoides e estatinas</strong>. Risco de rash, incluindo <strong>Stevens-Johnson</strong> (sobretudo em portadores do alelo HLA-B*1502, frequente em asiáticos — rastrear). Outros: hiponatremia (SIADH), diplopia e tonturas iniciais, leucopenia, hepatotoxicidade ligeira. Não usar em epilepsia generalizada idiopática.'
+    )],
+    ['Oxcarbazepina — perfil semelhante mas menos indução enzimática, melhor tolerabilidade',
+     'Lacosamida — alternativa moderna em crises focais, sem indução enzimática',
+     'Lamotrigina — boa eficácia em crises focais e melhor perfil cognitivo'],
+    ['Carbamazepina em <strong>epilepsias generalizadas idiopáticas</strong> (ausências, mioclonias) — pode agravar',
+     'Associação com outros indutores enzimáticos sem ajuste de dose',
+     'Manter contraceção oral isolada — risco de falência contracetiva'],
+    'Tratamento crónico. Rever doseamento sérico após 4 semanas (autoindução) e depois anualmente.',
+    ['Tomar com as refeições para minimizar tonturas iniciais',
+     'Evitar sumo de toranja (inibe metabolismo)',
+     'Comunicar imediatamente qualquer rash cutâneo ou febre',
+     'Considerar contraceção alternativa (DIU ou injetável) se aplicável',
+     'Evitar consumo de álcool'],
+    ['Hemograma e função hepática antes do início, ao 1.º e 3.º mês, depois anual',
+     'Ionograma — risco de hiponatremia (sobretudo em idosos)',
+     'Doseamento sérico de carbamazepina aos 4 e 12 meses (alvo: 4–12 mg/L)',
+     'Rastreio HLA-B*1502 em doentes de origem asiática antes de iniciar',
+     'Densitometria óssea após 5 anos de tratamento (risco de osteoporose por indução enzimática)'],
+    {elderly: isOld ? 'Em idosos: começar com 50–100 mg 2x/dia e titular muito lentamente. Maior risco de hiponatremia, tonturas e quedas. Rever sempre interações medicamentosas — a indução enzimática afeta múltiplos fármacos comuns no idoso.' : '',
+     costNote: 'Custo muito baixo. Genérico comparticipado. Os custos indiretos vêm das análises de doseamento e da gestão de interações.'},
+    'ATENÇÃO: confirmar que se trata de epilepsia focal e não generalizada antes de iniciar. A carbamazepina tem múltiplas interações medicamentosas — rever toda a medicação habitual.'
+  );
+
+  /* Resultado 2 — Idosos ou dificuldade de adesão (lamotrigina) */
+  if (isOld || hardAdhere) return res(
+    'Resultado 2: ' + (isOld ? 'Epilepsia no Idoso' : 'Adesão Difícil') + ' — Lamotrigina',
+    'Lamotrigina — boa tolerabilidade e perfil cognitivo favorável',
+    [drug(
+      'Lamotrigina',
+      'Antiepilético — bloqueador de canais de sódio dependentes da voltagem',
+      'A lamotrigina estabiliza a membrana neuronal através do bloqueio dos canais de sódio dependentes da voltagem, reduzindo a libertação de glutamato. É <strong>eficaz tanto em crises focais como generalizadas</strong>, incluindo ausências (ao contrário da carbamazepina). Distingue-se pelo seu <strong>perfil cognitivo neutro</strong> (não causa sedação ou disfunção cognitiva, ao contrário do topiramato ou do valproato), pela ausência de aumento de peso e por não ter indução enzimática significativa — o que a torna uma escolha preferencial em <strong>idosos, mulheres em idade fértil e doentes que valorizam a função cognitiva</strong>. A principal limitação é a necessidade de <strong>titulação muito lenta</strong> para reduzir o risco de rash grave (Stevens-Johnson, NET).',
+      'Monoterapia: 25 mg/dia durante 2 semanas → 50 mg/dia durante 2 semanas → aumento de 50–100 mg a cada 1–2 semanas até 100–200 mg/dia em 1–2 tomas · Em associação com valproato: <strong>metade</strong> da dose em cada etapa',
+      'Oral, 1 a 2 vezes/dia, com ou sem alimentos',
+      'TITULAÇÃO LENTA OBRIGATÓRIA — não acelerar mesmo em crises frequentes. Se interromper mais de 5 dias, reiniciar o esquema do início. Se associada a valproato, reduzir a dose e a velocidade de titulação para metade.',
+      'Custo médio (genérico amplamente disponível pelo SNS)',
+      'Risco de <strong>rash cutâneo grave (Stevens-Johnson, necrólise epidérmica tóxica)</strong> nas primeiras 8 semanas — incidência cerca de 0,1% mas dose-dependente; titulação lenta reduz drasticamente o risco. Comunicar imediatamente qualquer erupção, febre ou ulceração mucosa. Outros: cefaleia, insónia, diplopia em doses altas. Interação major com valproato (eleva níveis 2x — reduzir dose para metade) e com indutores enzimáticos (reduzem níveis — pode ser preciso aumentar).'
+    )],
+    ['Levetiracetam — eficaz e bem tolerado também no idoso, sem interações relevantes',
+     'Topiramato — eficaz mas pior perfil cognitivo (parestesias, lentificação, perda de peso)',
+     'Gabapentina — útil sobretudo em crises focais ligeiras com dor neuropática associada'],
+    ['Titulação rápida — risco de rash grave',
+     'Suspensão abrupta — risco de crises de rebound',
+     'Ignorar exantema cutâneo — pode evoluir para Stevens-Johnson'],
+    'Tratamento crónico. Reavaliação anual após estabilização da dose.',
+    ['Manter horário fixo da toma — adesão é o principal preditor de controlo',
+     'Caixa semanal de medicação se múltiplos fármacos ou défice cognitivo',
+     'Sono regular (mínimo 7 horas) — privação é precipitante major',
+     'Evitar álcool e drogas recreativas',
+     'Não conduzir até pelo menos 6–12 meses sem crises'],
+    ['Função hepática e hemograma anuais',
+     'Vigilância cutânea estreita nas primeiras 8 semanas',
+     'Avaliação cognitiva e do humor (lamotrigina pode melhorar humor — utilidade adicional na perturbação bipolar)',
+     'Doseamento sérico se associada a valproato ou indutores enzimáticos, ou se gravidez'],
+    {elderly: isOld ? 'No idoso, a lamotrigina é uma escolha preferencial: sem indução enzimática, perfil cognitivo neutro, sem aumento de peso, sem efeito sobre a marcha. Iniciar com 12,5–25 mg/dia e titular ainda mais lentamente. Maior risco de quedas se associada a outros sedativos.' : '',
+     costNote: 'Custo médio com genérico amplamente comparticipado. A formulação dispersível (orodispersível) facilita a adesão em doentes com disfagia ou défice cognitivo.'},
+    isOld ? 'Em idosos polimedicados, rever sempre interações antes de iniciar (sobretudo se já fizer indutores enzimáticos como fenitoína).' : 'A adesão é o principal preditor de controlo de crises — usar caixas semanais e alarmes; a lamotrigina tolera atrasos pontuais melhor do que outros AE.'
+  );
+
+  /* Resultado 1 — Tratamento padrão de primeira linha */
+  return res(
+    'Resultado 1: Epilepsia — Tratamento de Primeira Linha',
+    'Levetiracetam — antiepilético de amplo espetro',
+    [drug(
+      'Levetiracetam',
+      'Antiepilético — modulador da proteína sináptica SV2A',
+      'O levetiracetam liga-se à proteína vesicular SV2A nos terminais sinápticos, modulando a libertação de neurotransmissores e estabilizando a transmissão sináptica em zonas de hiperexcitabilidade. Tem um <strong>amplo espetro de ação</strong> — eficaz em crises focais, generalizadas tónico-clónicas e mioclónicas — e um perfil farmacocinético <strong>excecionalmente favorável</strong>: praticamente sem metabolismo hepático (eliminação maioritariamente renal), sem indução nem inibição enzimática significativas, sem interações medicamentosas relevantes (incluindo com contracetivos orais e anticoagulantes) e início de ação relativamente rápido. É a <strong>escolha de primeira linha</strong> em muitos contextos, sobretudo em mulheres em idade fértil, idosos, polimedicados e doentes com hepatopatia.',
+      'Início: 250–500 mg 2x/dia · Titular ao longo de 2–4 semanas até 1000–1500 mg 2x/dia (dose máxima 3000 mg/dia)',
+      'Oral, 2 vezes/dia (manhã e noite), com ou sem alimentos',
+      'Tomar à mesma hora todos os dias. Pode ser dividido em 2 tomas iguais ou tomas desiguais (dose menor de manhã se sonolência matinal). Ajustar à função renal — reduzir dose se TFGe < 50 mL/min.',
+      'Custo médio (genérico amplamente disponível pelo SNS)',
+      'Efeito adverso mais comum e relevante: <strong>irritabilidade, alterações do humor, agressividade ou sintomas depressivos</strong> em cerca de 10–15% — mais frequente em doentes com história prévia de perturbação psiquiátrica. Outros: sonolência inicial (transitória), astenia, cefaleia. Sem indução enzimática — não interfere com contracetivos. Ajuste obrigatório em insuficiência renal. <strong>Não interromper abruptamente</strong> — risco de crises de rebound e estado de mal.'
+    )],
+    ['Lamotrigina — alternativa de primeira linha, especialmente se humor lábil ou perturbação bipolar associada',
+     'Valproato — mais eficaz em algumas epilepsias generalizadas idiopáticas (mioclónicas), mas evitar em mulheres em idade fértil',
+     'Topiramato — alternativa mas pior perfil cognitivo',
+     'Lacosamida ou perampanel como adjuvantes em casos refratários'],
+    ['Suspensão abrupta — risco de crises de rebound',
+     'Consumo de álcool — reduz limiar convulsivo e potencia sedação',
+     'Privação de sono — precipitante major de crises',
+     'Conduzir antes de cumprir o período legal sem crises'],
+    'Tratamento crónico. Considerar redução gradual após 2–5 anos sem crises (decisão neurológica individualizada).',
+    ['Sono regular — mínimo 7 horas por noite',
+     'Evicção de álcool e drogas recreativas',
+     'Adesão estrita à medicação — usar caixa semanal e alarmes',
+     'Não conduzir até cumprir o período legal sem crises (em Portugal: 6 meses para ligeiros, 12 meses para pesados)',
+     'Atividade física regular (com proteção em desportos de risco)',
+     'Identificação médica (pulseira/cartão) e plano de primeiros socorros partilhado com familiares e colegas'],
+    ['Avaliação clínica trimestral inicialmente, depois semestral',
+     'Função renal anual (ajuste de dose se TFGe < 50 mL/min)',
+     'Vigilância de humor e comportamento — sobretudo nos primeiros 3 meses',
+     'EEG periódico conforme indicação clínica',
+     'Doseamento sérico não é rotineiro (resposta clínica > nível sérico para o levetiracetam) mas útil em gravidez ou suspeita de má adesão'],
+    {elderly: isOld ? 'No idoso: começar com 250 mg 2x/dia e titular mais lentamente. Maior risco de sedação, irritabilidade e quedas. Ajuste à função renal é particularmente importante.' : '',
+     pregnancy: 'O levetiracetam é uma das opções mais seguras na gravidez (a par da lamotrigina). Em mulheres a planear engravidar, suplementar com ácido fólico 5 mg/dia desde 3 meses antes da conceção. Doseamento sérico trimestral — clearance aumenta na gravidez.',
+     costNote: 'Custo médio. Genérico amplamente comparticipado pelo SNS. A formulação injetável (IV) está disponível em meio hospitalar para situações em que a via oral está inviável.'},
+    ''
+  );
 }
 
 /* ── RENDER RESULT ────────────────────────────────── */
