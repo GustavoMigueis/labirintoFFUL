@@ -148,13 +148,36 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
 .ralert{background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:12px 15px;font-size:13px;color:#b91c1c;line-height:1.65;margin-bottom:16px}
 .rbtn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
 
+/* CONTACT BAND */
+.contact-band{background:#f8fafc;padding:56px 40px;border-top:1px solid #e2e8f0}
+.contact-band .sec-title{color:#1e293b;text-decoration:none;margin-bottom:6px}
+.contact-band .sec-sub{margin-bottom:36px}
+.contact-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.contact-info{display:flex;flex-direction:column;gap:16px}
+.contact-item{display:flex;align-items:flex-start;gap:14px;color:#475569;font-size:14px;line-height:1.55}
+.contact-item svg{flex:0 0 22px;width:22px;height:22px;color:#7c3aed;margin-top:2px}
+.contact-item a{color:inherit;text-decoration:none}
+.contact-item a:hover{color:#7c3aed;text-decoration:underline}
+.contact-map iframe{display:block;width:100%;height:280px;border:0;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+
+/* BIBLIO BAND */
+.biblio-band{background:#fff;padding:56px 40px;border-top:1px solid #e2e8f0}
+.biblio-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:14px 32px}
+.biblio-item{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#475569;font-style:italic;line-height:1.55}
+.biblio-item::before{content:'\2022';color:#7c3aed;font-style:normal;font-size:18px;line-height:1;flex:0 0 auto;margin-top:1px}
+.biblio-item a{color:#7c3aed;text-decoration:none;font-style:normal}
+.biblio-item a:hover{text-decoration:underline}
+
+/* DD-HERO decorative rule (cor dinamica via openDisease) */
+.dd-hero hr{border:none;border-top:3px solid #7c3aed;width:60px;margin:14px auto 0}
+
 @media(max-width:760px){
   nav{padding:0 16px}
-  .two-col,.d-row,.str-grid,.r2col,.drc-grid,.rbtn-row{grid-template-columns:1fr}
+  .two-col,.d-row,.str-grid,.r2col,.drc-grid,.rbtn-row,.contact-grid,.biblio-grid{grid-template-columns:1fr}
   .d-row.rev .d-vis,.d-row.rev .d-inf{order:unset}
   .wrap,.wrap-sm,.dd-body{padding:40px 20px}
   .d-list{padding:28px 20px 56px}
-  .dc-top,.band,.quote-band{padding:40px 20px}
+  .dc-top,.band,.quote-band,.contact-band,.biblio-band{padding:40px 20px}
 }
 </style>
 </head>
@@ -714,6 +737,16 @@ var DIMG = {
 };
 var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
 var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DCOLOR = {
+  dc:     '#e11d48',   /* cardiovascular — vermelho */
+  resp:   '#0891b2',   /* respiratorio — ciano */
+  neuro:  '#6d28d9',   /* neurologico — roxo escuro */
+  mental: '#db2777',   /* saude mental — rosa */
+  metab:  '#d97706',   /* metabolico — ambar */
+  reuma:  '#059669',   /* reumatologico — verde */
+  renal:  '#2563eb'    /* renal — azul */
+};
+function colorFor(id) { return DCOLOR[DGROUP[id]] || '#7c3aed'; }
 var DINTRO = {
   dm2: [
     'A diabetes mellitus tipo 2 é uma doença metabólica crónica caracterizada por níveis elevados de glicose no sangue, resultantes de uma combinação de resistência à insulina e diminuição progressiva da secreção desta hormona pelo pâncreas. É a forma mais comum de diabetes, estando frequentemente associada a fatores como obesidade, sedentarismo e envelhecimento.',
@@ -773,7 +806,9 @@ var DINTRO = {
 function openDisease(id) {
   /* Build the page HTML */
   var intro = DINTRO[id];
-  var html = '<div class="dd-hero"><h1>' + DNAME[id] + '</h1></div>';
+  var c = colorFor(id);
+  var html = '<div class="dd-hero"><h1 style="color:' + c + '">' + DNAME[id] + '</h1>'
+           + '<hr style="border-top-color:' + c + '"></div>';
   html += '<div class="dd-body">';
   for (var i = 0; i < intro.length; i++) html += '<p class="dd-p">' + intro[i] + '</p>';
   html += '<div class="qbox"><div class="qbox-title">Quiz Terapêutico</div>';
@@ -2470,6 +2505,72 @@ function tog(i) {
   b.style.display = open ? 'none' : 'block';
   if (a) a.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
 }
+
+/* ── CONTACT + BIBLIOGRAFIA BANDS ─────────────────── */
+var ICON_PIN   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+var ICON_MAIL  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>';
+var ICON_PHONE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+var ICON_GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+
+var CONTACT_BAND_HTML =
+  '<section class="contact-band" aria-labelledby="contact-title">'
++   '<div class="sec-title" id="contact-title">Contacto</div>'
++   '<div class="sec-sub">Faculdade de Farm&aacute;cia da Universidade de Lisboa</div>'
++   '<div class="contact-grid">'
++     '<div class="contact-info">'
++       '<div class="contact-item">' + ICON_PIN + '<div>Av. Prof. Gama Pinto, 1649-003 Lisboa</div></div>'
++       '<div class="contact-item">' + ICON_MAIL + '<div><a href="mailto:ffarmacia@ff.ulisboa.pt">ffarmacia@ff.ulisboa.pt</a></div></div>'
++       '<div class="contact-item">' + ICON_PHONE + '<div><a href="tel:+351217946400">+351 217 946 400</a></div></div>'
++       '<div class="contact-item">' + ICON_GLOBE + '<div><a href="https://www.ff.ulisboa.pt" target="_blank" rel="noopener noreferrer">www.ff.ulisboa.pt</a></div></div>'
++     '</div>'
++     '<div class="contact-map">'
++       '<iframe title="Mapa da Faculdade de Farm&aacute;cia da Universidade de Lisboa" '
++         'src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3112.0!2d-9.1575!3d38.7517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1933b5b4f0f0f0f%3A0x0!2sFaculdade+de+Farm%C3%A1cia+da+Universidade+de+Lisboa!5e0!3m2!1spt!2spt!4v1" '
++         'width="100%" height="280" style="border:0;border-radius:12px" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
++     '</div>'
++   '</div>'
++ '</section>';
+
+var BIBLIO_REFS = [
+  ['DGS — Direção-Geral da Saúde. Normas e orientações clínicas.', 'https://www.dgs.pt', 'www.dgs.pt'],
+  ['INFARMED — Autoridade Nacional do Medicamento. Prontuário Terapêutico.', 'https://www.infarmed.pt', 'www.infarmed.pt'],
+  ['WHO — World Health Organization. Essential Medicines.', 'https://www.who.int', 'www.who.int'],
+  ['ESC Guidelines — European Society of Cardiology.', 'https://www.escardio.org', 'www.escardio.org'],
+  ['Sociedade Portuguesa de Cardiologia.', 'https://www.spc.pt', 'www.spc.pt'],
+  ['Ordem dos Farmacêuticos.', 'https://www.ordemfarmaceuticos.pt', 'www.ordemfarmaceuticos.pt'],
+  ['UpToDate — Clinical decision support.', 'https://www.uptodate.com', 'www.uptodate.com'],
+  ['Micromedex — Drug information.', 'https://www.micromedex.com', 'www.micromedex.com'],
+  ['Guideline epilepsia — ILAE International League Against Epilepsy.', 'https://www.ilae.org', 'www.ilae.org'],
+  ['Guideline depressão/ansiedade — BAP British Association for Psychopharmacology.', 'https://www.bap.org.uk', 'www.bap.org.uk']
+];
+
+var BIBLIO_ITEMS_HTML = '';
+for (var bi = 0; bi < BIBLIO_REFS.length; bi++) {
+  var r = BIBLIO_REFS[bi];
+  BIBLIO_ITEMS_HTML += '<div class="biblio-item"><span>' + r[0] + ' <a href="' + r[1] + '" target="_blank" rel="noopener noreferrer">' + r[2] + '</a></span></div>';
+}
+
+var BIBLIO_BAND_HTML =
+  '<section class="biblio-band" aria-labelledby="biblio-title">'
++   '<div class="sec-title" id="biblio-title">Bibliografia</div>'
++   '<div class="sec-sub">Fontes e refer&ecirc;ncias utilizadas na elabora&ccedil;&atilde;o deste projeto</div>'
++   '<div class="biblio-grid">' + BIBLIO_ITEMS_HTML + '</div>'
++ '</section>';
+
+function injectBands() {
+  /* Pg-home recebe Bibliografia + Contacto antes do footer.
+     As restantes pg-* (dc/resp/neuro/mental/metab/reuma/renal) recebem so Contacto. */
+  var pageIds = ['home','dc','resp','neuro','mental','metab','reuma','renal'];
+  for (var i = 0; i < pageIds.length; i++) {
+    var page = document.getElementById('pg-' + pageIds[i]);
+    if (!page) continue;
+    var footer = page.querySelector('footer');
+    if (!footer) continue;
+    var html = (pageIds[i] === 'home' ? BIBLIO_BAND_HTML : '') + CONTACT_BAND_HTML;
+    footer.insertAdjacentHTML('beforebegin', html);
+  }
+}
+injectBands();
 
 </script>
 </body>
