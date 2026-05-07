@@ -19,7 +19,7 @@ not_found_handling = "single-page-application"
 [[d1_databases]]
 binding = "DB"
 database_name = "labirinto-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "784cb16a-712d-450f-aa9c-5de8c4db5149"
 
 # ─── R2 ─────────────────────────────────────────────────────────────────
 # Bucket para servir as imagens do website. Criar com:
