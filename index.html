@@ -673,8 +673,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
     <div class="d-row"><div class="d-vis" style="background:#dbeafe;min-height:220px"></div><div class="d-inf">
       <h2 style="color:#2563eb">Doença Renal Crónica</h2>
       <p>Perda progressiva e irreversível da função renal, habitualmente associada a diabetes mellitus e hipertensão arterial. A sua progressão silenciosa torna o diagnóstico precoce fundamental. Nos estadios avançados pode ser necessária diálise ou transplante renal. A gestão farmacológica é complexa, com necessidade de ajuste de dose de muitos medicamentos.</p>
-      <div style="background:#dbeafe;border-radius:10px;padding:12px 16px;font-size:13px;color:#2563eb;margin-bottom:14px">Conteúdo detalhado e quiz terapêutico em desenvolvimento.</div>
-      <button class="btn-purple" style="background:#2563eb;opacity:0.5;cursor:not-allowed">Em breve</button>
+      <button class="btn-purple" style="background:#2563eb" onclick="openDisease('drc')">Saber Mais</button>
     </div></div>
     <div class="d-row rev"><div class="d-inf">
       <h2 style="color:#2563eb">Gota</h2>
@@ -744,6 +743,7 @@ var DIMG = {
   hipotiroidismo: '',
   epilepsia: '',
   alzheimer: '',
+  drc: '',
   hta: "/images/img_hta.png",
   eam: "/images/img_eam.png",
   ic:  "/images/img_ic.png",
@@ -751,8 +751,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', drc:'renal', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', drc:'Doença Renal Crónica', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -821,6 +821,11 @@ var DINTRO = {
     'A doença de Alzheimer é uma <strong>doença neurodegenerativa progressiva</strong>, sendo a causa mais comum de demência. Caracteriza-se pela deterioração gradual das funções cognitivas, incluindo memória, linguagem, orientação e capacidade de realizar atividades do dia a dia, resultando numa perda progressiva da autonomia.',
     'A doença está associada à acumulação anormal de proteínas no cérebro, como as <strong>placas de beta-amiloide e os emaranhados de tau</strong>, que levam à disfunção e morte neuronal. Os sintomas iniciam-se de forma subtil, geralmente com alterações da memória recente, e evoluem ao longo do tempo para um compromisso mais global das funções cognitivas e comportamentais.',
     'Atualmente, <strong>não existe cura</strong> para a doença de Alzheimer. O tratamento disponível tem como objetivo atrasar a progressão dos sintomas e melhorar a qualidade de vida do doente, sendo essencial uma <strong>abordagem multidisciplinar</strong> que inclua apoio farmacológico e não farmacológico. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
+  ],
+  drc: [
+    'A doença renal crónica (DRC) caracteriza-se pela <strong>perda progressiva e irreversível da função dos rins</strong> ao longo do tempo, levando a uma diminuição da capacidade de filtrar resíduos e regular o equilíbrio de líquidos e eletrólitos no organismo. As causas mais frequentes incluem <strong>diabetes mellitus, hipertensão arterial e doenças renais primárias</strong>.',
+    'Numa fase inicial, a doença pode ser <strong>assintomática</strong>, sendo muitas vezes diagnosticada através de análises laboratoriais. À medida que progride, podem surgir sintomas como fadiga, edema, alterações urinárias e, em fases mais avançadas, complicações sistémicas graves como <strong>anemia, hiperparatiroidismo secundário e doença cardiovascular acelerada</strong>.',
+    'O tratamento tem como objetivo <strong>atrasar a progressão da doença, controlar as complicações e reduzir o risco cardiovascular</strong>, sendo fundamental uma abordagem individualizada que inclua controlo rigoroso das doenças associadas e terapêutica farmacológica adequada. Use o quiz abaixo para perceber qual a abordagem mais indicada ao seu perfil.'
   ]
 };
 
@@ -969,7 +974,16 @@ var Qu = {
   alz_adherence: q('alz_adherence','O doente tem dificuldade em tomar medicação regularmente?', [o('A','Sim',{alz_adherence:true}),o('B','Não',{alz_adherence:false})]),
   alz_age65:     q('alz_age65',    'Tem mais de 65 anos?', [o('A','Sim',{alz_age65:true}),o('B','Não',{alz_age65:false})]),
   alz_comorbid:  q('alz_comorbid', 'Tem outras doenças importantes (cardíacas, renais, hepáticas)?', [o('A','Sim',{alz_comorbid:true}),o('B','Não',{alz_comorbid:false})]),
-  alz_meds:      q('alz_meds',     'Já faz tratamento para Alzheimer?', [o('A','Não',{alz_meds:'none'}),o('B','Sim',{alz_meds:'yes'})])
+  alz_meds:      q('alz_meds',     'Já faz tratamento para Alzheimer?', [o('A','Não',{alz_meds:'none'}),o('B','Sim',{alz_meds:'yes'})]),
+  drc_diag:    q('drc_diag',   'Tem diagnóstico de doença renal crónica?', [o('A','Sim',{drc_diag:true}),o('B','Não',{drc_diag:false})]),
+  drc_dm:      q('drc_dm',     'Tem diabetes?', [o('A','Sim',{drc_dm:true}),o('B','Não',{drc_dm:false})]),
+  drc_hta:     q('drc_hta',    'Tem hipertensão arterial?', [o('A','Sim',{drc_hta:true}),o('B','Não',{drc_hta:false})]),
+  drc_edema:   q('drc_edema',  'Tem inchaço nas pernas (edema)?', [o('A','Sim',{drc_edema:true}),o('B','Não',{drc_edema:false})]),
+  drc_gfr:     q('drc_gfr',    'Já foi informado que a função renal está diminuída?', [o('A','Sim',{drc_gfr:true}),o('B','Não',{drc_gfr:false})]),
+  drc_age65:   q('drc_age65',  'Tem mais de 65 anos?', [o('A','Sim',{drc_age65:true}),o('B','Não',{drc_age65:false})]),
+  drc_anemia:  q('drc_anemia', 'Tem níveis baixos de energia ou foi-lhe diagnosticada anemia?', [o('A','Sim',{drc_anemia:true}),o('B','Não',{drc_anemia:false})]),
+  drc_polimed: q('drc_polimed','Toma vários medicamentos diariamente?', [o('A','Sim',{drc_polimed:true}),o('B','Não',{drc_polimed:false})]),
+  drc_worsen:  q('drc_worsen', 'Já teve agravamento recente da função renal?', [o('A','Sim',{drc_worsen:true}),o('B','Não',{drc_worsen:false})])
 };
 
 var DQ = {
@@ -986,7 +1000,8 @@ var DQ = {
   depressao:      ['dep_sad','dep_anhed','dep_fatigue','dep_sleep','dep_appetite','dep_concent','dep_diag','dep_suicidal'],
   hipotiroidismo: ['ht_diag','ht_symptoms','ht_preg','ht_age65','ht_cardiac','ht_meds','ht_fasting','ht_interact'],
   epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence'],
-  alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds']
+  alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds'],
+  drc:            ['drc_diag','drc_dm','drc_hta','drc_edema','drc_gfr','drc_age65','drc_anemia','drc_polimed','drc_worsen']
 };
 
 function tags() {
@@ -1068,6 +1083,7 @@ function getOutcome() {
   if (id==='hipotiroidismo') return hipotiroidismoO(t);
   if (id==='epilepsia') return epilepsiaO(t);
   if (id==='alzheimer') return alzheimerO(t);
+  if (id==='drc') return drcO(t);
 }
 
 
@@ -2636,6 +2652,240 @@ function alzheimerO(t) {
     {elderly: isOld ? 'No idoso (todos estes doentes serão geralmente > 65 anos): "start low, go slow". Vigiar quedas, hipotensão ortostática e interações. Rever toda a medicação habitual a cada 6 meses — desprescrever fármacos com efeito anticolinérgico (antagonizam o donepezilo).' : '',
      costNote: 'Donepezilo genérico tem custo baixo a médio e está amplamente comparticipado pelo SNS na indicação Alzheimer ligeiro a moderado. O custo principal do tratamento é o suporte multidisciplinar (terapia ocupacional, apoio domiciliário) e o tempo do cuidador — frequentemente subestimado.'},
     'IMPORTANTE: a abordagem não farmacológica (estimulação cognitiva, exercício, ambiente estruturado, suporte ao cuidador) é tão importante quanto a medicação. Em fase moderada ou grave, o doente NÃO deve conduzir — informar a família e notificar o médico assistente.'
+  );
+}
+
+function drcO(t) {
+  var hasDM       = (t.drc_dm      === true);
+  var hasHTA      = (t.drc_hta     === true);
+  var hasEdema    = (t.drc_edema   === true);
+  var hasGFR      = (t.drc_gfr     === true);
+  var hasWorsen   = (t.drc_worsen  === true);
+  var hasAnemia   = (t.drc_anemia  === true);
+  var isOld       = (t.drc_age65   === true);
+  var polimed     = (t.drc_polimed === true);
+
+  /* Resultado 5 — DRC avançada / encaminhamento especializado */
+  if (hasWorsen && hasGFR && hasEdema) return res(
+    'Resultado 5: DRC Avançada — Referenciação a Nefrologia',
+    'Estádio G4–G5 (TFG <30 mL/min) — preparação para terapia de substituição renal',
+    [drug(
+      'Referenciação Especializada e Preparação para TSR',
+      'Cuidados nefrológicos avançados e ajuste sistémico de medicação',
+      'A DRC em estádio G4 (TFG 15–29 mL/min) e G5 (TFG <15 mL/min) exige <strong>referenciação obrigatória a Nefrologia</strong> para preparação atempada da terapia de substituição renal (TSR). O atraso na referenciação está associado a pior sobrevida, maior risco de iniciar diálise em urgência (e não programada) e a uma carga sintomática significativamente maior. Em paralelo com a planificação da TSR, é fundamental controlar as complicações sistémicas da DRC: <strong>anemia, hiperparatiroidismo secundário, acidose metabólica, hiperfosfatemia, sobrecarga hídrica e dislipidemia</strong>. Toda a medicação eliminada por via renal deve ser revista — doses ajustadas ou substituídas por alternativas mais seguras. As três opções de TSR são <strong>hemodiálise, diálise peritoneal e transplante renal</strong>, sendo o transplante a opção com melhor sobrevida e qualidade de vida (mas com lista de espera).',
+      'Hemodiálise: 3x/semana (4 horas/sessão) em centro ou domicílio · Diálise peritoneal: troca diária de líquido (CAPD) ou cíclica noturna (APD) em casa · Transplante renal: cirurgia eletiva ou em urgência relativa (dador vivo ou cadáver)',
+      'Equipa multidisciplinar: nefrologia, enfermagem especializada, dietética, assistente social, psicologia',
+      'Iniciar TSR habitualmente com TFG entre 5–10 mL/min ou se sintomas urémicos (náuseas, prurido, edema refratário, encefalopatia), hipercaliemia ou acidose graves não controláveis com medicação.',
+      'Custo elevado — hemodiálise ~40.000€/doente/ano (comparticipação total pelo SNS); transplante renal mais custo-efetivo a longo prazo',
+      'AJUSTAR DOSE de TODOS os fármacos eliminados por via renal. <strong>SUSPENDER metformina se TFG <30</strong>, AINE, aminoglicosídeos, contraste iodado sem hidratação prévia, lítio. Vacinação pré-diálise: <strong>hepatite B</strong> (esquema reforçado), pneumocócica e gripe anual. Risco aumentado de hemorragia, infeções e doença cardiovascular.'
+    )],
+    ['<strong>Diálise peritoneal</strong> em vez de hemodiálise — maior autonomia, preserva mais tempo função renal residual, sem necessidade de acesso vascular',
+     '<strong>Transplante preemptivo</strong> (antes de iniciar diálise) — melhor opção quando há dador vivo disponível',
+     'Conservative care (cuidados conservadores não-dialíticos) — em doentes muito idosos ou com comorbilidades graves: foco em qualidade de vida e sintomas',
+     'Quelantes do fósforo: carbonato de cálcio (genérico) ou sevelamer (se hiperfosfatemia + risco vascular)',
+     'Cinacalcete para hiperparatiroidismo secundário severo (PTH > 600 pg/mL)',
+     'Bicarbonato de sódio oral 0,5–1 g/dia se acidose metabólica (HCO3 < 22)'],
+    ['AINE (ibuprofeno, naproxeno, diclofenac) — nefrotóxicos absolutos em DRC avançada',
+     'Metformina se TFG <30 mL/min — risco de acidose lática',
+     'Contraste iodado sem hidratação e ponderação benefício/risco',
+     'Aminoglicosídeos (gentamicina, amicacina) sem ajuste e doseamento',
+     'Lítio — eliminação exclusivamente renal',
+     'Soluções com potássio, espironolactona em altas doses sem monitorização',
+     'Atrasar a referenciação a Nefrologia — pior sobrevida e início de diálise em urgência'],
+    'Acompanhamento intensivo e indefinido. Preparação de acesso vascular (fístula AV) ou peritoneal pelo menos 6 meses antes do início previsto de diálise.',
+    ['Restrição dietética: <strong>proteínas 0,6–0,8 g/kg/dia</strong> em pré-diálise (1,2 g/kg/dia em diálise), fósforo, potássio (frutos secos, banana, batata, tomate), sódio (<5 g sal/dia)',
+     'Restrição hídrica habitualmente <1–1,5 L/dia em estádios avançados',
+     'Cessação tabágica obrigatória — acelera progressão e risco vascular',
+     'Vacinação completa antes de iniciar diálise: hepatite B (esquema reforçado), pneumocócica conjugada e polissacarídea, gripe anual, COVID-19',
+     'Controlo rigoroso da TA (<130/80) e da diabetes (HbA1c individualizada, normalmente 7–8%)',
+     'Apoio psicossocial e familiar — adesão a TSR depende criticamente do suporte',
+     'Recursos: <strong>Associação Portuguesa de Insuficientes Renais (APIR)</strong> — www.apir.org.pt, grupos de apoio e acompanhamento'],
+    ['TFG (creatinina) mensal · ureia, ionograma (Na, K, Cl, HCO3) mensal',
+     'Cálcio, fósforo, PTH a cada 3 meses',
+     'Hemograma, ferritina, saturação de transferrina a cada 3 meses',
+     'Albumina e estado nutricional a cada 3 meses',
+     'Ecocardiograma anual e avaliação cardiovascular regular',
+     'Fundoscopia anual em diabéticos',
+     'Hepatites virais e HIV antes da TSR'],
+    {elderly: isOld ? 'Em idosos com DRC avançada, ponderar cuidadosamente diálise vs cuidados conservadores — a evidência mostra ganho de sobrevida modesto em > 80 anos com múltiplas comorbilidades, mas com carga significativa em qualidade de vida. Decisão individualizada e partilhada.' : '',
+     costNote: 'Hemodiálise é o tratamento crónico mais caro do SNS (~40.000€/ano por doente). O transplante renal é mais custo-efetivo a longo prazo. APIR oferece apoio social e jurídico aos doentes em diálise.'},
+    'CRÍTICO: a referenciação a Nefrologia deve ser feita logo que TFG <30 mL/min, OU se proteinúria persistente (rácio albumina/creatinina >300 mg/g), OU se progressão rápida (queda TFG >5 mL/min/ano). O atraso compromete o planeamento da TSR e a qualidade do início.'
+  );
+
+  /* Resultado 4 — Anemia da DRC */
+  if (hasAnemia) return res(
+    'Resultado 4: Anemia da DRC — Reposição de Ferro e Eritropoietina',
+    'Tratamento sequencial — primeiro corrigir o ferro, depois ponderar AEE',
+    [drug(
+      'Ferro Oral (Sulfato Ferroso ou Ferro Polimaltosado)',
+      'Suplementação marcial — primeira linha em DRC pré-diálise',
+      'A anemia da DRC é multifactorial: défice de eritropoietina (a EPO é produzida pelas células peritubulares renais e a sua produção cai com a TFG), défice absoluto ou funcional de ferro (perdas crónicas, má absorção intestinal por inflamação) e <strong>inflamação crónica</strong> (a hepcidina aumenta na DRC e bloqueia a absorção e libertação de ferro pelos macrófagos). Antes de iniciar agentes estimuladores da eritropoiese (AEE), é <strong>essencial corrigir o défice de ferro</strong> — uma resposta inadequada aos AEE em doente com ferritina <100 ng/mL ou saturação de transferrina <20% deve-se quase sempre a défice marcial. O ferro oral é económico e eficaz em fases iniciais, mas a tolerância gastrointestinal é limitada e a absorção é frequentemente insuficiente em DRC avançada — nestes casos passa a ferro IV.',
+      'Sulfato ferroso 325 mg (≈65 mg de ferro elementar) — 1 a 2 comprimidos/dia · Ferro polimaltosado 100 mg de ferro elementar 2x/dia · Total: 100–200 mg de ferro elementar/dia em 2–3 tomas',
+      'Oral, em jejum (1 hora antes ou 2 horas depois das refeições), de preferência com sumo de laranja (a vitamina C aumenta a absorção)',
+      'Separar pelo menos 2 horas de antiácidos, cálcio, levotiroxina e quelantes do fósforo. Manter pelo menos 3 meses para repor reservas de ferro e mais 3 meses após normalização da hemoglobina.',
+      'Custo baixo (genérico amplamente comparticipado pelo SNS)',
+      'Obstipação (frequente — fibra, hidratação, ponderar laxante osmótico), náuseas e dor epigástrica (tomar com alimentos se intolerância — reduz absorção mas melhora adesão), <strong>fezes escuras (esperado, não é hemorragia)</strong>, sabor metálico. Em DRC avançada, a absorção é frequentemente insuficiente — passar a ferro IV se ferritina não responde após 3 meses.'
+    ),
+    drug(
+      'Agentes Estimuladores da Eritropoiese — AEE (Epoetina ou Darbepoetina)',
+      'Análogos da eritropoietina humana recombinante',
+      'Os AEE substituem a eritropoietina endógena que falta na DRC. <strong>Iniciam-se apenas se Hgb <10 g/dL</strong> APÓS correção do ferro (ferritina >100 ng/mL e saturação de transferrina >20%). O <strong>objetivo terapêutico é Hgb 10–11,5 g/dL</strong> — ultrapassar 12 g/dL associa-se a aumento de eventos cardiovasculares (estudos CHOIR, TREAT), AVC e tromboembolismo. A darbepoetina alfa tem semivida mais longa que a epoetina e permite administração menos frequente (semanal ou quinzenal vs 1–3x/semana), o que melhora a adesão e reduz a carga assistencial.',
+      'Epoetina alfa: 50–100 UI/kg 1–3x/semana SC ou IV · Darbepoetina alfa: 0,45 µg/kg/semana SC ou IV (ou 0,75 µg/kg quinzenal) · Ajustar dose para manter Hgb 10–11,5 g/dL',
+      'Subcutânea (mais económica em pré-diálise) ou IV (durante hemodiálise) — 1 a 3 vezes por semana ou semanal/quinzenal',
+      'Apenas iniciar APÓS correção do défice de ferro. Avaliar resposta às 4–8 semanas. Reduzir dose 25–50% se Hgb subir >1 g/dL em 2 semanas ou se >11,5 g/dL.',
+      'Custo elevado (comparticipado pelo SNS em DRC pré-diálise e em diálise com critérios de Hgb e ferro)',
+      '<strong>Hipertensão arterial</strong> de novo ou agravamento em 20–30% dos doentes — monitorizar TA antes e durante o tratamento; ajustar anti-hipertensores. Risco tromboembólico (AVC, TVP, TEP) aumentado se Hgb >12 g/dL. Aplasia pura de células vermelhas (rara, mediada por anticorpos anti-EPO — sobretudo com epoetina alfa SC). Cefaleia, sintomas gripais, reações no local de injeção.'
+    )],
+    ['<strong>Ferro IV</strong> (ferrocarboximaltose 500–1000 mg dose única; sacarato de ferro 100–200 mg/sessão) — preferido se intolerância oral, má absorção, anemia grave (Hgb <9) ou em hemodiálise',
+     'Vitamina B12 e ácido fólico — corrigir se défice associado',
+     'Investigar e tratar perdas hemorrágicas (gastrointestinais, ginecológicas) — anemia da DRC é diagnóstico de exclusão',
+     'Roxadustat (estabilizador do HIF) — alternativa oral aos AEE, recente, ainda com adoção limitada em Portugal'],
+    ['Iniciar AEE sem corrigir primeiro o défice de ferro — resposta inadequada e desperdício de fármaco caro',
+     'Objetivo de Hgb >12 g/dL — aumenta mortalidade cardiovascular e AVC',
+     'Transfusão sanguínea como tratamento de rotina — sensibilização HLA compromete futuro transplante',
+     'AINE — pioram a função renal e aumentam risco hemorrágico'],
+    'Tratamento crónico, ajustado em função do estádio da DRC e da resposta. Reavaliação cada 3 meses em estabilidade.',
+    ['Dieta rica em ferro (carne vermelha magra, leguminosas, vegetais de folha verde) e vitamina C',
+     'Higiene oral cuidada — o ferro pode escurecer transitoriamente os dentes',
+     'Atividade física adaptada — combate a fadiga e mantém capacidade funcional',
+     'Cumprir rigorosamente o horário e o jejum do ferro oral — separar de cálcio, antiácidos e levotiroxina',
+     'Comunicar imediatamente sintomas de TVP, AVC ou hipertensão não controlada se em AEE'],
+    ['Hemograma a cada 4 semanas até estabilização, depois cada 3 meses',
+     'Ferritina e saturação de transferrina antes de iniciar AEE e cada 3 meses',
+     'Reticulócitos (índice de produção medular)',
+     'Tensão arterial em cada toma se em AEE',
+     'Função renal (TFG) — ajustar dose de AEE se progressão',
+     'PCR ou outros marcadores de inflamação — inflamação crónica é causa frequente de resistência'],
+    {elderly: isOld ? 'No idoso, ferro oral é frequentemente mal tolerado (obstipação, náuseas) — ponderar passar a ferro IV mais cedo. Objetivo de Hgb mais conservador (10–11 g/dL) para minimizar risco cardiovascular.' : '',
+     costNote: 'Ferro oral genérico tem custo muito baixo. Ferro IV e AEE têm custo elevado mas comparticipação SNS em indicações aprovadas (DRC com critérios de Hgb e ferro). A correção da anemia melhora claramente qualidade de vida e capacidade funcional.'},
+    'IMPORTANTE: nunca iniciar AEE sem antes confirmar reservas de ferro adequadas. A resistência ao tratamento da anemia exige investigação de causas adicionais — perdas hemorrágicas, défice de B12/folato, hiperparatiroidismo, intoxicação por alumínio (rara), inflamação ou neoplasia oculta.'
+  );
+
+  /* Resultado 3 — Edema / sobrecarga hídrica (furosemida) */
+  if (hasEdema) return res(
+    'Resultado 3: Edema e Sobrecarga Hídrica — Furosemida',
+    'Diurético de ansa — controlo de volume em DRC',
+    [drug(
+      'Furosemida',
+      'Diurético de ansa (inibidor do co-transportador Na-K-2Cl)',
+      'A furosemida é o <strong>diurético de eleição em DRC com edema ou sobrecarga hídrica</strong>, mantendo eficácia mesmo em fases avançadas (ao contrário das tiazidas, que perdem eficácia se TFG <30 mL/min). Atua na <strong>ansa de Henle ascendente espessa</strong>, inibindo o co-transportador Na-K-2Cl e promovendo a excreção de sódio, cloreto, água, potássio, magnésio e cálcio. Em DRC avançada, a entrega tubular de furosemida está reduzida (porque a função renal está diminuída) e há resistência diurética relativa — frequentemente é necessário <strong>aumentar a dose</strong> ou combinar com uma tiazida (efeito sinérgico — bloqueio segmentar do néfron). O controlo de volume é uma das prioridades terapêuticas em DRC porque a sobrecarga hídrica acelera a hipertensão, a hipertrofia ventricular esquerda e a progressão para insuficiência cardíaca.',
+      'Iniciar com 20–40 mg/dia oral · Em DRC avançada podem ser necessárias <strong>doses mais elevadas (80–250 mg/dia)</strong> · Se ausência de resposta a dose alta, considerar combinação com hidroclorotiazida 25 mg ou metolazona 2,5–5 mg 30 min antes da furosemida',
+      'Oral, preferencialmente de <strong>manhã</strong> (evitar noctúria); se 2 tomas: manhã e início da tarde — não administrar à noite',
+      'Tomar à mesma hora todos os dias. Pesar diariamente em jejum, mesma roupa — variação >1 kg em 24h indica desequilíbrio hídrico. Restrição de sal (<5 g/dia) e líquidos potencia o efeito.',
+      'Custo muito baixo (genérico amplamente comparticipado pelo SNS)',
+      '<strong>Hipocaliemia</strong> (frequente — pode exigir suplementação oral KCl ou poupador de potássio em doses baixas), hiponatremia (sobretudo se associada a tiazida), hipomagnesemia, hiperuricemia (precipita gota), <strong>desidratação e hipotensão ortostática</strong> (risco de quedas em idosos). Ototoxicidade em doses muito altas IV ou se associada a aminoglicosídeos. Em DRC avançada com resistência diurética: doses orais altas têm absorção errática — pode ser necessária via IV transitória.'
+    )],
+    ['<strong>Combinação furosemida + tiazida</strong> (hidroclorotiazida 25 mg ou metolazona 2,5–5 mg) em resistência diurética — efeito sinérgico bloqueando dois segmentos do néfron',
+     'Torasemida — diurético de ansa com semivida mais longa (12 h) e biodisponibilidade oral mais previsível, útil em casos de absorção errática',
+     'Espironolactona ou eplerenona em baixa dose — bloqueio aldosterona, reduz progressão da DRC e proteinúria (atenção a hipercaliemia se TFG <30)',
+     'Restrição de sódio dietético <5 g/dia e restrição hídrica conforme prescrito — frequentemente mais eficaz que aumentar a dose'],
+    ['<strong>AINE</strong> (ibuprofeno, naproxeno, diclofenac) — antagonizam o efeito diurético, são nefrotóxicos e precipitam IRA',
+     'Tiazida em monoterapia se TFG <30 mL/min — perde eficácia',
+     'Combinação com poupadores de potássio (espironolactona, amilorida) sem monitorização rigorosa do potássio',
+     'Suspender abruptamente em sobrecarga hídrica grave — risco de descompensação rápida'],
+    'Tratamento crónico em DRC com edema. Ajuste de dose conforme peso, TA, perfusão periférica e ionograma.',
+    ['<strong>Pesar diariamente em jejum</strong>, mesma hora, mesma roupa — instrumento mais sensível para gerir o tratamento',
+     'Restrição de sal <5 g/dia e líquidos conforme indicação (habitualmente 1–1,5 L/dia em DRC avançada)',
+     'Elevar membros inferiores e meias de compressão graduada se edema',
+     'Evitar AINE para qualquer dor — usar paracetamol como primeira linha (sem ajuste em DRC)',
+     'Se ortostatismo: levantar lentamente da cama, hidratação adequada, rever doses dos anti-hipertensores'],
+    ['Peso diário pelo doente (registo)',
+     'Ionograma (sódio, potássio, cloreto, bicarbonato) e função renal (creatinina, ureia, TFG) 1–2 semanas após início e cada 1–3 meses',
+     'Magnésio sérico cada 6 meses · ácido úrico se história de gota',
+     'Tensão arterial em decúbito e ortostática em cada consulta',
+     'Avaliação clínica de sinais de desidratação ou sobrecarga em cada consulta'],
+    {elderly: isOld ? 'No idoso, iniciar com dose baixa (20 mg/dia) e titular lentamente. Maior risco de hipotensão ortostática, quedas, desidratação e hipocaliemia. Cuidado especial em meses quentes (desidratação) e infeções (descompensação rápida).' : '',
+     costNote: 'Furosemida genérica tem custo praticamente desprezável. O custo principal é a monitorização laboratorial frequente, justificada pela margem terapêutica estreita.'},
+    polimed ? 'ATENÇÃO: doente polimedicado — rever toda a medicação para identificar interações (AINE ocultos em produtos de venda livre, suplementos com potássio ou sódio, fármacos nefrotóxicos como aminoglicosídeos ou contraste).' : ''
+  );
+
+  /* Resultado 2 — DRC com diabetes (SGLT2) */
+  if (hasDM) return res(
+    'Resultado 2: DRC + Diabetes — Inibidor SGLT2',
+    'Dapagliflozina ou Empagliflozina — proteção renal e cardiovascular',
+    [drug(
+      'Dapagliflozina (ou Empagliflozina)',
+      'Inibidor SGLT2 — inibidor do co-transportador sódio-glicose tipo 2',
+      'Os <strong>inibidores SGLT2 são uma das principais inovações terapêuticas da última década em DRC</strong>. Bloqueiam a reabsorção de glicose e sódio no túbulo proximal renal, com três efeitos principais: (1) <strong>natriurese</strong> que reduz a pressão arterial e o volume intravascular; (2) <strong>vasoconstrição da arteríola eferente</strong> via feedback tubuloglomerular, normalizando a hiperfiltração glomerular (mecanismo central da progressão da nefropatia diabética); (3) efeitos pleiotrópicos cardio- e nefroprotetores independentes do efeito hipoglicemiante (redução de fibrose, melhoria do metabolismo energético renal). Os estudos <strong>DAPA-CKD</strong> (dapagliflozina) e <strong>EMPA-KIDNEY</strong> (empagliflozina) demonstraram redução significativa da progressão da DRC, das hospitalizações por insuficiência cardíaca e da mortalidade cardiovascular — incluindo em doentes <strong>SEM diabetes</strong>. São hoje primeira linha em DRC com proteinúria, com ou sem diabetes.',
+      'Dapagliflozina 10 mg/dia (dose única para DRC, independente da diabetes) · Empagliflozina 10–25 mg/dia · NÃO iniciar se TFG <25 mL/min (dapagliflozina) ou <20 mL/min (empagliflozina)',
+      'Oral, 1x/dia, de manhã, com ou sem alimentos',
+      'Iniciar associado a IECA ou ARA II (não substituir). É esperada uma <strong>queda transitória da TFG de 3–5 mL/min</strong> nas primeiras semanas — não suspender, é manifestação do efeito nefroprotetor. Reavaliar TFG, glicemia e TA às 2–4 semanas. Suspender 3 dias antes de cirurgia ou jejum prolongado (risco de cetoacidose).',
+      'Custo médio a elevado (sem genérico ainda em Portugal — comparticipação SNS em indicações aprovadas: DRC com TFG ≥25 mL/min, IC com fração de ejeção reduzida, diabetes tipo 2)',
+      '<strong>Infeções genitais fúngicas (candidíase)</strong> em 5–10% — higiene cuidada, secagem após higiene íntima; tratamento tópico habitualmente suficiente. Infeções urinárias (não claramente aumentadas em estudos recentes). <strong>Cetoacidose diabética euglicémica</strong> (rara mas grave — alerta especial em jejum, infeção, cirurgia, álcool); SUSPENDER 3 dias antes de cirurgia eletiva ou se doença aguda com vómitos. Hipovolemia e hipotensão (especialmente em diuréticos concomitantes — pode ser preciso reduzir dose do diurético). Não causa hipoglicemia em monoterapia.'
+    )],
+    ['<strong>IECA ou ARA II</strong> sempre em associação (mantém-se a base de proteção renal) — ramipril 5–10 mg/dia ou losartan 50–100 mg/dia',
+     'Finerenona (antagonista mineralocorticoide não esteróide) — opção adicional em DRC + diabetes com proteinúria persistente, mesmo em uso de SGLT2 + IECA',
+     'Metformina (se TFG ≥30) — mantém-se na base de tratamento da diabetes na DRC moderada',
+     'Análogos GLP-1 (semaglutido, dulaglutido) — alternativa para diabetes com risco cardiovascular se SGLT2 contraindicado',
+     'Controlo da TA <130/80 mmHg e da diabetes (HbA1c individualizada)'],
+    ['Iniciar SGLT2 se TFG abaixo do limiar (<25 mL/min para dapagliflozina, <20 para empagliflozina)',
+     'Combinar com diurético em alta dose sem reavaliar volume — risco de hipovolemia',
+     'Manter durante doença aguda grave (vómitos, jejum prolongado, cirurgia) — risco de cetoacidose',
+     'Suspender se TFG cair transitoriamente (queda inicial é esperada e desejável)',
+     'AINE — sempre evitar em DRC'],
+    'Tratamento crónico indefinido. Manter mesmo após início de diálise se tolerado.',
+    ['<strong>Higiene íntima cuidada</strong> e secagem completa após o duche — reduz risco de candidíase',
+     'Hidratação adequada (1,5–2 L/dia, salvo restrição hídrica)',
+     'Suspender SGLT2 em caso de doença aguda com vómitos ou diarreia, ou jejum prolongado — reiniciar após estabilização',
+     'Atividade física regular — sinérgica com o efeito metabólico do SGLT2',
+     'Não fumar, dieta mediterrânica adaptada (controlo de potássio se TFG <45)',
+     'Comunicar imediatamente: sintomas de infeção genital ou urinária, cetoacidose (náuseas, vómitos, dor abdominal, hálito cetónico)'],
+    ['TFG e creatinina às 2–4 semanas, depois 3-6 meses (queda inicial 3–5 mL/min é esperada)',
+     'Glicemia e HbA1c trimestrais (em diabéticos)',
+     'Tensão arterial em casa 2x/dia',
+     'Peso e exame físico (sinais de hipovolemia) em cada consulta',
+     'Albuminúria (rácio albumina/creatinina urinário) cada 3–6 meses — marcador de proteção renal',
+     'Cetonemia capilar se sintomas suspeitos'],
+    {elderly: isOld ? 'No idoso, vigiar especialmente hipovolemia, hipotensão ortostática e quedas. Ajustar dose de diurético frequentemente em paralelo. Maior risco de candidíase e infeções urinárias por imunidade reduzida.' : '',
+     costNote: 'Custo médio a elevado, mas com forte custo-eficácia documentada (DAPA-CKD, EMPA-KIDNEY): redução de progressão para diálise e de hospitalizações cardiovasculares. Comparticipado pelo SNS nas indicações aprovadas — DRC com TFG ≥25 mL/min, IC com FE reduzida, diabetes tipo 2 com risco cardiovascular.'},
+    'IMPORTANTE: o SGLT2 deve ser ASSOCIADO ao IECA/ARA II (e não substitutivo). A combinação tem efeito aditivo na proteção renal e cardiovascular. Reduzir ligeiramente a dose do diurético se hipotensão ou hipovolemia ao introduzir.'
+  );
+
+  /* Resultado 1 — Proteção renal de base (IECA / ARA II) */
+  return res(
+    'Resultado 1: DRC — Proteção Renal de Base',
+    'IECA (Enalapril) ou ARA II (Losartan) — primeira linha em DRC',
+    [drug(
+      'Enalapril (IECA) ou Losartan (ARA II)',
+      'Bloqueio do sistema renina-angiotensina-aldosterona (SRAA)',
+      'Os <strong>IECA e ARA II são a pedra angular do tratamento farmacológico da DRC</strong>, especialmente em doentes com diabetes, hipertensão ou proteinúria — independentemente da TA basal. Atuam reduzindo a pressão de filtração glomerular através da <strong>vasodilatação seletiva da arteríola eferente</strong>, o que diminui a hiperfiltração e a proteinúria — dois dos principais motores da progressão da nefropatia. A redução da proteinúria correlaciona-se diretamente com o atraso na progressão para insuficiência renal terminal. <strong>Não combinar IECA com ARA II</strong> (estudos ONTARGET, ALTITUDE) — o duplo bloqueio aumenta hipercaliemia, hipotensão e IRA sem benefício adicional. A escolha entre IECA e ARA II é frequentemente determinada pela tolerância: a <strong>tosse seca</strong> ocorre em 5–15% dos doentes em IECA (mediada por bradicinina) e é a razão mais comum de troca para ARA II.',
+      'Enalapril: 5 mg/dia inicial → titular até 10–20 mg 1–2x/dia (máx. 40 mg/dia) · Losartan: 50 mg/dia inicial → titular até 100 mg/dia (em 1 toma) · Iniciar com dose baixa, dobrar após 2–4 semanas se tolerado',
+      'Oral, 1x/dia (losartan) ou 1–2x/dia (enalapril), com ou sem alimentos',
+      'Reavaliar creatinina, potássio e TA <strong>1–2 semanas após início e após cada aumento de dose</strong>. Aumento de creatinina até 30% e TFG até -25% nas primeiras semanas é ESPERADO e ACEITÁVEL — reflete a normalização da pressão de filtração glomerular. Aumentos superiores ou hipercaliemia >5,5 mmol/L exigem reavaliação.',
+      'Custo muito baixo (genéricos amplamente comparticipados pelo SNS — enalapril e losartan estão entre os fármacos mais baratos disponíveis)',
+      '<strong>Tosse seca</strong> com IECA (5–15%, mediada por bradicinina — substituir por ARA II). <strong>Hipercaliemia</strong> — risco aumentado se TFG <30, em diabéticos, com poupadores de potássio ou AINE; rever toda a medicação. <strong>Aumento ligeiro/transitório de creatinina</strong> nas primeiras semanas é esperado. Hipotensão (especialmente após primeira dose ou se hipovolemia). Angioedema (raro mas potencialmente grave — sobretudo com IECA, mais frequente em descendência africana). <strong>Contraindicação absoluta na gravidez</strong> (fetotoxicidade renal — descontinuar antes da conceção em mulher fértil).'
+    )],
+    ['<strong>Espironolactona ou Finerenona</strong> em doses baixas — bloqueio adicional da aldosterona, reduz proteinúria e progressão (vigiar potássio)',
+     'Bloqueadores dos canais de cálcio não dihidropiridínicos (diltiazem, verapamil) — alternativa anti-hipertensora se IECA/ARA II contraindicados',
+     'Bloqueadores beta cardioseletivos (bisoprolol, nebivolol) — em associação para controlo da TA e em IC associada',
+     '<strong>Inibidores SGLT2</strong> em associação (especialmente se diabetes ou proteinúria persistente) — efeito aditivo nefroprotetor',
+     'Estatina em alta intensidade (atorvastatina 20–40 mg, rosuvastatina 10–20 mg) — risco cardiovascular elevado em DRC'],
+    ['<strong>Combinar IECA + ARA II</strong> — proibido (hipercaliemia, IRA sem benefício)',
+     '<strong>AINE</strong> (ibuprofeno, naproxeno, diclofenac) — nefrotóxicos e antagonizam o efeito protetor; usar paracetamol em alternativa',
+     'Suplementos de potássio ou poupadores de potássio em alta dose sem monitorização rigorosa',
+     'Manter IECA/ARA II em gravidez ou planeamento — fetotoxicidade renal grave',
+     'Iniciar em doente com TFG <15 mL/min sem orientação nefrológica',
+     'Suspender ao menor aumento de creatinina sem investigar — habitualmente é esperado e desejável'],
+    'Tratamento crónico indefinido. Reavaliação cada 3–6 meses em estabilidade.',
+    ['<strong>Restrição de sal (<5 g/dia)</strong> — potencia o efeito anti-hipertensor e antiproteinúrico',
+     'Restrição moderada de proteínas (0,8 g/kg/dia em pré-diálise; 0,6 g/kg em fases mais avançadas)',
+     'Atividade física regular adaptada (caminhada 30 min/dia)',
+     'Cessação tabágica — acelera dramaticamente a progressão',
+     'Monitorização da TA em casa 2x/dia (objetivo <130/80 em DRC com proteinúria)',
+     'Evitar AINE — usar paracetamol para qualquer dor; em DRC vigiar dose se TFG <30',
+     'Vacinação completa (gripe anual, pneumocócica, hepatite B) — imunidade reduzida na DRC',
+     'Recursos: <strong>APIR — Associação Portuguesa de Insuficientes Renais</strong> (www.apir.org.pt) para apoio e informação'],
+    ['Creatinina, TFG, potássio, sódio: <strong>baseline e 1–2 semanas após início ou aumento de dose</strong>',
+     'Reavaliação cada 3–6 meses em estabilidade · cada 1–3 meses se TFG <30',
+     'Albuminúria (rácio albumina/creatinina urinário) cada 6 meses — marcador-chave de proteção renal',
+     'Tensão arterial em consulta e em casa (objetivo <130/80 com proteinúria)',
+     'Hemograma anual (rastreio de anemia da DRC se TFG <60)',
+     'Cálcio, fósforo, PTH se TFG <45 mL/min',
+     'Perfil lipídico anual'],
+    {elderly: isOld ? 'No idoso, "start low, go slow": iniciar com metade da dose (enalapril 2,5 mg, losartan 25 mg). Vigiar hipotensão ortostática (risco de quedas), hipercaliemia (mais frequente) e função renal. Hidratação adequada — desidratação precipita IRA pré-renal sob IECA/ARA.' : '',
+     pregnancy: 'CONTRAINDICAÇÃO ABSOLUTA na gravidez — fetotoxicidade renal, oligohidrâmnios, hipoplasia pulmonar. Substituir por nifedipina ou metildopa em mulher fértil que planeie engravidar.',
+     costNote: 'Custo praticamente desprezável (genéricos amplamente comparticipados). A relação custo-eficácia é uma das melhores da medicina — enalapril/losartan reduzem em ~30% a progressão para insuficiência renal terminal.'},
+    'IMPORTANTE: aumentos de creatinina até 30% e queda de TFG até 25% nas primeiras semanas são ESPERADOS e BENÉFICOS — não suspender. Apenas reavaliar se aumento >30%, hipercaliemia >5,5 mmol/L ou hipotensão sintomática.'
   );
 }
 
