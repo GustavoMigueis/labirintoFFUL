@@ -3124,7 +3124,7 @@ function renderResult() {
   h += notesH;
   h += '<div class="rbtn-row">';
   h += '<button class="btn-out" onclick="QS.answers={};QS.open={};renderQ()">Repetir o quiz</button>';
-  h += '<button class="btn-solid" onclick="showPage(DGROUP[did]||\'dc\')">Outras doenças</button>';
+  h += '<button class="btn-solid" onclick="showPage(DGROUP[QS.disease]||\'dc\')">Outras doenças</button>';
   h += '</div>';
   el.innerHTML = h;
 
