@@ -872,9 +872,14 @@ var Qu = {
   htaGrade: q('htaGrade','Qual e o grau de hipertensão?',[o('A','Grau 1: 140-159 / 90-99 mmHg',{htaGrade:1}),o('B','Grau 2: 160-179 / 100-109 mmHg',{htaGrade:2}),o('C','Grau 3: 180 ou superior mmHg',{htaGrade:3})]),
   htaComorbid: q('htaComorbid','Existem comorbilidades relevantes?',[o('A','Diabetes mellitus tipo 2',{comorbid:'diabetes'}),o('B','DRC com proteinuria',{comorbid:'ckd'}),o('C','Insuficiência cardíaca',{comorbid:'hf'}),o('D','Doença coronaria / Angina',{comorbid:'cad'}),o('E','Nenhuma relevante',{comorbid:'none'})]),
   htaLife: q('htaLife','Estilo de vida do doente?',[o('A','Sedentario, dieta rica em sal',{lifestyle:'poor'}),o('B','Moderadamente ativo',{lifestyle:'moderate'}),o('C','Ativo, boa dieta',{lifestyle:'good'})]),
-  eamType: q('eamType','Tipo de síndrome coronario?',[o('A','STEMI - elevacao do segmento ST',{eamType:'STEMI'}),o('B','NSTEMI - troponinas elevadas sem elevacao ST',{eamType:'NSTEMI'}),o('C','Angina instavel - sem troponinas elevadas',{eamType:'UA'})]),
-  eamBleed: q('eamBleed','Existe risco hemorrágico elevado?',[o('A','Sim (hemorragia recente, úlcera ativa, anticoagulação)',{bleed:'high'}),o('B','Nao, risco normal',{bleed:'normal'})]),
-  eamLVEF: q('eamLVEF','FEVE após o EAM?',[o('A','Preservada, FEVE de 50% ou mais',{lvef:'preserved'}),o('B','Reduzida, FEVE inferior a 40%',{lvef:'reduced'}),o('C','Nao avaliada',{lvef:'unknown'})]),
+  eam_chest:    q('eam_chest',   'Apresenta dor no peito intensa com duração superior a 20 minutos?', [o('A','Sim',{eam_chest:true}),o('B','Não',{eam_chest:false})]),
+  eam_irrad:    q('eam_irrad',   'A dor irradia para o braço, pescoço ou mandíbula?', [o('A','Sim',{eam_irrad:true}),o('B','Não',{eam_irrad:false})]),
+  eam_symptoms: q('eam_symptoms','Tem sintomas como falta de ar, sudorese ou náuseas?', [o('A','Sim',{eam_symptoms:true}),o('B','Não',{eam_symptoms:false})]),
+  eam_risk:     q('eam_risk',    'Tem antecedentes de hipertensão, diabetes ou colesterol elevado?', [o('A','Sim',{eam_risk:true}),o('B','Não',{eam_risk:false})]),
+  eam_smoke:    q('eam_smoke',   'É fumador?', [o('A','Sim',{eam_smoke:true}),o('B','Não',{eam_smoke:false})]),
+  eam_prev:     q('eam_prev',    'Já teve um enfarte anteriormente?', [o('A','Sim',{eam_prev:true}),o('B','Não',{eam_prev:false})]),
+  eam_meds:     q('eam_meds',    'Está a tomar medicação cardiovascular?', [o('A','Não',{eam_meds:'none'}),o('B','Sim',{eam_meds:'yes'})]),
+  eam_rest:     q('eam_rest',    'Os sintomas surgiram em repouso?', [o('A','Sim',{eam_rest:true}),o('B','Não',{eam_rest:false})]),
   icFEVE: q('icFEVE','Qual e a FEVE?',[o('A','ICFEr, FEVE inferior a 40% (reduzida)',{feve:'reduced'}),o('B','ICFEmr, FEVE entre 40 e 49%',{feve:'mildred'}),o('C','ICFEp, FEVE de 50% ou mais (preservada)',{feve:'preserved'})]),
   icNYHA: q('icNYHA','Classe funcional NYHA?',[o('A','NYHA I, assintomatico',{nyha:1}),o('B','NYHA II, limitacao ligeira',{nyha:2}),o('C','NYHA III, limitacao marcada',{nyha:3}),o('D','NYHA IV, sintomas em repouso',{nyha:4})]),
   icDM:  q('icDM', 'O doente tem diabetes tipo 2?',[o('A','Sim',{icDM:true}),o('B','Nao',{icDM:false})]),
@@ -991,7 +996,7 @@ var DQ = {
   dpoc: ['dp_smoke','dp_breath','dp_cough','dp_hosp','dp_exac','dp_inhaler','dp_age65','dp_cardiac','dp_smoking'],
   asma: ['as_freq','as_night','as_hosp','as_sos','as_allergy','as_child','as_preg','as_copd','as_inhaler'],
   hta: ['hta_diag','hta_bp','hta_age65','hta_comorbid2','hta_weight','hta_habits','hta_meds2','hta_symptoms'],
-  eam: ['age','sex','preg','eamType','eamBleed','eamLVEF','renal','cost'],
+  eam: ['eam_chest','eam_irrad','eam_symptoms','eam_risk','eam_smoke','eam_prev','eam_meds','eam_rest'],
   ic:  ['age','sex','preg','icFEVE','icNYHA','icDM','renal','cost'],
   fa:  ['fa_age','fa_comorbid','fa_stroke','fa_bleed','fa_symptoms','fa_ic','fa_renal','fa_preg','fa_meds'],
   dap: ['age','sex','dapStage','dapSmoke','dapCV','renal','cost'],
@@ -2020,39 +2025,245 @@ function htaO(t) {
 }
 
 function eamO(t) {
-  if (t.preg==='pregnant') return res('EAM na Gravidez','Equipa multidisciplinar imediata, hemodinamica mais obstetrica',
-    [drug('AAS mais Enoxaparina','Antiagregante mais HBPM','AAS: inibicao COX-1 em dose baixa, seguro na gravidez. Enoxaparina: anti-fator Xa, não atravessa a placenta.','AAS 100 mg por dia mais Enoxaparina 1 mg/kg de 12 em 12 h SC','AAS com refeicao','AAS com refeicao. Enoxaparina SC conforme protocolo. Suspender 24 h antes do parto.','Euro ou Euro-Euro','Suspender 24 h antes do parto. Monitorizar anti-Xa.')],
-    ['ICP primaria preferivel a fibrinólise no STEMI gestacional'],
-    ['Estatinas, teratogenicas, suspender','IECA e ARA II, fetotoxicos'],
-    'Fase aguda hospitalar. Reiniciar anticoagulação no pós-parto.',
-    ['Repouso absoluto','Monitorização fetal continua'],
-    ['Troponinas e ECG seriados','Anti-Xa se HBPM'],
-    {pregnancy:'ICP primaria e o tratamento preferido no STEMI gestacional. Evitar radiacao fetal desnecessária.'},
-    'ATENCAO: ativar hemodinamica e obstetrica imediatamente. Nao atrasar reperfusão no STEMI.');
+  var chest    = (t.eam_chest    === true);
+  var irrad    = (t.eam_irrad    === true);
+  var sympt    = (t.eam_symptoms === true);
+  var risk     = (t.eam_risk     === true);
+  var smoke    = (t.eam_smoke    === true);
+  var prev     = (t.eam_prev     === true);
+  var medsYes  = (t.eam_meds     === 'yes');
+  var rest     = (t.eam_rest     === true);
 
-  var hb = (t.bleed==='high');
-  var p2 = hb
-    ? drug('Clopidogrel','Tienopiridina, inibidor P2Y12 irreversivel','Menor risco hemorrágico vs ticagrelor. Indicado em alto risco de hemorragia.','300-600 mg de carga, depois 75 mg por dia','Com ou sem alimentos','Pode tomar a qualquer hora, com ou sem alimentos. Manter horario regular.','Euro (generico)','Variabilidade genetica (CYP2C19). Menos potente que o ticagrelor.')
-    : drug('Ticagrelor','Inibidor P2Y12 reversivel, mais potente','Inibicao mais rapida e consistente. Superior ao clopidogrel em mortalidade CV (PLATO trial).','180 mg de carga, depois 90 mg 2 vezes ao dia','Manha e noite, com ou sem alimentos','Tomar 2 vezes ao dia: manha e noite. Com ou sem alimentos.','Euro-Euro','Dispneia em 15-20% dos casos, geralmente benigna. Evitar AAS superior a 100 mg por dia em simultaneo.');
-  var drs = [
-    drug('AAS, Ácido Acetilsalicilico','Inibidor COX-1, base da DAPT','Inibicao irreversivel COX-1. Base da terapia antiagregante dupla.','300 mg de carga, depois 100 mg por dia','Com refeicao','Tomar com refeicao para reduzir irritacao gastrica. Associar IBP se risco GI elevado.','Euro','Irritacao gastrica. Hemorragia GI.'),
-    p2,
-    drug('Atorvastatina 40-80 mg','Estatina de alta intensidade','Reduz LDL-C e estabiliza placa aterosclerotica. Iniciar imediatamente após o EAM.','40-80 mg por dia','A noite, ao jantar ou ao deitar','Tomar a noite: a HMG-CoA redutase tem maior atividade noturna, o que maximiza a eficácia.','Euro (generico)','Miopatia em casos raros. Transaminases. Contraindicada na gravidez.'),
-    drug('Bisoprolol','Beta-bloqueante beta-1','Reduz FC, consumo de O2 e risco de arritmias pós-EAM. Iniciar precocemente se hemodinamicamente estavel.','5-10 mg por dia','De manha com o pequeno-almoco','Tomar com refeicao. NUNCA parar abruptamente.','Euro','Bradicardia. Hipotensao. Evitar em choque cardiogenico e DPOC grave.')
-  ];
-  if (t.lvef==='reduced') {
-    drs.push(drug('Ramipril','IECA, pós-EAM com FEVE reduzida','Reduz remodelagem cardíaca e melhora FEVE. Forte evidência em FEVE inferior a 40% (AIRE trial).','5-10 mg por dia, iniciar com 2,5 mg','De manha','Iniciar em dose baixa e titular progressivamente.','Euro','Tosse seca. Hipotensao. Monitorizar creatinina.'));
-    drs.push(drug('Eplerenona','Antagonista da Aldosterona','Reduz mortalidade no pós-EAM com FEVE inferior a 40% mais IC ou DM (EPHESUS trial).','25 a 50 mg por dia','Qualquer hora','Tomar a mesma hora todos os dias.','Euro-Euro','Hipercaliemia, monitorizar potassio. Contraindicado se TFGe inferior a 30.'));
-  }
-  return res((t.eamType||'EAM')+', Terapia Fármacologica', t.eamType==='STEMI'?'Após reperfusão por ICP primaria':'Terapia médica otimizada', drs,
-    hb?['Prasugrel 10 mg por dia (se ICP, sem AVC previo, com menos de 75 anos)']:['Clopidogrel 75 mg por dia (se contraindicacao ao ticagrelor)'],
-    ['IECA mais ARA II em simultaneo, contraindicado','AINEs, risco trombótico e renal','Estatinas na gravidez, contraindicadas'],
-    'DAPT por 12 meses. Beta-bloqueante e IECA (se indicado): indefinidamente. Estatina: indefinidamente.',
-    ['Cessação tabagica obrigatória','Reabilitacao cardíaca supervisionada','Dieta mediterranea'],
-    ['PA mais FC em consulta','LDL-C objetivo inferior a 55 mg/dL','Creatinina mais potassio','Ecocardiograma 6-12 semanas pós-EAM'],
-    {elderly:'Mais de 75 anos: preferir clopidogrel ao ticagrelor (menor risco hemorrágico). Doses mais baixas de IECA.',
-     costNote: hb?'Euro, Clopidogrel generico muito economico.':'Euro-Euro, Ticagrelor: considerar custo vs beneficio clínico ao longo de 12 meses.'},
-    t.eamType==='STEMI'?'ATENCAO: STEMI, cada minuto sem reperfusão e músculo cardíaco perdido. ICP primaria em menos de 90 minutos.':'');
+  /* Resultado 1 — EMERGÊNCIA: dor torácica >20 min com irradiação ou sintomas vegetativos */
+  if (chest && (irrad || sympt)) return res(
+    'Resultado 1: EMERGÊNCIA — Suspeita de Enfarte Agudo do Miocárdio',
+    'Ativação imediata da via verde coronária — LIGAR 112',
+    [drug(
+      'Aspirina (AAS) — dose de carga',
+      'Antiagregante plaquetário — inibidor irreversível da COX-1',
+      'A aspirina inibe <strong>irreversivelmente a COX-1 plaquetária</strong>, bloqueando a síntese de tromboxano A2 e reduzindo a agregação plaquetária. É o <strong>primeiro fármaco a administrar</strong> perante suspeita de síndrome coronária aguda — antes mesmo de chegar ao hospital, se possível. A dose de carga deve ser <strong>mastigada e não engolida inteira</strong>: a mastigação e dissolução em solução salivar aceleram a absorção bucal/gástrica, atingindo concentrações antiagregantes plaquetárias eficazes em 15–30 minutos. A redução de mortalidade demonstrada no ISIS-2 é da ordem dos 23%.',
+      'Aguda: 300 mg mastigada imediatamente · Manutenção: 75–100 mg/dia indefinidamente após o episódio',
+      'Mastigar, NÃO engolir inteira',
+      'Toma única em fase aguda. Em manutenção, com refeição (associar IBP — pantoprazol/omeprazol — se risco gastrointestinal elevado).',
+      'Custo muito baixo (genérico)',
+      'Hemorragia gastrointestinal — associar IBP em risco elevado. Contraindicado em alergia conhecida a AAS, hemorragia ativa ou úlcera péptica em atividade. Não atrasar a administração para confirmar diagnóstico — o benefício supera largamente o risco em suspeita clínica.'
+    ), drug(
+      'Ticagrelor (preferido) ou Clopidogrel',
+      'Antiagregante plaquetário — inibidor do recetor P2Y12 do ADP',
+      'Os inibidores P2Y12 bloqueiam o <strong>recetor P2Y12 do ADP</strong> nas plaquetas, impedindo a sua ativação e agregação. Em conjunto com a aspirina, formam a <strong>dupla antiagregação plaquetária (DAPT)</strong>, padrão de cuidado pós-síndrome coronária aguda. O <strong>ticagrelor é preferido</strong> em síndromes coronárias agudas pelo seu início de ação mais rápido, inibição mais consistente e <strong>superioridade demonstrada na mortalidade cardiovascular</strong> face ao clopidogrel (estudo PLATO). O clopidogrel é a alternativa em alto risco hemorrágico, em > 75 anos ou contraindicação ao ticagrelor.',
+      'Ticagrelor: 180 mg de carga → 90 mg 2x/dia durante 12 meses · Clopidogrel: 300–600 mg de carga → 75 mg/dia',
+      'Ticagrelor: manhã e noite · Clopidogrel: 1x/dia',
+      'Manter durante 12 meses associado à aspirina (DAPT). Não suspender por iniciativa própria — risco de trombose intra-stent e novo evento.',
+      'Médio (ticagrelor) · Baixo (clopidogrel genérico)',
+      'Risco hemorrágico aumentado com DAPT — vigiar epistaxes, equimoses, hemorragia GI, hematúria. <strong>Ticagrelor: dispneia</strong> em 15–20% (habitualmente benigna) e bradicardia/pausas sinusais. Não associar ticagrelor a AAS >100 mg/dia. Clopidogrel tem variabilidade genética por CYP2C19 (alguns doentes são "maus metabolizadores").'
+    ), drug(
+      'Heparina — HBPM (Enoxaparina) ou HNF',
+      'Anticoagulante — fase aguda hospitalar',
+      'A heparina (não fracionada IV ou de baixo peso molecular SC) <strong>previne a extensão do trombo coronário</strong> enquanto se aguarda revascularização (ICP primária no STEMI ou estratégia invasiva no NSTEMI). A enoxaparina (HBPM) tem perfil farmacocinético mais previsível e não exige monitorização de aPTT em maioria dos casos; a heparina não fracionada (HNF) IV é preferida quando há previsão de ICP imediata, em insuficiência renal grave (TFG <30) ou em doente em choque.',
+      'Enoxaparina (HBPM): 1 mg/kg SC 12/12h · HNF: bolus IV 60 UI/kg + perfusão 12 UI/kg/h, ajustada por aPTT',
+      'Hospitalar — administração por equipa de saúde',
+      'Iniciada em ambiente hospitalar/pré-hospitalar (INEM). Suspensa pós-revascularização ou conforme protocolo institucional.',
+      'Hospitalar (incluído nos cuidados)',
+      'Hemorragia (principal complicação) — monitorização clínica e laboratorial. <strong>Trombocitopenia induzida pela heparina (TIH)</strong> — entre o 5.º e 14.º dia, com paradoxal estado pró-trombótico; suspender e mudar para argatrobano/fondaparinux. Ajustar dose à função renal (TFG <30 mL/min — preferir HNF).'
+    ), drug(
+      'Nitroglicerina',
+      'Vasodilatador — nitrato orgânico',
+      'A nitroglicerina liberta <strong>óxido nítrico (NO)</strong> nas células musculares lisas vasculares, ativando a guanilato ciclase e provocando <strong>vasodilatação venosa e arterial</strong>. A vasodilatação venosa reduz a pré-carga (e por isso o consumo de oxigénio pelo miocárdio); a vasodilatação coronária pode aliviar o vasoespasmo associado. Tem início de ação em 1–3 minutos por via sublingual, sendo útil para <strong>alívio sintomático rápido</strong> da dor isquémica e diferenciação clínica (a dor de origem coronária frequentemente alivia com nitratos; a dor de outras causas — pericardite, dissecção, espasmo esofágico — pode não aliviar).',
+      '0,4 mg sublingual (comprimido ou spray) — repetir a cada 5 minutos até 3 doses · IV em meio hospitalar (5–200 µg/min) titulada por TA',
+      'Sublingual ou IV em meio hospitalar',
+      'Sentado ou deitado para administrar (risco de hipotensão e síncope). Verificar tensão arterial — não administrar se TAS <90 mmHg.',
+      'Custo baixo (genérico)',
+      'Hipotensão (frequente) — não administrar se TAS <90 mmHg ou bradicardia <50. <strong>Contraindicação ABSOLUTA com inibidores da PDE5</strong> (sildenafil, tadalafil, vardenafil) tomados nas últimas 24–48h — risco de hipotensão grave e fatal. Cefaleia (efeito vasodilatador). Não administrar em enfarte do ventrículo direito (pré-carga dependente). Tolerância com uso prolongado.'
+    )],
+    ['<strong>Morfina</strong> 2–4 mg IV se dor refratária à nitroglicerina — usar com prudência (estudos sugerem que pode atrasar absorção dos antiagregantes orais e mascarar sintomas; reservar para dor intensa)',
+     'Beta-bloqueador IV precoce em casos selecionados (estável, sem sinais de IC) — metoprolol 5 mg IV em bolus repetíveis',
+     'Oxigénio APENAS se SpO₂ <90% — evidência atual desaconselha oxigénio rotineiro em normoxémicos',
+     'Inibidor da bomba de protões (pantoprazol 40 mg IV) se DAPT + risco hemorrágico',
+     'ICP primária em menos de 90 minutos no STEMI — fibrinólise IV se ICP indisponível em <120 min'],
+    ['<strong>AINEs</strong> (ibuprofeno, naproxeno, diclofenac) — aumentam risco trombótico e hemorrágico',
+     '<strong>Atrasar chamada do 112</strong> ou tentar conduzir-se ao hospital — esperar pelo INEM (transporte assistido + ECG e desfibrilhação a bordo)',
+     'Nitroglicerina se TAS <90 mmHg, suspeita de enfarte do ventrículo direito ou em uso de inibidores da PDE5 nas últimas 24–48h',
+     'Suspender DAPT antes de 12 meses sem orientação cardiológica',
+     'Diltiazem ou verapamil em FEVE reduzida (efeito inotrópico negativo)'],
+    'Fase aguda hospitalar (24–72h em UCIC). Após estabilização: DAPT 12 meses + restantes fármacos cardioprotetores indefinidamente.',
+    ['Após estabilização: <strong>cessação tabágica imediata</strong> (reduz risco de novo evento em 50% ao fim de 1 ano)',
+     'Reabilitação cardíaca supervisionada (12 semanas) — reduz mortalidade em 25%',
+     'Dieta mediterrânica (azeite, peixe, vegetais, fruta, cereais integrais)',
+     'Atividade física progressiva conforme protocolo de reabilitação',
+     'Adesão estrita à medicação — DAPT 12 meses obrigatório'],
+    ['ECG seriado (12 derivações em <10 min na chegada e a cada 15–30 min se sintomas)',
+     'Troponinas de alta sensibilidade — basal e a 1–3h depois',
+     'Ecocardiograma transtorácico nas 24–48h (avaliação de FEVE e complicações mecânicas)',
+     'Coronariografia urgente — em STEMI <90 min, em NSTEMI conforme estratificação de risco (GRACE)',
+     'Monitorização contínua de ECG, FC, TA e SpO₂'],
+    {elderly: 'Em > 75 anos: preferir clopidogrel ao ticagrelor (menor risco hemorrágico), doses mais baixas de heparina, ICP é segura e está indicada — não há limite superior de idade.',
+     pregnancy: 'EAM na gravidez é raro mas possível (sobretudo no peri-parto). ICP primária é o tratamento preferido (radiação fetal mínima com proteção). AAS em baixa dose e enoxaparina são seguras. Evitar IECA/ARA II e estatinas durante a gravidez.',
+     costNote: 'Os fármacos da fase aguda e dos primeiros 12 meses são amplamente comparticipados pelo SNS. O custo principal é hospitalar (UCIC, ICP) e o transporte INEM — gratuitos para o doente.'},
+    'EMERGÊNCIA MÉDICA: LIGAR 112 IMEDIATAMENTE. "Tempo é músculo" — cada minuto sem reperfusão equivale a músculo cardíaco perdido para sempre. Tempo porta-balão alvo: <90 minutos. NÃO conduzir-se ao hospital — esperar transporte assistido com ECG e desfibrilhação a bordo.'
+  );
+
+  /* Resultado 2 — Prevenção secundária: doente com enfarte prévio ou alto risco já medicado */
+  if (prev || (risk && medsYes)) return res(
+    'Resultado 2: Prevenção Secundária — Alto Risco Cardiovascular',
+    prev ? 'Pós-EAM — terapêutica cardioprotetora indefinida' : 'Doente de alto risco cardiovascular já medicado',
+    [drug(
+      'Atorvastatina (alta intensidade)',
+      'Estatina — inibidor da HMG-CoA redutase',
+      'Em prevenção secundária, a estatina deve ser <strong>de alta intensidade</strong> (atorvastatina 40–80 mg ou rosuvastatina 20–40 mg), independentemente do valor de LDL basal. Para além de reduzir a síntese hepática de colesterol LDL, tem <strong>efeitos pleiotrópicos cruciais pós-EAM</strong>: estabilização da placa aterosclerótica, redução da inflamação vascular (PCR), melhoria da função endotelial e redução do stress oxidativo. O <strong>objetivo terapêutico em muito alto risco é LDL <55 mg/dL</strong> (ou redução ≥50% do basal) — alvo agressivo justificado pelo benefício linear e progressivo na redução de eventos.',
+      'Atorvastatina 40–80 mg/dia · Rosuvastatina 20–40 mg/dia (alternativa)',
+      'À noite, ao jantar ou ao deitar',
+      'Tomada noturna preferível porque a HMG-CoA redutase tem maior atividade durante a noite — maximiza eficácia. Manter indefinidamente.',
+      'Custo baixo (genéricos amplamente comparticipados)',
+      '<strong>Miopatia/rabdomiólise</strong> (rara — comunicar dor muscular intensa, fraqueza ou urina escura). Elevação das transaminases (AST/ALT até 3× o limite superior é aceitável e geralmente transitório). Interações com inibidores do CYP3A4 (claritromicina, eritromicina, sumo de toranja em grandes quantidades, itraconazol, ciclosporina). Diabetes incidente — risco discreto que NÃO supera o benefício cardiovascular. Contraindicada na gravidez.'
+    ), drug(
+      'Bisoprolol (ou Carvedilol)',
+      'Beta-bloqueador cardiosseletivo (bisoprolol) ou misto α/β (carvedilol)',
+      'Os beta-bloqueadores <strong>reduzem a mortalidade em 25% pós-EAM</strong>, sobretudo no primeiro ano. Atuam reduzindo a frequência cardíaca, a contratilidade e a tensão arterial — o que diminui o consumo de oxigénio pelo miocárdio e o risco de arritmias ventriculares. Em FEVE reduzida (<40%), o <strong>carvedilol e bisoprolol são preferidos</strong> pela evidência específica em IC pós-isquémica (estudos CAPRICORN, CIBIS-II). A titulação é gradual para evitar bradicardia e hipotensão; a suspensão deve ser sempre progressiva (risco de efeito rebound).',
+      'Bisoprolol: iniciar com 1,25–2,5 mg/dia · titular até 10 mg/dia · Carvedilol: 3,125 mg 2x/dia · titular até 25 mg 2x/dia',
+      'Bisoprolol: 1x/dia de manhã com pequeno-almoço · Carvedilol: 2x/dia com refeições',
+      'NUNCA suspender abruptamente — risco de efeito rebound (taquicardia, isquemia, novo evento). Em caso de cirurgia ou procedimento, manter sob orientação cardiológica.',
+      'Custo baixo (genéricos amplamente comparticipados)',
+      'Bradicardia (vigiar FC <50 bpm), hipotensão, fadiga inicial. Precaução em <strong>asma e DPOC graves</strong> (o bisoprolol é cardiosseletivo em dose baixa mas o efeito pode perder-se em dose alta). <strong>Nunca em choque cardiogénico, BAV de 2.º/3.º grau sem pacemaker, ou IC descompensada</strong>. Mascara sinais de hipoglicemia em diabéticos sob insulina (manter educação reforçada).'
+    ), drug(
+      'Ramipril (ou Enalapril)',
+      'IECA — inibidor da enzima conversora da angiotensina',
+      'Os IECA <strong>previnem a remodelagem ventricular adversa pós-EAM</strong> e reduzem mortalidade, sobretudo em doentes com FEVE reduzida (<40%) ou diabetes (estudos AIRE, HOPE, EUROPA). Atuam bloqueando a conversão de angiotensina I em II — reduzem a pré e pós-carga, atenuam a fibrose miocárdica e o rearranjo do ventrículo após isquemia. Estão indicados <strong>em todos os doentes pós-EAM</strong>, com particular benefício em FEVE <40%, diabetes, hipertensão ou doença renal crónica.',
+      'Ramipril: iniciar 2,5 mg/dia → titular até 5–10 mg/dia · Enalapril: iniciar 2,5 mg/dia → 10–20 mg 2x/dia',
+      'Manhã, com ou sem alimentos',
+      'Iniciar com dose baixa após estabilização hemodinâmica. Reavaliar creatinina e potássio 1–2 semanas após início e após cada aumento. Aumento de creatinina até 30% é aceitável.',
+      'Custo muito baixo (genéricos amplamente comparticipados)',
+      '<strong>Tosse seca</strong> em 5–15% (mediada por bradicinina — substituir por ARA II como valsartan ou candesartan). Hipercaliemia (vigiar potássio, especialmente se TFG reduzida). Hipotensão (sobretudo após primeira dose ou se hipovolemia). Angioedema (raro mas potencialmente grave). <strong>CONTRAINDICAÇÃO ABSOLUTA na gravidez</strong> — fetotoxicidade renal.'
+    )],
+    ['<strong>Aspirina 75–100 mg/dia</strong> indefinidamente (mantém-se a base antiagregante)',
+     '<strong>Inibidor P2Y12 (ticagrelor 90 mg 2x/dia ou clopidogrel 75 mg/dia) durante 12 meses pós-EAM</strong> em DAPT — não suspender sem consulta cardiológica',
+     'Valsartan ou Candesartan (ARA II) se intolerância ao IECA por tosse',
+     'Eplerenona 25–50 mg/dia em FEVE <40% + IC ou DM (estudo EPHESUS)',
+     'Inibidor SGLT2 (dapagliflozina, empagliflozina) se diabetes ou IC associadas',
+     'Ezetimiba ou inibidor PCSK9 (alirocumab, evolocumab) se LDL não atinge alvo com estatina máxima'],
+    ['Suspender DAPT antes de 12 meses sem orientação cardiológica',
+     'Combinar IECA + ARA II — não traz benefício e aumenta risco de hipercaliemia e IRA',
+     'AINEs (ibuprofeno, diclofenac) — aumentam risco trombótico e antagonizam o efeito do AAS',
+     'Suspender beta-bloqueador abruptamente — risco de efeito rebound',
+     'Manter tabagismo — duplica risco de novo EAM'],
+    'DAPT: 12 meses · AAS, estatina, beta-bloqueador, IECA: indefinidamente. Reavaliação cardiológica anual.',
+    ['<strong>Cessação tabágica obrigatória</strong> — reduz risco de novo EAM em 50% ao fim de 1 ano (apoio em consulta de cessação tabágica + nicotina/vareniclina)',
+     '<strong>Reabilitação cardíaca supervisionada</strong> (12 semanas) — reduz mortalidade em 25%',
+     'Dieta mediterrânica: azeite, peixe (>2x/semana), legumes, fruta, cereais integrais, frutos secos',
+     'Atividade física aeróbica 150 min/semana (caminhada rápida, natação, bicicleta) + treino de força 2x/semana',
+     'IMC alvo <25 kg/m² · perímetro abdominal <94 cm (homem) ou <80 cm (mulher)',
+     'Controlo do stress, sono regular 7–8h, redução do consumo de álcool',
+     'Vacinação anual contra a gripe — recomendada (reduz eventos cardiovasculares em pós-EAM)'],
+    ['<strong>LDL alvo <55 mg/dL</strong> (ou redução ≥50% do basal) a cada 4–8 semanas após início/ajuste, depois anual',
+     'TA em casa 2x/dia (objetivo <130/80 em pós-EAM)',
+     'Frequência cardíaca em consulta (objetivo 55–65 bpm em repouso)',
+     'Função renal (creatinina, TFG) e potássio: basal, 1–2 semanas após início de IECA, depois cada 6 meses',
+     'HbA1c se diabetes (alvo individualizado, geralmente 7%)',
+     'Ecocardiograma 6–12 semanas pós-EAM e depois anual se FEVE reduzida',
+     'Avaliação cardiológica anual com prova de esforço se sintomas'],
+    {elderly: 'Em > 75 anos: preferir clopidogrel ao ticagrelor (menor risco hemorrágico). Iniciar IECA com metade da dose. Vigiar quedas (hipotensão ortostática) e hipercaliemia.',
+     pregnancy: 'Em mulher fértil: IECA, ARA II e estatinas são CONTRAINDICADOS. Substituir por nifedipina/metildopa antes da conceção. AAS em baixa dose pode manter-se sob orientação obstétrica.',
+     costNote: 'Genéricos disponíveis para AAS, estatina, beta-bloqueador e IECA — comparticipação SNS habitualmente >80%. Ticagrelor tem custo médio mas comparticipação SNS em pós-EAM nos primeiros 12 meses.'},
+    smoke ? 'PRIORIDADE ABSOLUTA: cessação tabágica. Manter o tabagismo após um EAM duplica o risco de novo evento. Encaminhar imediatamente para consulta de cessação tabágica.' : ''
+  );
+
+  /* Resultado 3 — Sintomas de alarme mas não típicos: avaliação urgente */
+  if (chest || rest) return res(
+    'Resultado 3: Sintomas Suspeitos — Avaliação Médica Urgente',
+    'Ir ao Serviço de Urgência ou ligar 112 — não esperar em casa',
+    [drug(
+      'Aspirina (AAS) — preventiva enquanto aguarda avaliação',
+      'Antiagregante plaquetário — inibidor irreversível da COX-1',
+      'Perante sintomas suspeitos de isquemia coronária (dor torácica prolongada, dor em repouso, dispneia inexplicada) sem confirmação diagnóstica, a <strong>aspirina mastigada antes de chegar ao hospital pode ser potencialmente salvadora</strong> — o benefício em mortalidade demonstrado no ISIS-2 manifesta-se quando administrada o mais cedo possível. Não esperar pelo ECG ou pelas troponinas para a tomar, salvo contraindicação clara (alergia conhecida, hemorragia ativa). É um gesto simples e barato com elevado benefício potencial em síndrome coronária aguda.',
+      '300 mg mastigada (única dose, em fase aguda)',
+      'Mastigar e não engolir inteira',
+      'Tomar IMEDIATAMENTE perante sintomas suspeitos, salvo contraindicação. Em seguida, ligar 112 e ir ao SU.',
+      'Custo muito baixo',
+      'Alergia conhecida ao AAS, hemorragia ativa ou úlcera péptica em atividade. Em todos os outros casos, o benefício potencial supera amplamente o risco quando há suspeita de SCA.'
+    )],
+    ['Avaliação no SU com prioridade — sintomas torácicos = triagem manchester laranja/amarela',
+     'ECG de 12 derivações em <strong>menos de 10 minutos</strong> à chegada ao SU',
+     'Troponina de alta sensibilidade — basal e 1–3h depois (algoritmo rule-out 0/1h ou 0/3h)',
+     'Rx tórax — exclusão de pneumotórax, dissecção aórtica (alargamento do mediastino)',
+     'Ecocardiograma transtorácico se disponível — alterações segmentares da contratilidade',
+     'D-dímeros + AngioTC se suspeita de TEP · ECG + troponina + ECO se suspeita de pericardite/miocardite'],
+    ['Esperar em casa para ver se passa — risco de evolução para EAM com necrose extensa',
+     'Tomar AINE (ibuprofeno) para a dor — mascara sintomas e aumenta risco trombótico',
+     'Conduzir-se ao hospital — risco de síncope/paragem durante o trajeto; ligar 112',
+     'Confiar num ECG normal nas primeiras horas — pode normalizar-se entre crises ou em NSTEMI inicial; valor preditivo negativo aumenta com troponina seriada'],
+    'Avaliação aguda no SU; após exclusão de SCA — investigação ambulatória dirigida (prova de esforço, eco-stress, AngioTC coronária ou cateterismo se risco alto).',
+    ['Manter-se em repouso até avaliação médica — não fazer esforços',
+     'Levar lista de medicação habitual e antecedentes ao SU',
+     'Acompanhante presente se possível — apoio e segurança no transporte',
+     'Após exclusão: identificar e tratar fatores de risco (HTA, DM, dislipidemia, tabaco)'],
+    ['ECG basal + ECG seriado se sintomas',
+     'Troponinas de alta sensibilidade — algoritmo de rule-out',
+     'Ecocardiograma se ECG ou troponina alteradas',
+     'Provas funcionais (esforço/eco-stress/cintigrafia) se SCA excluída e suspeita de doença coronária estável',
+     'AngioTC coronária ou cateterismo se risco intermédio/alto'],
+    {elderly: 'Em idosos, mulheres e diabéticos, a apresentação do EAM é frequentemente <strong>atípica</strong>: pode manifestar-se apenas como dispneia, fadiga, mal-estar geral, dor epigástrica ou síncope, SEM dor torácica típica. A suspeição clínica deve ser elevada — limiar baixo para investigação. Não desvalorizar sintomas inespecíficos persistentes.',
+     costNote: 'Avaliação no SU é gratuita pelo SNS. O benefício de excluir EAM com 1–2 troponinas e ECG é amplamente custo-eficaz — evita o pior cenário (EAM negligenciado).'},
+    'IMPORTANTE: um ECG normal não exclui EAM nas primeiras horas, sobretudo em NSTEMI. As troponinas de alta sensibilidade têm de ser seriadas (basal + 1–3h). Diagnósticos diferenciais relevantes a excluir no SU: <strong>angina instável, dissecção aórtica (dor migratória + assimetria de pulsos/TA), embolia pulmonar (dispneia + sat O₂ baixa + D-dímeros), pericardite (atrito + alterações ECG difusas), espasmo esofágico/GERD</strong>.'
+  );
+
+  /* Resultado 4 — Baixo risco: prevenção primária */
+  return res(
+    'Resultado 4: Baixo Risco — Prevenção Primária',
+    'Estilo de vida cardioprotetor + tratamento de fatores de risco',
+    [drug(
+      'Modificações do Estilo de Vida (1.ª linha)',
+      'Intervenção não farmacológica de eficácia comparável à farmacológica',
+      'A <strong>prevenção primária da doença cardiovascular começa pelo estilo de vida</strong>, com benefícios de magnitude comparável à melhor terapêutica farmacológica. A dieta mediterrânica reduz eventos cardiovasculares em ~30% (estudo PREDIMED); a cessação tabágica reduz o risco em 50% no primeiro ano após o abandono; 150 min/semana de atividade física moderada reduz mortalidade cardiovascular em ~25%. Em prevenção primária, a estratificação de risco baseia-se na escala <strong>SCORE2</strong> (40–69 anos) ou <strong>SCORE2-OP</strong> (70+) — risco a 10 anos de evento cardiovascular fatal e não fatal.',
+      'Aplicação contínua e gradual — sem dose definida',
+      'Diariamente, integrado nos hábitos',
+      'Plano individualizado: dietista, atividade física supervisionada, consulta de cessação tabágica se aplicável.',
+      'Custo praticamente nulo — alguns custos com produtos alimentares de qualidade',
+      'Nenhum efeito adverso clínico. Risco de lesão musculoesquelética se atividade física iniciada sem progressão adequada — começar gradualmente.'
+    ), drug(
+      'Estatina (Sinvastatina ou Atorvastatina) — se indicada por estratificação de risco',
+      'Estatina — inibidor da HMG-CoA redutase',
+      'Em <strong>prevenção primária</strong>, a estatina está indicada quando o risco cardiovascular a 10 anos calculado pela SCORE2 for elevado (≥10% em 50–69 anos, ≥15% em ≥70 anos), ou em diabetes de longa duração, doença renal crónica moderada-grave ou hipercolesterolemia familiar. A intensidade pode ser <strong>baixa-média</strong> em prevenção primária (sinvastatina 20–40 mg ou atorvastatina 10–20 mg), com objetivo de LDL <100 mg/dL em risco elevado e <70 mg/dL em risco muito elevado.',
+      'Sinvastatina 20–40 mg/dia · Atorvastatina 10–20 mg/dia · Rosuvastatina 5–10 mg/dia',
+      'À noite, ao deitar (sinvastatina) ou a qualquer hora (atorvastatina e rosuvastatina, semivida mais longa)',
+      'Iniciar após estratificação de risco e discussão partilhada com o doente. Verificar perfil lipídico 4–8 semanas após início e ajustar.',
+      'Custo baixo (genéricos amplamente comparticipados)',
+      'Mialgias (até 10% — frequentemente nocebo; reavaliar com placebo se dúvida). Elevação ligeira de transaminases (até 3× é aceitável). Diabetes incidente em risco aumentado (~0,2%/ano), benefício cardiovascular supera. Interações com inibidores do CYP3A4 (claritromicina, sumo de toranja). Contraindicada na gravidez.'
+    ), drug(
+      'IECA — se HTA com diabetes ou lesão de órgão-alvo',
+      'IECA — inibidor da enzima conversora da angiotensina',
+      'Em prevenção primária, o IECA está indicado quando há <strong>hipertensão arterial associada a diabetes mellitus, doença renal crónica com proteinúria, ou lesão de órgão-alvo</strong> (hipertrofia ventricular, retinopatia hipertensiva). Tem efeito nefroprotector específico (reduz proteinúria), benefício cardiovascular para além do controlo da TA e tolerância geralmente boa. O ramipril e o perindopril têm a evidência mais robusta em prevenção primária (estudos HOPE, EUROPA). Em HTA isolada sem comorbilidades, BCC ou diuréticos tiazídicos são alternativas igualmente válidas.',
+      'Ramipril: 2,5 mg/dia → titular até 5–10 mg/dia · Perindopril: 4 mg/dia → 8 mg/dia · Enalapril: 5 mg/dia → 10–20 mg 1–2x/dia',
+      'Manhã, com ou sem alimentos',
+      'Iniciar com dose baixa e titular conforme TA e tolerância. Reavaliar creatinina e potássio 1–2 semanas após início.',
+      'Custo muito baixo (genéricos)',
+      'Tosse seca em 5–15% (substituir por ARA II). Hipercaliemia (sobretudo se TFG <60). Hipotensão. Angioedema (raro). CONTRAINDICAÇÃO ABSOLUTA na gravidez.'
+    )],
+    ['ARA II (valsartan, candesartan) se intolerância ao IECA',
+     'Antagonista dos canais de cálcio (amlodipina) — alternativa em HTA isolada, especialmente em idosos e descendência africana',
+     'Diurético tiazídico (indapamida, hidroclorotiazida) — alternativa em HTA isolada',
+     'Inibidor SGLT2 (dapagliflozina, empagliflozina) em diabetes tipo 2 com risco cardiovascular elevado',
+     'Aspirina em prevenção primária — só em casos selecionados de risco muito elevado (decisão individualizada — estudos recentes mostram benefício marginal vs risco hemorrágico)'],
+    ['Aspirina rotineira em prevenção primária — risco hemorrágico geralmente supera o benefício',
+     'Tabagismo — fator de risco modificável mais importante; dobra o risco cardiovascular',
+     'Sedentarismo — equivalente a fumar 1 maço/dia em risco cardiovascular',
+     'Dietas com excesso de açúcar/processados/álcool — aumentam síndrome metabólica',
+     'Consumo elevado de álcool (>14 unidades/semana mulher, >21 homem)'],
+    'Tratamento crónico/indefinido conforme fatores de risco. Reavaliação anual da estratificação SCORE2.',
+    ['<strong>Cessação tabágica</strong> se fumador — apoio em consulta + vareniclina/nicotina',
+     '<strong>Dieta mediterrânica</strong> — azeite, peixe (≥2x/semana), legumes, fruta, frutos secos, cereais integrais',
+     '<strong>Atividade física</strong> — 150 min/semana de atividade aeróbica moderada (caminhar rápido, natação) + 2x/semana treino de força',
+     '<strong>Peso saudável</strong> — IMC <25 kg/m²; perímetro abdominal <94 cm (homem) ou <80 cm (mulher)',
+     'Sono regular 7–8h/noite · gestão do stress · meditação ou mindfulness',
+     'Limitar álcool (<10 unidades/semana) · vacinação anual da gripe',
+     'Identificação dos primeiros sinais de SCA (dor torácica prolongada, irradiação, dispneia, sudorese) — saber chamar 112'],
+    ['Tensão arterial em casa: 1–2x por semana se normotenso · diariamente se HTA tratada',
+     'Perfil lipídico: a cada 5 anos se sem fatores de risco · anual se fatores de risco ou em estatina',
+     'Glicemia em jejum: anual em ≥45 anos ou se IMC ≥25 + 1 fator de risco',
+     'Função renal e ionograma: anual se HTA tratada ou diabetes',
+     'ECG de repouso: a cada 1–2 anos em ≥40 anos com fatores de risco',
+     'Reavaliação SCORE2 anual em ≥40 anos'],
+    {costNote: 'Cessação tabágica e atividade física são gratuitas e têm impacto cardiovascular comparável à melhor terapêutica farmacológica. Estatinas e anti-hipertensores genéricos têm custo muito baixo e comparticipação SNS.'},
+    risk ? 'ATENÇÃO: tem fatores de risco cardiovascular acumulados. Discutir com o seu médico a estratificação SCORE2 e considerar tratamento farmacológico se risco a 10 anos elevado. A prevenção é mais eficaz quando iniciada cedo.' : (smoke ? 'O TABAGISMO é o fator de risco modificável mais importante — duplica o risco de EAM. Consulta de cessação tabágica disponível no centro de saúde.' : 'Manter o estilo de vida cardioprotetor e a vigilância periódica. A prevenção primária bem feita evita 80% dos eventos cardiovasculares.')
+  );
 }
 
 function icO(t) {
