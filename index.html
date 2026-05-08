@@ -558,8 +558,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
     <div class="d-row rev"><div class="d-inf">
       <h2 style="color:#6d28d9">Alzheimer e Demências</h2>
       <p>A doença de Alzheimer é a forma mais comum de demência, correspondendo a 60-70% dos casos. Caracteriza-se por deterioração progressiva da memória, raciocínio e funções cognitivas. Em Portugal estima-se que existam mais de 160 000 pessoas com demência, número que tende a aumentar com o envelhecimento da população.</p>
-      <div style="background:#ede9fe;border-radius:10px;padding:12px 16px;font-size:13px;color:#6d28d9;margin-bottom:14px">Conteúdo detalhado e quiz terapêutico em desenvolvimento.</div>
-      <button class="btn-purple" style="background:#6d28d9;opacity:0.5;cursor:not-allowed">Em breve</button>
+      <button class="btn-purple" style="background:#6d28d9" onclick="openDisease('alzheimer')">Saber Mais</button>
     </div><div class="d-vis" style="background:#ede9fe;min-height:220px"></div></div>
     <div class="d-row"><div class="d-vis" style="background:#ede9fe;min-height:220px"></div><div class="d-inf">
       <h2 style="color:#6d28d9">Enxaqueca</h2>
@@ -728,6 +727,7 @@ var DIMG = {
   depressao: '',
   hipotiroidismo: '',
   epilepsia: '',
+  alzheimer: '',
   hta: "/images/img_hta.png",
   eam: "/images/img_eam.png",
   ic:  "/images/img_ic.png",
@@ -735,8 +735,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -800,6 +800,11 @@ var DINTRO = {
     'A epilepsia é uma <strong>doença neurológica crónica</strong> caracterizada pela ocorrência de crises epiléticas recorrentes, resultantes de atividade elétrica anormal no cérebro. Estas crises podem manifestar-se de diferentes formas, desde episódios breves de ausência até convulsões generalizadas com perda de consciência.',
     'A doença pode ter diversas causas, incluindo <strong>fatores genéticos, lesões cerebrais, infeções ou alterações do desenvolvimento neurológico</strong>, embora em muitos casos a causa permaneça desconhecida. A frequência e gravidade das crises variam significativamente entre doentes.',
     'Apesar de não existir cura definitiva na maioria dos casos, a epilepsia pode ser <strong>eficazmente controlada com terapêutica adequada</strong>, permitindo que muitos doentes tenham uma vida normal. O tratamento tem como principal objetivo prevenir crises, sendo frequentemente necessário um acompanhamento prolongado e individualizado. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
+  ],
+  alzheimer: [
+    'A doença de Alzheimer é uma <strong>doença neurodegenerativa progressiva</strong>, sendo a causa mais comum de demência. Caracteriza-se pela deterioração gradual das funções cognitivas, incluindo memória, linguagem, orientação e capacidade de realizar atividades do dia a dia, resultando numa perda progressiva da autonomia.',
+    'A doença está associada à acumulação anormal de proteínas no cérebro, como as <strong>placas de beta-amiloide e os emaranhados de tau</strong>, que levam à disfunção e morte neuronal. Os sintomas iniciam-se de forma subtil, geralmente com alterações da memória recente, e evoluem ao longo do tempo para um compromisso mais global das funções cognitivas e comportamentais.',
+    'Atualmente, <strong>não existe cura</strong> para a doença de Alzheimer. O tratamento disponível tem como objetivo atrasar a progressão dos sintomas e melhorar a qualidade de vida do doente, sendo essencial uma <strong>abordagem multidisciplinar</strong> que inclua apoio farmacológico e não farmacológico. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
   ]
 };
 
@@ -940,7 +945,15 @@ var Qu = {
   ep_liver:    q('ep_liver',    'Tem doenças hepáticas?', [o('A','Sim',{ep_liver:true}),o('B','Não',{ep_liver:false})]),
   ep_meds:     q('ep_meds',     'Já toma medicação para epilepsia?', [o('A','Não',{ep_meds:'none'}),o('B','Sim',{ep_meds:'yes'})]),
   ep_adverse:  q('ep_adverse',  'Já teve efeitos adversos com medicação antiepilética?', [o('A','Sim',{ep_adverse:true}),o('B','Não',{ep_adverse:false})]),
-  ep_adherence:q('ep_adherence','Tem dificuldade em tomar medicação diariamente?', [o('A','Sim',{ep_adherence:true}),o('B','Não',{ep_adherence:false})])
+  ep_adherence:q('ep_adherence','Tem dificuldade em tomar medicação diariamente?', [o('A','Sim',{ep_adherence:true}),o('B','Não',{ep_adherence:false})]),
+  alz_memory:    q('alz_memory',   'O doente tem dificuldades de memória frequentes?', [o('A','Sim',{alz_memory:true}),o('B','Não',{alz_memory:false})]),
+  alz_daily:     q('alz_daily',    'As dificuldades já afetam atividades do dia a dia?', [o('A','Sim',{alz_daily:true}),o('B','Não',{alz_daily:false})]),
+  alz_early:     q('alz_early',    'A doença está numa fase inicial?', [o('A','Sim',{alz_early:true}),o('B','Não ou não sei',{alz_early:false})]),
+  alz_behavior:  q('alz_behavior', 'Existem alterações de comportamento (agitação, ansiedade, alucinações)?', [o('A','Sim',{alz_behavior:true}),o('B','Não',{alz_behavior:false})]),
+  alz_adherence: q('alz_adherence','O doente tem dificuldade em tomar medicação regularmente?', [o('A','Sim',{alz_adherence:true}),o('B','Não',{alz_adherence:false})]),
+  alz_age65:     q('alz_age65',    'Tem mais de 65 anos?', [o('A','Sim',{alz_age65:true}),o('B','Não',{alz_age65:false})]),
+  alz_comorbid:  q('alz_comorbid', 'Tem outras doenças importantes (cardíacas, renais, hepáticas)?', [o('A','Sim',{alz_comorbid:true}),o('B','Não',{alz_comorbid:false})]),
+  alz_meds:      q('alz_meds',     'Já faz tratamento para Alzheimer?', [o('A','Não',{alz_meds:'none'}),o('B','Sim',{alz_meds:'yes'})])
 };
 
 var DQ = {
@@ -956,7 +969,8 @@ var DQ = {
   ansiedade: ['ax_freq','ax_control','ax_physical','ax_sleep','ax_daily','ax_diag','ax_meds','ax_alcohol'],
   depressao:      ['dep_sad','dep_anhed','dep_fatigue','dep_sleep','dep_appetite','dep_concent','dep_diag','dep_suicidal'],
   hipotiroidismo: ['ht_diag','ht_symptoms','ht_preg','ht_age65','ht_cardiac','ht_meds','ht_fasting','ht_interact'],
-  epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence']
+  epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence'],
+  alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds']
 };
 
 function tags() {
@@ -1037,6 +1051,7 @@ function getOutcome() {
   if (id==='depressao') return depressaoO(t);
   if (id==='hipotiroidismo') return hipotiroidismoO(t);
   if (id==='epilepsia') return epilepsiaO(t);
+  if (id==='alzheimer') return alzheimerO(t);
 }
 
 
@@ -2432,6 +2447,179 @@ function epilepsiaO(t) {
      pregnancy: 'O levetiracetam é uma das opções mais seguras na gravidez (a par da lamotrigina). Em mulheres a planear engravidar, suplementar com ácido fólico 5 mg/dia desde 3 meses antes da conceção. Doseamento sérico trimestral — clearance aumenta na gravidez.',
      costNote: 'Custo médio. Genérico amplamente comparticipado pelo SNS. A formulação injetável (IV) está disponível em meio hospitalar para situações em que a via oral está inviável.'},
     ''
+  );
+}
+
+function alzheimerO(t) {
+  var hasMemory     = (t.alz_memory    === true);
+  var affectsDaily  = (t.alz_daily     === true);
+  var earlyStage    = (t.alz_early     === true);
+  var hasBehavior   = (t.alz_behavior  === true);
+  var hardAdhere    = (t.alz_adherence === true);
+  var isOld         = (t.alz_age65     === true);
+  var hasComorbid   = (t.alz_comorbid  === true);
+  var medsYes       = (t.alz_meds      === 'yes');
+  var medsNone      = (t.alz_meds      === 'none');
+
+  /* Resultado 4 — Sintomas comportamentais em doente já medicado */
+  if (hasBehavior && medsYes) return res(
+    'Resultado 4: Sintomas Comportamentais e Neuropsiquiátricos',
+    'Sertralina — ISRS para depressão, ansiedade e irritabilidade na demência',
+    [drug(
+      'Sertralina',
+      'ISRS — Inibidor Seletivo da Recaptação de Serotonina',
+      'A sertralina é um <strong>antidepressivo de primeira linha</strong> para o tratamento dos sintomas neuropsiquiátricos associados à doença de Alzheimer — depressão, ansiedade, irritabilidade e labilidade emocional. Atua bloqueando a recaptação pré-sináptica de serotonina, aumentando a sua disponibilidade na fenda sináptica e modulando o humor e a ansiedade. Tem um <strong>perfil mais seguro do que outros antidepressivos no idoso</strong>: poucas interações medicamentosas (não inibe significativamente o CYP), efeito anticolinérgico mínimo (importante na demência — anticolinérgicos pioram a cognição) e boa tolerabilidade cardiovascular. <strong>Os antipsicóticos NÃO devem ser primeira linha para agitação na demência</strong> — estão associados a aumento da mortalidade e eventos cerebrovasculares no idoso com demência (alerta black-box da FDA).',
+      'Iniciar com 25 mg/dia durante 1 semana → 50 mg/dia · Aumentar gradualmente até 100–150 mg/dia conforme resposta (máx. 200 mg/dia)',
+      'Oral, 1x/dia (manhã preferível para evitar insónia), com ou sem alimentos',
+      'Iniciar com dose baixa em idosos (25 mg) — "start low, go slow". Resposta clínica demora 4–6 semanas — manter dose terapêutica antes de avaliar eficácia. Não suspender abruptamente (síndrome de descontinuação).',
+      'Custo baixo a médio (genérico amplamente comparticipado pelo SNS)',
+      '<strong>Hiponatremia (SIADH)</strong> — risco aumentado em idosos, sobretudo nas primeiras 4 semanas; vigiar sódio. Sintomas iniciais: náuseas, diarreia, cefaleia, insónia, disfunção sexual — habitualmente transitórios. Risco de quedas (vigiar marcha em idosos). Risco hemorrágico aumentado se associado a AINEs ou anticoagulantes. Prolongamento ligeiro do QT em doses altas — verificar ECG em doentes com cardiopatia. <strong>Síndrome serotoninérgica</strong> em associação com tramadol, IMAOs ou outros serotoninérgicos.'
+    )],
+    ['<strong>Abordagem não farmacológica em primeira linha</strong>: musicoterapia, aromaterapia, validação emocional, rotinas estruturadas, ambiente calmo e familiar — habitualmente eficaz em agitação ligeira a moderada',
+     'Citalopram ou escitalopram — alternativas eficazes em depressão na demência (atenção ao QT em doses altas no idoso, sobretudo citalopram > 20 mg)',
+     'Trazodona em baixa dose (25–50 mg ao deitar) — útil se insónia ou agitação noturna predominantes',
+     'Antipsicóticos atípicos (risperidona, quetiapina, olanzapina) — APENAS em casos graves de agitação/alucinações sem resposta às medidas anteriores, em dose mínima e pelo menor tempo possível, com avaliação especializada e consentimento informado'],
+    ['<strong>Antipsicóticos como primeira linha para agitação</strong> — risco aumentado de mortalidade, AVC e enfarte em idosos com demência (alerta FDA black-box)',
+     'Benzodiazepinas crónicas — pioram cognição, aumentam risco de quedas e podem causar agitação paradoxal',
+     'Anticolinérgicos (di-hidropiridinas para incontinência, anti-histamínicos sedativos, antiespasmódicos) — antagonizam o efeito dos anticolinesterásicos e pioram a cognição',
+     'Tricíclicos (amitriptilina, imipramina) — efeito anticolinérgico forte, contraindicados na demência',
+     'Tramadol em associação com ISRS — risco de síndrome serotoninérgica e crises convulsivas'],
+    'Reavaliação clínica às 4–6 semanas. Se eficaz, manter pelo menos 6–12 meses. Considerar redução gradual após estabilização sustentada dos sintomas.',
+    ['<strong>Manter rotina diária estruturada</strong> — horários fixos para refeições, banho, atividades e sono',
+     'Estimulação cognitiva e atividade social adaptada (musicoterapia, terapia ocupacional, fisioterapia)',
+     'Ambiente calmo, bem iluminado, com referências familiares (fotografias, objetos pessoais)',
+     'Identificar e evitar gatilhos de agitação (multidão, ruído, alterações de rotina, dor não tratada)',
+     '<strong>Não conduzir</strong> — em fase moderada/grave: incompatível com condução; informar a família e notificar o médico assistente'],
+    ['Ionograma (sódio) ao 1.º mês e depois trimestral — risco de hiponatremia',
+     'Tensão arterial e frequência cardíaca em cada consulta',
+     'ECG basal e a cada 6–12 meses se cardiopatia',
+     'Avaliação cognitiva (MMSE, MoCA) e comportamental (NPI) a cada 6 meses',
+     'Função renal e hepática anual',
+     'Vigilância de risco de quedas e adesão à medicação'],
+    {elderly: 'Em idosos com demência, "start low, go slow": começar com metade da dose habitual e titular muito lentamente. Reavaliar regularmente a relação benefício/risco — se sem melhoria às 8 semanas, considerar troca ou suspensão antes de adicionar antipsicótico.',
+     costNote: 'Sertralina genérica é amplamente comparticipada pelo SNS. O suporte ao cuidador (associações como a Alzheimer Portugal — www.alzheimer-portugal.pt) tem impacto direto na adesão e na carga psicológica familiar.'},
+    'IMPORTANTE: a abordagem NÃO farmacológica deve sempre ser tentada PRIMEIRO ou em paralelo. O burnout do cuidador é uma das principais causas de institucionalização precoce — apoiar e formar o cuidador é parte do tratamento.'
+  );
+
+  /* Resultado 3 — Fase moderada a grave (memantina) */
+  if (!earlyStage && affectsDaily) return res(
+    'Resultado 3: Doença de Alzheimer — Fase Moderada a Grave',
+    'Memantina — antagonista NMDA, podendo associar a anticolinesterásico',
+    [drug(
+      'Memantina',
+      'Antagonista não competitivo dos recetores NMDA do glutamato',
+      'A memantina é o <strong>único fármaco aprovado especificamente para a doença de Alzheimer em fases moderadas a graves</strong>. Atua bloqueando a ativação excessiva e patológica dos recetores NMDA pelo glutamato, reduzindo a <strong>excitotoxicidade neuronal</strong> que contribui para a morte progressiva dos neurónios — sem interferir com a transmissão glutamatérgica fisiológica. <strong>Pode (e deve, em muitos casos) ser combinada com donepezilo ou rivastigmina</strong> — a associação tem evidência de benefício adicional em fases moderadas a graves (estudos PERFORM, MEM-MD-12). Não interrompe nem reverte a doença, mas pode <strong>retardar a progressão funcional</strong> e reduzir a sobrecarga do cuidador.',
+      'Iniciar com 5 mg/dia · Aumentar 5 mg por semana → dose alvo de 20 mg/dia (10 mg 2x/dia ou 20 mg 1x/dia em formulação prolongada de libertação modificada) · Reduzir para 10 mg/dia se TFGe 30–49 mL/min · Não recomendado se TFGe < 30 mL/min',
+      'Oral, com ou sem alimentos — preferir horário consistente (manhã ou ao deitar)',
+      'Titulação lenta minimiza tonturas e cefaleias iniciais. A formulação de libertação modificada (1x/dia) facilita a adesão. Pode associar a donepezilo (10 mg) ou rivastigmina sem necessidade de ajuste cruzado.',
+      'Custo médio (genérico disponível, comparticipado pelo SNS)',
+      'Tonturas e cefaleias (transitórias, dose-dependentes), obstipação e sonolência. Raramente: confusão (sobretudo no início) e alucinações. <strong>Ajuste em insuficiência renal moderada a grave</strong> — a memantina é eliminada predominantemente por via renal. Interações relevantes: amantadina, ketamina, dextrometorfano (efeito antagonista NMDA aditivo). Aumenta níveis de hidroclorotiazida e pode interagir com warfarina (vigiar INR).'
+    )],
+    ['<strong>Combinação memantina + donepezilo (ou rivastigmina)</strong> — recomendada em fases moderadas a graves; sinergia entre antagonismo NMDA e potenciação colinérgica',
+     'Manter o anticolinesterásico se já em curso e bem tolerado — não suspender ao introduzir memantina',
+     'Apoio multidisciplinar: terapia ocupacional, fisioterapia, nutricionista (avaliar disfagia em fase grave), apoio psicológico ao cuidador'],
+    ['Suspender abruptamente o anticolinesterásico ao introduzir memantina — pode acelerar declínio',
+     'Anticolinérgicos (oxibutinina, tolterodina, anti-histamínicos sedativos, antidepressivos tricíclicos) — pioram cognição e antagonizam o efeito',
+     'Benzodiazepinas crónicas — sedação, quedas, agravamento da confusão',
+     'Doses altas em insuficiência renal — risco de toxicidade neurológica',
+     'Conduzir veículo em fase moderada ou grave'],
+    'Tratamento crónico. Reavaliação semestral da resposta clínica e funcional. Se sem benefício após 6 meses ou perda de autonomia muito avançada, considerar suspensão sob orientação especializada.',
+    ['<strong>Estimulação cognitiva</strong> regular (jogos de memória, leitura, conversas estruturadas) — efeito modesto mas cumulativo',
+     'Atividade física adaptada — caminhada diária reduz declínio funcional',
+     'Rotinas previsíveis e ambiente seguro (remover tapetes, instalar barras de apoio, sinalética simples)',
+     'Identificação médica permanente (pulseira, cartão) — risco de desorientação espacial',
+     'Avaliação nutricional periódica — disfagia e perda de peso são frequentes em fase moderada/grave',
+     'Suporte ao cuidador: <strong>Alzheimer Portugal</strong> (www.alzheimer-portugal.pt) oferece grupos de apoio, formação e centros de dia'],
+    ['Função renal (TFGe) a cada 6–12 meses — ajuste de dose se < 50 mL/min',
+     'Avaliação cognitiva (MMSE, MoCA) e funcional (ADL/IADL) a cada 6 meses',
+     'Inventário Neuropsiquiátrico (NPI) — vigiar sintomas comportamentais',
+     'Avaliação do risco de quedas e da disfagia a cada 6 meses',
+     'Avaliação da carga e do estado psicológico do cuidador (escala Zarit)'],
+    {elderly: isOld ? 'No idoso, ajuste de dose à função renal é particularmente importante (a TFGe declina com a idade). Vigiar interações com toda a polimedicação habitual. Privilegiar formulação 1x/dia (libertação modificada) para melhorar adesão.' : '',
+     costNote: 'Memantina genérica amplamente comparticipada pelo SNS na indicação de Alzheimer moderado a grave. A combinação com donepezilo está disponível em comprimido único (Namzaric) — mais cara mas melhora adesão.'},
+    'A doença de Alzheimer em fase moderada/grave compromete a capacidade de condução — informar família e notificar o médico assistente para suspensão da carta de condução.'
+  );
+
+  /* Resultado 2 — Dificuldade de adesão (rivastigmina adesivo transdérmico) */
+  if (hardAdhere) return res(
+    'Resultado 2: Dificuldade de Adesão — Rivastigmina Adesivo',
+    'Rivastigmina transdérmica — administração diária pelo cuidador',
+    [drug(
+      'Rivastigmina (adesivo transdérmico)',
+      'Inibidor da acetilcolinesterase (e da butirilcolinesterase)',
+      'A rivastigmina inibe <strong>tanto a acetilcolinesterase como a butirilcolinesterase</strong> — esta dupla inibição é particularmente relevante na demência avançada, em que a butirilcolinesterase ganha importância. A <strong>formulação transdérmica (Exelon Patch)</strong> é a opção preferencial quando há <strong>dificuldade em tomar comprimidos</strong> (disfagia, recusa, esquecimento), <strong>quando o cuidador gere a medicação</strong> (fácil de aplicar e verificar) ou <strong>quando há intolerância gastrointestinal à formulação oral</strong> (incidência de náuseas e vómitos é cerca de 3 vezes menor com o adesivo). Está também disponível em cápsulas orais e solução oral.',
+      'Iniciar com adesivo de <strong>4,6 mg/24h</strong> · Após 4 semanas, aumentar para <strong>9,5 mg/24h</strong> (dose-alvo) · Em fase grave de Alzheimer, pode aumentar-se para <strong>13,3 mg/24h</strong>',
+      'Adesivo transdérmico — 1 adesivo a cada 24 horas, aplicado nas costas, peito ou braço superior',
+      '<strong>Rodar SEMPRE o local de aplicação</strong> — não voltar a aplicar no mesmo sítio em menos de 14 dias. Pele limpa, seca, sem pelos. Pressionar 30 segundos para garantir adesão. Trocar à mesma hora todos os dias. <strong>Não cortar o adesivo</strong>. Lavar as mãos depois de aplicar. Em caso de queda do adesivo, aplicar um novo e voltar ao horário habitual no dia seguinte.',
+      'Custo médio a elevado (comparticipado pelo SNS na indicação aprovada — Alzheimer ligeiro a moderado-grave e demência associada à doença de Parkinson)',
+      '<strong>Irritação cutânea</strong> no local de aplicação (eritema, prurido, vesículas em casos raros) — rotação correta dos locais é essencial. Reações sistémicas: náuseas e vómitos (cerca de 3× menos frequentes que a forma oral), tonturas, anorexia, diarreia. Bradicardia e síncope — precaução em doentes com bloqueio AV ou doença do nó sinusal. Risco de broncoespasmo em asma/DPOC graves. Suspender 48h antes de cirurgia eletiva (interação com bloqueadores neuromusculares).'
+    )],
+    ['Rivastigmina cápsula oral (1,5 → 6 mg 2x/dia) ou solução oral — alternativas se adesivo causar irritação cutânea',
+     'Donepezilo 10 mg/dia — única toma diária, fácil de gerir mas em comprimido (menos prático na disfagia)',
+     'Galantamina LP 24 mg/dia — alternativa, dose única',
+     'Adaptações práticas: <strong>caixa semanal de medicação</strong>, alarmes, supervisão da toma pelo cuidador, simplificação do esquema (preferir 1x/dia)'],
+    ['Aplicar mais do que um adesivo em simultâneo — risco de sobredosagem grave (crise colinérgica)',
+     'Aplicar em pele irritada, com lesões ou em zonas de fricção contínua',
+     'Cortar o adesivo — altera a libertação e a dose',
+     'Anticolinérgicos (oxibutinina, tolterodina, anti-histamínicos sedativos, antidepressivos tricíclicos) — antagonizam diretamente o efeito',
+     'Suspender abruptamente sem alternativa em curso — risco de declínio cognitivo acelerado'],
+    'Tratamento crónico. Reavaliação clínica e funcional aos 3 meses e depois semestral.',
+    ['Cuidador deve aprender a aplicar e a documentar o local rotativo (mapa corporal de aplicação)',
+     'Monitorizar a pele para sinais de irritação — cremes hidratantes em zonas pré-aplicação (não no momento da aplicação)',
+     'Manter rotinas de medicação ao mesmo tempo todos os dias — reduz erros',
+     'Atividade física adaptada e estimulação cognitiva',
+     'Suporte e formação ao cuidador — Alzheimer Portugal (www.alzheimer-portugal.pt)'],
+    ['Avaliação cutânea no local de aplicação em cada consulta',
+     'Frequência cardíaca, ECG basal e a cada 6 meses se doença cardíaca conhecida',
+     'Peso e estado nutricional — risco de perda de peso (efeito colinérgico)',
+     'Avaliação cognitiva (MMSE) e funcional (ADL) semestral',
+     'Avaliação da técnica de aplicação pelo cuidador a cada consulta'],
+    {elderly: isOld ? 'No idoso, vigiar especialmente bradicardia (interação com beta-bloqueantes) e perda de peso. A pele do idoso é mais frágil — usar local diferente a cada 14 dias.' : '',
+     costNote: 'Comparticipação SNS na indicação aprovada. O adesivo é mais caro que o comprimido oral mas a melhoria de adesão e a redução de náuseas justificam o custo em doentes selecionados.'},
+    hasComorbid ? 'Em doente com comorbilidades cardíacas (bradicardia, bloqueio AV) ou respiratórias (asma/DPOC graves), considerar avaliação cardiológica/pneumológica antes de iniciar.' : ''
+  );
+
+  /* Resultado 1 — Fase ligeira a moderada (donepezilo, primeira linha) */
+  return res(
+    'Resultado 1: Doença de Alzheimer — Fase Ligeira a Moderada',
+    'Donepezilo — anticolinesterásico de primeira linha',
+    [drug(
+      'Donepezilo',
+      'Inibidor seletivo da acetilcolinesterase central',
+      'O donepezilo é o anticolinesterásico mais prescrito no tratamento da doença de Alzheimer em fase ligeira a moderada (e até grave em dose alta). Inibe seletivamente a <strong>acetilcolinesterase</strong> na fenda sináptica, aumentando a disponibilidade de acetilcolina e potenciando a transmissão colinérgica — que está deficitária na doença de Alzheimer devido à degeneração dos neurónios colinérgicos do núcleo basal de Meynert. Não interrompe a doença subjacente (não modifica a deposição de beta-amiloide nem de tau), mas <strong>retarda em vários meses a progressão dos sintomas cognitivos e funcionais</strong> e melhora a qualidade de vida do doente e do cuidador. Tem a vantagem de uma <strong>toma única diária</strong> e um perfil farmacocinético favorável (não inibe CYP de forma significativa).',
+      'Iniciar com <strong>5 mg/dia</strong> ao deitar · Aumentar para <strong>10 mg/dia</strong> após 4–6 semanas se boa tolerância · Em fases mais avançadas (Alzheimer grave), pode aumentar-se para <strong>23 mg/dia</strong> em formulação modificada (Aricept 23)',
+      'Oral, 1x/dia ao deitar — reduz náuseas iniciais e aproveita ligeiro efeito sedativo',
+      'Tomar à mesma hora todos os dias. Não dependente da refeição. <strong>Não suspender abruptamente</strong> — se interrupção > 7 dias, reiniciar com 5 mg. Caixa semanal de medicação melhora adesão.',
+      'Custo médio (genérico amplamente disponível, comparticipado pelo SNS)',
+      'Efeitos GI nas primeiras semanas: <strong>náuseas, vómitos, diarreia, anorexia, perda de peso</strong> — geralmente transitórios; tomar ao deitar e introdução gradual minimizam. <strong>Bradicardia</strong> e raramente bloqueio AV — precaução em doença do nó sinusal e em doentes a fazer beta-bloqueantes ou digoxina; ECG basal recomendado em cardiopatas. Cãibras musculares e fasciculações (efeito colinérgico). Insónia e pesadelos vívidos se tomado de manhã. Risco aumentado de úlcera péptica em doentes com história prévia ou a fazer AINEs. <strong>Anticolinérgicos antagonizam o efeito</strong> — rever toda a medicação habitual.'
+    )],
+    ['<strong>Rivastigmina</strong> (cápsula 1,5–6 mg 2x/dia ou adesivo 4,6→9,5→13,3 mg/24h) — alternativa, particularmente útil se intolerância GI ao donepezilo ou se demência associada a Parkinson',
+     '<strong>Galantamina</strong> LP 16–24 mg/dia — alternativa com perfil semelhante, dose única em forma de libertação prolongada',
+     'Adicionar <strong>memantina</strong> ao anticolinesterásico se progressão para fase moderada a grave (combinação com evidência aditiva)',
+     'Estimulação cognitiva, terapia ocupacional, musicoterapia — evidência consistente na qualidade de vida'],
+    ['<strong>Anticolinérgicos</strong> (oxibutinina, tolterodina, anti-histamínicos sedativos como hidroxizina e difenidramina, antidepressivos tricíclicos, antiespasmódicos) — antagonizam diretamente o efeito do donepezilo e pioram a cognição',
+     'Tomar de manhã sem indicação — risco de insónia e pesadelos',
+     'Combinar com outros colinérgicos (succinilcolina em anestesia) sem alerta — pode prolongar bloqueio neuromuscular',
+     'Suspender bruscamente — risco de declínio cognitivo acelerado',
+     'Conduzir em fase moderada ou grave'],
+    'Tratamento crónico. Reavaliação clínica aos 3 meses (tolerância) e aos 6 meses (eficácia). Manter enquanto houver benefício clínico ou funcional.',
+    ['<strong>Estimulação cognitiva</strong> diária (leitura, jogos de memória, conversa estruturada) — efeito cumulativo',
+     'Atividade física aeróbica adaptada — caminhada 30 min/dia tem evidência de proteção cognitiva',
+     'Sono regular e higiene do sono',
+     'Dieta mediterrânica — evidência de neuroprotecção',
+     'Estimulação social — evitar isolamento',
+     '<strong>Suporte ao cuidador</strong>: o burnout do cuidador é uma das principais causas de institucionalização precoce. Encaminhar para grupos de apoio (Alzheimer Portugal — www.alzheimer-portugal.pt), formação e centros de dia',
+     'Identificação médica permanente (pulseira) — risco de desorientação',
+     'Conducão: avaliar caso a caso; em fase ligeira pode manter-se com supervisão; <strong>em fase moderada ou grave: NÃO conduzir</strong>'],
+    ['Avaliação cognitiva (MMSE ou MoCA) e funcional (ADL/IADL) a cada 6 meses',
+     'Inventário Neuropsiquiátrico (NPI) — vigiar agitação, depressão, alucinações',
+     'Frequência cardíaca em cada consulta · ECG basal e anual se cardiopatia ou polimedicação',
+     'Peso e estado nutricional a cada 3 meses (perda de peso é frequente)',
+     'Tolerância GI nas primeiras 8 semanas · função hepática se sintomas',
+     'Reavaliação da medicação habitual em cada consulta — caçar anticolinérgicos ocultos'],
+    {elderly: isOld ? 'No idoso (todos estes doentes serão geralmente > 65 anos): "start low, go slow". Vigiar quedas, hipotensão ortostática e interações. Rever toda a medicação habitual a cada 6 meses — desprescrever fármacos com efeito anticolinérgico (antagonizam o donepezilo).' : '',
+     costNote: 'Donepezilo genérico tem custo baixo a médio e está amplamente comparticipado pelo SNS na indicação Alzheimer ligeiro a moderado. O custo principal do tratamento é o suporte multidisciplinar (terapia ocupacional, apoio domiciliário) e o tempo do cuidador — frequentemente subestimado.'},
+    'IMPORTANTE: a abordagem não farmacológica (estimulação cognitiva, exercício, ambiente estruturado, suporte ao cuidador) é tão importante quanto a medicação. Em fase moderada ou grave, o doente NÃO deve conduzir — informar a família e notificar o médico assistente.'
   );
 }
 
