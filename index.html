@@ -617,8 +617,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
     <div class="d-row"><div class="d-vis" style="background:#d1fae5;min-height:220px"></div><div class="d-inf">
       <h2 style="color:#059669">Artrite Reumatoide</h2>
       <p>Doença inflamatória crónica autoimune que afeta primariamente as articulações, causando sinovite persistente, destruição articular progressiva e incapacidade funcional. Afeta cerca de 1% da população adulta portuguesa. O diagnóstico precoce é fundamental para prevenir lesões articulares irreversíveis e melhorar o prognóstico a longo prazo.</p>
-      <div style="background:#d1fae5;border-radius:10px;padding:12px 16px;font-size:13px;color:#059669;margin-bottom:14px">Conteúdo detalhado e quiz terapêutico em desenvolvimento.</div>
-      <button class="btn-purple" style="background:#059669;opacity:0.5;cursor:not-allowed">Em breve</button>
+      <button class="btn-purple" style="background:#059669" onclick="openDisease('artrite')">Saber Mais</button>
     </div></div>
     <div class="d-row rev"><div class="d-inf">
       <h2 style="color:#059669">Osteoporose</h2>
@@ -714,6 +713,7 @@ var DIMG = {
   epilepsia: '',
   alzheimer: '',
   drc: '',
+  artrite: '',
   hta: "/images/img_hta.png",
   eam: "/images/img_eam.png",
   ic:  "/images/img_ic.png",
@@ -721,8 +721,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', drc:'renal', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', drc:'Doença Renal Crónica', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', drc:'renal', artrite:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', drc:'Doença Renal Crónica', artrite:'Artrite Reumatoide', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -796,6 +796,11 @@ var DINTRO = {
     'A doença renal crónica (DRC) caracteriza-se pela <strong>perda progressiva e irreversível da função dos rins</strong> ao longo do tempo, levando a uma diminuição da capacidade de filtrar resíduos e regular o equilíbrio de líquidos e eletrólitos no organismo. As causas mais frequentes incluem <strong>diabetes mellitus, hipertensão arterial e doenças renais primárias</strong>.',
     'Numa fase inicial, a doença pode ser <strong>assintomática</strong>, sendo muitas vezes diagnosticada através de análises laboratoriais. À medida que progride, podem surgir sintomas como fadiga, edema, alterações urinárias e, em fases mais avançadas, complicações sistémicas graves como <strong>anemia, hiperparatiroidismo secundário e doença cardiovascular acelerada</strong>.',
     'O tratamento tem como objetivo <strong>atrasar a progressão da doença, controlar as complicações e reduzir o risco cardiovascular</strong>, sendo fundamental uma abordagem individualizada que inclua controlo rigoroso das doenças associadas e terapêutica farmacológica adequada. Use o quiz abaixo para perceber qual a abordagem mais indicada ao seu perfil.'
+  ],
+  artrite: [
+    'A artrite reumatoide (AR) é uma <strong>doença autoimune, inflamatória e crónica</strong> em que o sistema imunitário ataca as próprias articulações, causando inflamação persistente. Afeta sobretudo <strong>mãos, punhos, pés e joelhos</strong>, geralmente de forma <strong>bilateral e simétrica</strong>. Em Portugal, é a doença reumática inflamatória mais prevalente, afetando cerca de 0,3 a 0,7% da população.',
+    'Os sintomas mais característicos incluem <strong>dor articular, rigidez matinal com duração superior a 30 a 60 minutos</strong>, inchaço nas articulações, fadiga e diminuição progressiva da mobilidade. Sem tratamento adequado, a doença pode provocar <strong>destruição articular irreversível, deformações e incapacidade funcional significativa</strong>. Em casos mais graves, pode haver atingimento pulmonar, ocular ou cardiovascular.',
+    'O tratamento tem como objetivo <strong>controlar a inflamação, prevenir a progressão da doença e preservar a função articular</strong>, sendo fundamental uma abordagem precoce e individualizada. A escolha terapêutica depende da gravidade da doença, da resposta aos tratamentos anteriores e das características do doente. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
   ]
 };
 
@@ -958,7 +963,19 @@ var Qu = {
   drc_age65:   q('drc_age65',  'Tem mais de 65 anos?', [o('A','Sim',{drc_age65:true}),o('B','Não',{drc_age65:false})]),
   drc_anemia:  q('drc_anemia', 'Tem níveis baixos de energia ou foi-lhe diagnosticada anemia?', [o('A','Sim',{drc_anemia:true}),o('B','Não',{drc_anemia:false})]),
   drc_polimed: q('drc_polimed','Toma vários medicamentos diariamente?', [o('A','Sim',{drc_polimed:true}),o('B','Não',{drc_polimed:false})]),
-  drc_worsen:  q('drc_worsen', 'Já teve agravamento recente da função renal?', [o('A','Sim',{drc_worsen:true}),o('B','Não',{drc_worsen:false})])
+  drc_worsen:  q('drc_worsen', 'Já teve agravamento recente da função renal?', [o('A','Sim',{drc_worsen:true}),o('B','Não',{drc_worsen:false})]),
+  ar_diag:       q('ar_diag',      'Já foi diagnosticado com artrite reumatoide?', [o('A','Sim',{ar_diag:true}),o('B','Não',{ar_diag:false})]),
+  ar_stiffness:  q('ar_stiffness', 'Tem dor e rigidez articular frequente, especialmente de manhã (mais de 30 minutos)?', [o('A','Sim',{ar_stiffness:true}),o('B','Não',{ar_stiffness:false})]),
+  ar_swelling:   q('ar_swelling',  'As articulações das mãos, punhos ou pés estão inchadas?', [o('A','Sim',{ar_swelling:true}),o('B','Não',{ar_swelling:false})]),
+  ar_daily:      q('ar_daily',     'Tem dificuldade em realizar tarefas do dia a dia?', [o('A','Sim',{ar_daily:true}),o('B','Não',{ar_daily:false})]),
+  ar_age65:      q('ar_age65',     'Tem mais de 65 anos?', [o('A','Sim',{ar_age65:true}),o('B','Não',{ar_age65:false})]),
+  ar_infections: q('ar_infections','Tem histórico de infeções frequentes?', [o('A','Sim',{ar_infections:true}),o('B','Não',{ar_infections:false})]),
+  ar_meds:       q('ar_meds',      'Já toma medicação para artrite reumatoide?', [o('A','Não',{ar_meds:'none'}),o('B','Sim, controlada',{ar_meds:'controlled'}),o('C','Sim, mas sem controlo adequado',{ar_meds:'uncontrolled'})]),
+  ar_mtx:        q('ar_mtx',       'Já utilizou metotrexato?', [o('A','Sim',{ar_mtx:true}),o('B','Não',{ar_mtx:false})]),
+  ar_adverse:    q('ar_adverse',   'Tem efeitos secundários com a medicação atual?', [o('A','Sim',{ar_adverse:true}),o('B','Não',{ar_adverse:false})]),
+  ar_bio:        q('ar_bio',       'Já lhe foi proposta terapêutica biológica?', [o('A','Sim',{ar_bio:true}),o('B','Não',{ar_bio:false})]),
+  ar_osteo:      q('ar_osteo',     'Tem osteoporose ou risco aumentado de fraturas?', [o('A','Sim',{ar_osteo:true}),o('B','Não',{ar_osteo:false})]),
+  ar_followup:   q('ar_followup',  'Faz análises e acompanhamento regular em reumatologia?', [o('A','Sim',{ar_followup:true}),o('B','Não',{ar_followup:false})])
 };
 
 var DQ = {
@@ -976,7 +993,8 @@ var DQ = {
   hipotiroidismo: ['ht_diag','ht_symptoms','ht_preg','ht_age65','ht_cardiac','ht_meds','ht_fasting','ht_interact'],
   epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence'],
   alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds'],
-  drc:            ['drc_diag','drc_dm','drc_hta','drc_edema','drc_gfr','drc_age65','drc_anemia','drc_polimed','drc_worsen']
+  drc:            ['drc_diag','drc_dm','drc_hta','drc_edema','drc_gfr','drc_age65','drc_anemia','drc_polimed','drc_worsen'],
+  artrite:        ['ar_diag','ar_stiffness','ar_swelling','ar_daily','ar_age65','ar_infections','ar_meds','ar_mtx','ar_adverse','ar_bio','ar_osteo','ar_followup']
 };
 
 function tags() {
@@ -1059,6 +1077,7 @@ function getOutcome() {
   if (id==='epilepsia') return epilepsiaO(t);
   if (id==='alzheimer') return alzheimerO(t);
   if (id==='drc') return drcO(t);
+  if (id==='artrite') return artriteO(t);
 }
 
 
@@ -3067,6 +3086,297 @@ function drcO(t) {
      pregnancy: 'CONTRAINDICAÇÃO ABSOLUTA na gravidez — fetotoxicidade renal, oligohidrâmnios, hipoplasia pulmonar. Substituir por nifedipina ou metildopa em mulher fértil que planeie engravidar.',
      costNote: 'Custo praticamente desprezável (genéricos amplamente comparticipados). A relação custo-eficácia é uma das melhores da medicina — enalapril/losartan reduzem em ~30% a progressão para insuficiência renal terminal.'},
     'IMPORTANTE: aumentos de creatinina até 30% e queda de TFG até 25% nas primeiras semanas são ESPERADOS e BENÉFICOS — não suspender. Apenas reavaliar se aumento >30%, hipercaliemia >5,5 mmol/L ou hipotensão sintomática.'
+  );
+}
+
+function artriteO(t) {
+  var diag        = (t.ar_diag       === true);
+  var stiffness   = (t.ar_stiffness  === true);
+  var swelling    = (t.ar_swelling   === true);
+  var daily       = (t.ar_daily      === true);
+  var isOld       = (t.ar_age65      === true);
+  var infections  = (t.ar_infections === true);
+  var medsNone    = (t.ar_meds       === 'none');
+  var medsCtrl    = (t.ar_meds       === 'controlled');
+  var medsUnctrl  = (t.ar_meds       === 'uncontrolled');
+  var usedMtx     = (t.ar_mtx        === true);
+  var hadAdverse  = (t.ar_adverse    === true);
+  var bioOffered  = (t.ar_bio        === true);
+  var hasOsteo    = (t.ar_osteo      === true);
+  var followup    = (t.ar_followup   === true);
+
+  /* Resultado 6 — Proteção óssea (idoso com osteoporose ou risco de fraturas) */
+  if (hasOsteo && isOld) return res(
+    'Resultado 6: AR + Proteção Óssea — Prevenção de Fraturas',
+    'Bifosfonato + suplementação cálcio/vitamina D (em paralelo com a terapia anti-AR)',
+    [drug(
+      'Alendronato',
+      'Bifosfonato — inibidor da reabsorção óssea pelos osteoclastos',
+      'Os bifosfonatos ligam-se à hidroxiapatite no osso e <strong>inibem a atividade dos osteoclastos</strong>, reduzindo a reabsorção óssea e aumentando a densidade mineral óssea (DMO). Em doentes com AR, há risco acrescido de osteoporose por <strong>inflamação crónica</strong> (citocinas pró-osteoclásticas como IL-6 e TNF), <strong>imobilidade</strong> e frequentemente <strong>corticoterapia prolongada</strong>. O alendronato é o bifosfonato oral mais usado, com forte evidência de redução de fraturas vertebrais e da anca.',
+      '70 mg uma vez por semana (oral)',
+      'Em jejum, com um copo cheio de água — permanecer em pé/sentado durante 30 minutos antes da primeira refeição',
+      'NUNCA tomar deitado — risco de esofagite e ulceração esofágica. Aguardar 30 min antes de comer/beber outra coisa que não água. Se esquecer a dose, tomar no dia seguinte e retomar o esquema semanal.',
+      'Custo muito baixo (genérico amplamente comparticipado pelo SNS)',
+      'Esofagite e refluxo se mal administrado. Osteonecrose da mandíbula (rara, sobretudo com IV oncológico). Fraturas atípicas do fémur com uso muito prolongado (>5 anos) — rever necessidade após 3-5 anos. Contraindicado se TFG <35 mL/min, esofagopatia, incapacidade de permanecer em pé.'
+    ), drug(
+      'Vitamina D + Cálcio',
+      'Suplementação para mineralização óssea',
+      'A vitamina D é essencial para a absorção intestinal de cálcio e para a mineralização óssea. Em Portugal, a prevalência de hipovitaminose D é elevada mesmo em adultos saudáveis — atinge 80% em doentes com AR e corticoterapia. Sem vitamina D adequada, os bifosfonatos perdem eficácia e há risco de hipocalcemia. O cálcio deve vir preferencialmente da dieta (lacticínios, vegetais de folha verde, sardinha enlatada com espinhas) e o suplemento apenas completa o défice.',
+      'Vitamina D (colecalciferol): 800–2000 UI/dia · Cálcio: 500–1000 mg/dia (alimentação + suplemento, ajustado conforme ingestão dietética)',
+      'Oral, 1x/dia, com refeição (vitamina D lipossolúvel — melhor absorção com gordura)',
+      'Verificar ingestão alimentar de cálcio antes de prescrever suplemento — evitar excesso (risco de litíase renal e calcificações vasculares).',
+      'Custo muito baixo (genéricos)',
+      'Hipercalcemia em doses excessivas. Litíase renal (cálcio). Verificar 25-OH-vitamina D anual em risco — alvo 30–50 ng/mL.'
+    ), drug(
+      'Denosumab (alternativa se intolerância a bifosfonatos)',
+      'Anticorpo monoclonal anti-RANKL',
+      'O denosumab bloqueia o RANKL (Receptor Activator of Nuclear factor κB Ligand), inibindo a diferenciação e ativação dos osteoclastos. É uma <strong>alternativa eficaz aos bifosfonatos</strong> em doentes com intolerância digestiva, esofagopatia ou TFG <35 mL/min (pode usar-se em insuficiência renal moderada com precaução).',
+      '60 mg subcutânea cada 6 meses',
+      'Subcutâneo, em ambulatório de reumatologia ou centro de saúde',
+      'Suplementar SEMPRE com cálcio e vitamina D — risco de hipocalcemia grave se carência prévia. NÃO interromper sem alternativa em curso — risco de fraturas vertebrais múltiplas em rebound.',
+      'Custo moderado a elevado (comparticipação SNS com critérios)',
+      'Hipocalcemia (corrigir vitamina D e cálcio antes), infeções cutâneas no local, osteonecrose da mandíbula (rara), fraturas vertebrais em rebound se descontinuação não controlada.'
+    )],
+    ['Manter terapêutica de fundo da AR (DMARD) — controlo da inflamação reduz por si só a perda óssea',
+     'Reduzir a dose de corticoide ao mínimo eficaz e durante o menor tempo possível',
+     'Atividade física regular adaptada (carga moderada — caminhada, hidroterapia, treino de equilíbrio)',
+     'Avaliar risco de quedas (FRAX) e adaptar o ambiente domiciliário'],
+    ['Bifosfonato em jejum prolongado ou deitado — risco de esofagite',
+     'Cálcio em doses elevadas em monoterapia (sem vitamina D) — eficácia reduzida e risco de litíase',
+     'Quedas — calçado adequado, iluminação, retirar tapetes soltos, considerar ajudas técnicas (canadiana, andarilho)',
+     'Tabagismo e álcool — fatores de risco modificáveis para osteoporose'],
+    'Tratamento prolongado. Reavaliação aos 3-5 anos para decisão de continuar, suspender (drug holiday) ou trocar.',
+    ['Dieta rica em cálcio (lacticínios magros, sardinha, vegetais de folha verde escura) e proteína adequada',
+     'Exposição solar moderada (15-20 min/dia em horário seguro) ou suplementação de vitamina D',
+     'Treino de carga e equilíbrio (Tai Chi, fisioterapia adaptada)',
+     'Cessação tabágica e moderação alcoólica',
+     'Avaliação anual do risco de queda — adaptações domiciliárias (barras de apoio, antiderrapantes)'],
+    ['DXA (densitometria óssea) basal e a cada 2 anos',
+     '25-OH-vitamina D anual — alvo 30–50 ng/mL',
+     'Cálcio sérico e função renal antes de iniciar e a cada 6-12 meses',
+     'Avaliação dentária antes de iniciar bifosfonato ou denosumab (osteonecrose mandibular)',
+     'Marcadores de remodelação óssea (CTX, P1NP) opcional para avaliar resposta'],
+    {elderly: 'Em idosos, o risco de quedas é o principal preditor de fratura — intervenção multifatorial (revisão de medicação que cause hipotensão, treino de equilíbrio, óculos, audição, calçado) é tão importante quanto o bifosfonato.',
+     costNote: 'Alendronato genérico tem custo muito baixo. Denosumab e teriparatida têm custo elevado mas comparticipação SNS em casos selecionados.'},
+    'IMPORTANTE: a osteoporose é frequentemente diagnosticada apenas após a primeira fratura — o rastreio com DXA em mulheres pós-menopausa, idosos e doentes em corticoterapia >3 meses é essencial. Rever sempre risco com FRAX (https://frax.shef.ac.uk).'
+  );
+
+  /* Resultado 5 — Inibidores JAK (falha aos biológicos) */
+  if (bioOffered && medsUnctrl) return res(
+    'Resultado 5: AR Refratária — Inibidores JAK (Terapêutica Avançada Oral)',
+    'Após falha de DMARDs convencionais e biológicos — alternativa oral',
+    [drug(
+      'Baricitinib (ou Tofacitinib / Upadacitinib)',
+      'Inibidor das quinases Janus (JAK1/JAK2/JAK3/TYK2)',
+      'Os <strong>inibidores JAK</strong> são uma classe de DMARDs sintéticos dirigidos (tsDMARDs) que bloqueiam a sinalização intracelular das vias JAK-STAT, <strong>impedindo a resposta a múltiplas citocinas inflamatórias</strong> (IL-6, IFN-γ, GM-CSF, IL-2). A grande vantagem é a <strong>administração oral</strong> (vs injeção subcutânea/IV dos biológicos), com eficácia comparável aos biológicos anti-TNF em ensaios head-to-head. São utilizados após falha ou intolerância aos biológicos. <strong>EMA e FDA emitiram alertas</strong> sobre risco cardiovascular e tromboembólico aumentados em > 65 anos, fumadores ou doentes com risco CV elevado (estudo ORAL Surveillance) — usar com avaliação rigorosa benefício/risco.',
+      'Baricitinib: 2 mg/dia (4 mg/dia se TFG normal e sem fatores de risco) · Tofacitinib: 5 mg 2x/dia · Upadacitinib: 15 mg/dia',
+      'Oral, 1x/dia (baricitinib, upadacitinib) ou 2x/dia (tofacitinib), com ou sem alimentos',
+      'Tomar à mesma hora todos os dias. Antes de iniciar: rastreio de tuberculose latente (IGRA), hepatites B e C, hemograma, perfil lipídico, função hepática e renal. Vacinação atualizada (gripe anual, pneumocócica, herpes zoster — ANTES de iniciar; vacinas vivas contraindicadas durante o tratamento).',
+      'Custo elevado (~800–1100€/mês sem comparticipação) · Comparticipação SNS com critérios reumatológicos rigorosos',
+      'Risco aumentado de <strong>infeções graves</strong> (bacterianas, fúngicas, oportunistas), com destaque para <strong>herpes zoster</strong> (incidência 3-4x superior — vacinação Shingrix recomendada antes de iniciar). <strong>Risco tromboembólico</strong> (TVP, TEP) — particular atenção em > 65 anos, antecedentes de TEV ou risco CV. <strong>Aumento de LDL e triglicéridos</strong> — pode ser necessária estatina. Citopenias (linfopenia, neutropenia, anemia). Perfuração gastrointestinal (rara). Não usar em gravidez ou amamentação.'
+    )],
+    ['Adalimumab biossimilar (anti-TNF subcutâneo) — alternativa biológica se JAK contraindicado por risco CV/TEV',
+     'Tocilizumab (anti-IL-6) — alternativa em refratariedade ou citopenias',
+     'Rituximab (anti-CD20) — alternativa em FR/anti-CCP positivos com falha múltipla',
+     'Abatacept (modulador co-estimulação) — perfil de segurança favorável em idosos e doença pulmonar intersticial associada'],
+    ['Iniciar em > 65 anos, fumadores ativos ou com risco CV elevado sem ponderação rigorosa do benefício/risco (alerta EMA/FDA)',
+     'Iniciar com infeção ativa, tuberculose latente não tratada ou neoplasia recente (<5 anos)',
+     'Vacinas vivas (BCG, varicela, sarampo) durante o tratamento',
+     'Combinar com biológico — risco infecioso multiplicado, sem benefício adicional'],
+    'Tratamento crónico mantido enquanto eficaz. Reavaliação trimestral nos primeiros 12 meses, depois semestral.',
+    ['Vacinação atualizada antes de iniciar (gripe anual, pneumocócica, Shingrix para herpes zoster)',
+     'Identificar e tratar focos infecciosos antes do início (dentário, urológico, dermatológico)',
+     'Monitorização cardiovascular: TA, perfil lipídico, peso',
+     'Evitar grávidas e crianças não vacinadas durante surtos virais',
+     'Cessação tabágica obrigatória (potencia risco CV/TEV)'],
+    ['Hemograma e bioquímica (função hepática, renal) ao 1.º, 3.º e depois cada 3 meses',
+     'Perfil lipídico aos 3 meses (frequentemente sobe — ponderar estatina)',
+     'PCR e VSG para resposta clínica (DAS28, CDAI, SDAI)',
+     'Rastreio anual de tuberculose (IGRA) e hepatites virais',
+     'Vigilância clínica de tromboembolismo e eventos CV em consulta'],
+    {elderly: isOld ? 'Em > 65 anos, JAK só após avaliação cuidadosa de risco CV e tromboembólico — preferir biológico (anti-TNF, abatacept) salvo razão específica para a via oral.' : '',
+     costNote: 'Os JAK são caros mas têm vantagem importante de via oral. Comparticipação SNS exige falência prévia a DMARDs convencionais (incluindo metotrexato) e a pelo menos um biológico. Os biossimilares de adalimumab e etanercept são alternativas mais económicas.'},
+    isOld ? 'ATENÇÃO: alerta regulatório EMA/FDA sobre risco cardiovascular e tromboembólico em > 65 anos, fumadores e em risco CV elevado. Decisão deve ser partilhada e bem documentada.' : ''
+  );
+
+  /* Resultado 4 — Biológicos (falha ao metotrexato) */
+  if (usedMtx && medsUnctrl) return res(
+    'Resultado 4: AR Refratária ao Metotrexato — Terapêutica Biológica',
+    'Anti-TNF, anti-IL-6 ou modulador co-estimulação (em adição/substituição ao metotrexato)',
+    [drug(
+      'Adalimumab (ou Etanercept) — biológico anti-TNF',
+      'Anti-TNF — anticorpo monoclonal (adalimumab, infliximab) ou proteína de fusão recetor-Fc (etanercept)',
+      'Os biológicos <strong>anti-TNF</strong> bloqueiam o fator de necrose tumoral alfa, citocina central da inflamação na AR. São a primeira escolha de biológico após falha aos DMARDs convencionais. <strong>Adalimumab e etanercept são subcutâneos</strong> (auto-administrados em ambulatório), enquanto o <strong>infliximab é IV</strong> em hospital de dia. Mantêm-se em associação com o metotrexato sempre que possível — a associação reduz a formação de anticorpos anti-fármaco e aumenta a duração da resposta. <strong>Biossimilares</strong> de adalimumab e etanercept estão disponíveis com custo significativamente inferior e mesma eficácia.',
+      'Adalimumab: 40 mg SC cada 2 semanas · Etanercept: 50 mg SC semanal · Infliximab: 3 mg/kg IV nas semanas 0, 2, 6 e depois cada 8 semanas',
+      'Adalimumab/Etanercept: subcutânea (caneta ou seringa pré-cheia em casa) · Infliximab: hospital de dia',
+      'Antes de iniciar: rastreio obrigatório de <strong>tuberculose latente</strong> (IGRA ou Mantoux + Rx tórax), hepatites B e C, hemograma, função hepática. Vacinação atualizada (vacinas vivas contraindicadas durante tratamento).',
+      'Custo elevado (~700–1200€/mês sem comparticipação) · Biossimilares ~30-50% mais económicos · SNS comparticipa com critérios',
+      '<strong>Tuberculose</strong> (reativação) — rastreio e tratamento profilático antes de iniciar é obrigatório. Infeções graves bacterianas, fúngicas, oportunistas. Reativação de hepatite B (rastreio + profilaxia). Reações no local de injeção. Reações infusionais com infliximab. Risco aumentado de neoplasias cutâneas não-melanoma. Não iniciar em IC NYHA III-IV. Não usar em esclerose múltipla.'
+    ), drug(
+      'Tocilizumab (alternativa se anti-TNF falha ou contraindicado)',
+      'Anticorpo monoclonal anti-recetor da IL-6',
+      'O tocilizumab bloqueia o recetor da IL-6, citocina implicada não só na inflamação articular mas também em <strong>manifestações sistémicas da AR</strong> (anemia, fadiga, elevação da PCR/VSG). É a primeira escolha em <strong>monoterapia</strong> (sem metotrexato) — apresenta eficácia em monoterapia superior aos anti-TNF. Útil em doentes com intolerância ou contraindicação ao metotrexato.',
+      '162 mg SC semanal · ou 4–8 mg/kg IV cada 4 semanas',
+      'Subcutânea (semanal) ou IV em hospital de dia (mensal)',
+      'Vigiar transaminases (subida frequente), neutrófilos e perfil lipídico (subida significativa de LDL/triglicéridos pode exigir estatina). PCR pode estar artificialmente baixa — não fiável para detetar infeção sob tocilizumab.',
+      'Custo elevado · Comparticipação SNS com critérios',
+      'Elevação de transaminases (frequente — pode obrigar a redução/suspensão), neutropenia, hipercolesterolemia. <strong>Perfuração gastrointestinal</strong> (rara mas grave — sobretudo em diverticulite). Infeções graves. PCR mascara infeção — vigilância clínica reforçada.'
+    )],
+    ['Manter <strong>metotrexato em associação</strong> sempre que possível — reduz formação de anticorpos anti-fármaco e prolonga resposta',
+     'Abatacept (modulador da co-estimulação T) — bom perfil de segurança em idosos e doença pulmonar intersticial',
+     'Rituximab (anti-CD20) — em FR/anti-CCP positivos com falha múltipla; útil em vasculites associadas',
+     'Biossimilares de adalimumab e etanercept — mesma eficácia, custo significativamente inferior'],
+    ['Iniciar com infeção ativa, tuberculose latente não tratada, hepatite B/C ativa ou neoplasia recente (<5 anos)',
+     'Vacinas vivas (BCG, varicela, sarampo, febre amarela) durante o tratamento — manter calendário inativado',
+     'Combinar dois biológicos — risco infecioso multiplicado, sem benefício',
+     'Iniciar em IC NYHA III-IV (anti-TNF) ou esclerose múltipla'],
+    'Tratamento crónico, mantido enquanto eficaz e tolerado. Reavaliação trimestral inicial.',
+    ['Identificar e tratar focos infecciosos antes do início (dentário, dermatológico, urinário)',
+     'Vacinação completa antes de iniciar (gripe anual, pneumocócica, herpes zoster Shingrix, hepatite B se susceptível)',
+     'Higiene rigorosa, evitar contacto com pessoas com infeções respiratórias agudas',
+     'Comunicar imediatamente febre, tosse persistente, lesões cutâneas suspeitas',
+     'Apoio psicossocial — Liga Portuguesa Contra as Doenças Reumáticas (www.lpcdr.org.pt)'],
+    ['Hemograma, função hepática e renal ao 1.º, 3.º mês e depois cada 3 meses',
+     'PCR e VSG (controlo de atividade inflamatória — mas tocilizumab mascara PCR)',
+     'DAS28, CDAI ou SDAI a cada 3 meses (ajuste terapêutico segundo treat-to-target)',
+     'Rastreio anual de tuberculose (IGRA) e hepatites virais',
+     'Avaliação radiológica (mãos, punhos, pés) anual nos 2 primeiros anos'],
+    {elderly: isOld ? 'No idoso, abatacept tem o melhor perfil de segurança infeciosa entre os biológicos. Tocilizumab e rituximab também são opções viáveis. Anti-TNF mantêm-se eficazes mas exigem vigilância infeciosa reforçada.' : '',
+     costNote: 'Custo elevado mas comparticipado pelo SNS em casos com falha a DMARDs convencionais. Os biossimilares de adalimumab (Imraldi, Hyrimoz, Amgevita) e etanercept (Benepali, Erelzi) são bioequivalentes com custo 30-50% inferior — alternativa economicamente eficiente.'},
+    infections ? 'ATENÇÃO: doente com história de infeções frequentes — biológico exige avaliação infeciológica prévia, otimização de focos, atualização vacinal e vigilância reforçada nos primeiros meses.' : ''
+  );
+
+  /* Resultado 3 — Crise inflamatória aguda (corticoide) */
+  if (swelling && daily && medsNone) return res(
+    'Resultado 3: AR Inflamatória Ativa — Corticoide como Ponte',
+    'Prednisolona em baixa dose como ponte até efeito do DMARD',
+    [drug(
+      'Prednisolona',
+      'Corticosteroide sistémico — anti-inflamatório e imunossupressor potente',
+      'Os <strong>corticoides em baixa dose</strong> são úteis na AR como <strong>ponte terapêutica</strong> nas primeiras semanas/meses do tratamento, enquanto o DMARD (metotrexato, hidroxicloroquina) ainda não atingiu o efeito pleno (que demora 6-12 semanas). Têm <strong>efeito anti-inflamatório imediato</strong>, controlando a sinovite ativa, a dor e a rigidez. <strong>NÃO devem ser tratamento de manutenção prolongado</strong> — os efeitos secundários a longo prazo (osteoporose, diabetes, hipertensão, cataratas, infeções, síndrome de Cushing) superam os benefícios. O objetivo é <strong>reduzir gradualmente até suspender</strong> assim que o DMARD atinja eficácia (habitualmente em 3-6 meses).',
+      'Iniciar 5–20 mg/dia conforme gravidade · Reduzir gradualmente (1-2,5 mg cada 2-4 semanas) até suspender · Doses em pulso (250 mg-1 g IV) reservadas a manifestações extra-articulares graves',
+      'Oral, de manhã com pequeno-almoço (mimetiza o ritmo circadiano do cortisol — minimiza supressão do eixo HPA)',
+      'NUNCA suspender abruptamente após >2-3 semanas de uso — risco de insuficiência adrenal aguda. Reduzir gradualmente. Comunicar sintomas como prostração, hipotensão, hipoglicemia em situações de stress (cirurgia, infeção).',
+      'Custo muito baixo (genérico)',
+      'Em uso prolongado: <strong>osteoporose</strong> (associar sempre cálcio + vitamina D ± bifosfonato se >3 meses), diabetes/hiperglicemia, hipertensão, ganho ponderal, redistribuição de gordura (face em lua, gibosidade), atrofia muscular, fragilidade cutânea, cataratas, glaucoma, infeções (vírus, fungos, oportunistas). Imunossupressão. Insuficiência adrenal se suspensão abrupta.'
+    )],
+    ['<strong>Infiltração intra-articular de corticoide</strong> (metilprednisolona, triamcinolona) — em mono/oligo-articular ativa: efeito local com mínimos efeitos sistémicos',
+     'Iniciar DMARD em paralelo (metotrexato é primeira escolha) — corticoide é apenas ponte',
+     'AINE (naproxeno, ibuprofeno) em baixa dose pode ajudar na dor — vigilância renal e GI',
+     'Paracetamol como base para dor (sem efeito anti-inflamatório, mas seguro)'],
+    ['Manter corticoide em monoterapia — não trava a progressão da AR',
+     'Doses altas (>15 mg/dia) prolongadas — eventos adversos cumulativos importantes',
+     'Suspensão abrupta após >2-3 semanas — risco de insuficiência adrenal',
+     'AINE em alta dose por longos períodos — risco GI, cardiovascular e renal'],
+    'Uso curto: 3-6 meses como ponte. Reduzir gradualmente assim que o DMARD atinja eficácia.',
+    ['Dieta mediterrânica — pode reduzir necessidade de corticoide',
+     'Atividade física adaptada (hidroterapia, exercício de baixo impacto) — preserva mobilidade articular sem agravar inflamação',
+     'Cálcio (lacticínios magros) e vitamina D (exposição solar moderada ou suplemento)',
+     'Cessação tabágica — o tabaco agrava a AR e reduz a resposta ao tratamento',
+     'Apoio multidisciplinar — fisioterapia, terapia ocupacional para preservação da função'],
+    ['Glicemia em jejum, TA, peso e perímetro abdominal mensal nos primeiros 3 meses',
+     'DXA basal se uso previsto >3 meses · Cálcio e vitamina D séricos',
+     'Avaliação oftalmológica anual (cataratas, glaucoma)',
+     'PCR e VSG para resposta inflamatória',
+     'Avaliação reumatológica a cada 6-8 semanas no início'],
+    {elderly: isOld ? 'No idoso, doses ainda mais baixas (5 mg/dia) e duração mais curta. Vigiar glicemia, TA e queda. Iniciar bifosfonato se uso previsto >3 meses.' : '',
+     costNote: 'Corticoide é o anti-inflamatório mais barato disponível, mas o custo dos efeitos adversos a longo prazo é elevado — usar como ponte, não como manutenção.'},
+    'IMPORTANTE: o corticoide é PONTE, não tratamento de manutenção. O DMARD (metotrexato em primeira linha) deve ser iniciado em paralelo para travar a progressão da doença. Encaminhar urgentemente a reumatologia.'
+  );
+
+  /* Resultado 2 — Metotrexato (primeira linha em doente diagnosticado sem MTX prévio) */
+  if (diag && !usedMtx) return res(
+    'Resultado 2: AR — Metotrexato (Padrão de Cuidado)',
+    'DMARD convencional de primeira linha — primeira escolha após diagnóstico',
+    [drug(
+      'Metotrexato (MTX)',
+      'DMARD convencional sintético — antimetabolito (antagonista do ácido fólico)',
+      'O metotrexato é o <strong>padrão de cuidado em primeira linha na AR</strong> e tem evidência de mais de 30 anos. Em doses baixas semanais (não nas doses oncológicas), atua por mecanismos imunomoduladores complexos: <strong>inibição da AICAR transformilase</strong> (libertação de adenosina anti-inflamatória), inibição da síntese de pirimidinas e modulação de citocinas. Trava a progressão radiológica e melhora a função articular. O efeito clínico inicia-se em 4-6 semanas e atinge o pico em 12-16 semanas. <strong>É administrado UMA VEZ POR SEMANA, nunca diário</strong> — erros de toma diária causaram mortes; o INFARMED emitiu alerta de segurança específico em Portugal.',
+      'Iniciar 7,5–15 mg <strong>UMA VEZ POR SEMANA</strong> · Titular até 20–25 mg/semana (oral ou subcutâneo) · Subcutâneo preferível em doses ≥15 mg (melhor absorção, menos efeitos GI)',
+      'Oral ou subcutâneo, <strong>UMA VEZ POR SEMANA</strong>, sempre no mesmo dia, à mesma hora',
+      '<strong>UMA VEZ POR SEMANA — NUNCA DIÁRIO.</strong> Tomar à noite pode reduzir náuseas matinais. Suplementar SEMPRE com <strong>ácido fólico 5 mg/semana</strong> no dia seguinte ao MTX (reduz mucosite, náuseas, hepatotoxicidade). Evitar álcool. Contraceção obrigatória em mulher fértil — teratogénico (parar 3 meses antes da conceção; em homens, ponderar parar 3 meses antes).',
+      'Custo baixo a moderado (~10–30€/mês comparticipado pelo SNS)',
+      '<strong>ALERTA INFARMED: dose semanal — erros de toma diária causaram mortes.</strong> Hepatotoxicidade (transaminases — monitorização rigorosa). Citopenias (neutropenia, trombocitopenia, anemia). Mucosite oral, náuseas, alopecia (reduzidas com ácido fólico). Pneumonite por MTX (rara mas grave — dispneia + febre + tosse seca = suspender). Imunossupressão moderada — vigiar infeções. <strong>CONTRAINDICAÇÃO ABSOLUTA na gravidez e amamentação</strong> (teratogénico). Não usar se TFG <30 mL/min ou doença hepática crónica. Vacinas vivas contraindicadas.'
+    )],
+    ['Hidroxicloroquina e/ou sulfassalazina em adição (terapêutica combinada — esquema "tripla DMARD")',
+     'Leflunomida — alternativa se intolerância ou contraindicação ao MTX (também teratogénica)',
+     'MTX subcutâneo se má resposta/tolerância à formulação oral (melhor biodisponibilidade)',
+     'Iniciar em paralelo: AINE em baixa dose + corticoide em ponte se atividade inflamatória elevada',
+     'Reabilitação e fisioterapia — preservação de função articular'],
+    ['Toma diária — risco de toxicidade fatal (alerta INFARMED)',
+     'Álcool — potencia hepatotoxicidade',
+     'AINE em alta dose ou trimetoprim/sulfametoxazol — aumentam toxicidade',
+     'Gravidez/amamentação — contraceção obrigatória',
+     'Vacinas vivas (BCG, varicela, febre amarela) — contraindicadas'],
+    'Tratamento crónico, indefinido enquanto eficaz e tolerado. Avaliação aos 3 meses para resposta clínica.',
+    ['Suplementação de ácido fólico 5 mg/semana — reduz efeitos secundários sem afetar eficácia',
+     'Não consumir álcool (ou apenas ocasional e moderado, sob discussão com médico)',
+     'Hidratação adequada',
+     'Cessação tabágica — o tabaco agrava AR e reduz resposta ao MTX',
+     'Vacinação anual (gripe), pneumocócica, herpes zoster Shingrix',
+     'Reabilitação articular — fisioterapia e terapia ocupacional',
+     'Apoio: Liga Portuguesa Contra as Doenças Reumáticas (www.lpcdr.org.pt)'],
+    ['Hemograma, função hepática (AST/ALT, fosfatase alcalina, albumina), função renal (creatinina): basal, 4-8 semanas, depois cada 3 meses',
+     'Radiografia torácica basal (excluir doença pulmonar prévia)',
+     'PCR e VSG para resposta inflamatória',
+     'DAS28, CDAI ou SDAI para resposta clínica (treat-to-target)',
+     'Radiografia anual de mãos, punhos e pés nos 2 primeiros anos',
+     'Avaliação infecciológica em qualquer episódio febril'],
+    {elderly: isOld ? 'No idoso, iniciar com 7,5 mg/semana e titular mais lentamente. Vigiar função renal (eliminação predominantemente renal) — reduzir dose se TFG <50 mL/min, evitar se TFG <30. Maior risco de citopenias e infeções.' : '',
+     pregnancy: 'CONTRAINDICAÇÃO ABSOLUTA — teratogénico (síndrome do MTX fetal). Suspender 3 meses antes da conceção (em homens e mulheres). Em gravidez confirmada, suspender imediatamente e suplementar ácido fólico em dose alta. Hidroxicloroquina e sulfassalazina são alternativas seguras na gravidez.',
+     costNote: 'MTX genérico tem custo muito baixo. A formulação subcutânea (caneta pré-cheia) é mais cara mas comparticipada pelo SNS — melhor absorção e tolerância em doses elevadas.'},
+    hadAdverse ? 'Doente refere efeitos secundários com medicação prévia — partilhar com reumatologista para considerar via subcutânea, ajuste de dose ou alternativa (leflunomida).' : ''
+  );
+
+  /* Resultado 1 — Doença ligeira / inicial (hidroxicloroquina, sulfassalazina) */
+  return res(
+    'Resultado 1: AR Ligeira / Diagnóstico Inicial — DMARDs Convencionais',
+    'Hidroxicloroquina ou Sulfassalazina — DMARDs convencionais em doença ligeira',
+    [drug(
+      'Hidroxicloroquina (Plaquinol)',
+      'DMARD convencional — antimalárico com ação imunomoduladora',
+      'A hidroxicloroquina é um <strong>DMARD convencional ligeiro</strong>, originalmente antimalárico, com excelente perfil de segurança. Modula a apresentação de antigénios via inibição da função lisossómica e reduz a produção de citocinas inflamatórias. <strong>Útil em AR ligeira, doença em fase inicial ou em combinação</strong> com outros DMARDs. Tem efeito imunomodulador suave — não trava progressão radiológica de forma robusta isolada, mas adiciona benefício em terapia combinada (esquema "tripla DMARD" com MTX e SSZ). Tem também propriedades hipolipemiantes e antiglicémicas marginais. <strong>É segura na gravidez</strong> — DMARD de eleição em mulheres a planear conceber.',
+      '200–400 mg/dia (máximo <strong>5 mg/kg de peso real/dia</strong> — ultrapassar este limite aumenta risco de retinopatia)',
+      'Oral, 1 a 2x/dia, com alimentos (reduz desconforto GI)',
+      'Tomar à mesma hora todos os dias. Avaliação oftalmológica de base e <strong>anual após 5 anos</strong> de tratamento (rastreio de retinopatia macular). Demora 2-4 meses a fazer efeito — não abandonar prematuramente.',
+      'Custo baixo (~5–15€/mês, comparticipado pelo SNS)',
+      '<strong>Toxicidade ocular (retinopatia macular irreversível)</strong> com uso prolongado — rastreio oftalmológico anual a partir do 5.º ano (mais cedo se fatores de risco: dose alta, idade >70, doença renal/hepática, retinopatia prévia). Náuseas, dispepsia (transitórias). Rash cutâneo (pode obrigar a suspender). Discrasias hematológicas (raras). Cardiomiopatia (muito rara em doses cumulativas elevadas).'
+    ), drug(
+      'Sulfassalazina (alternativa ou em combinação)',
+      'DMARD convencional — combina sulfapiridina (efeito imunomodulador) com 5-ASA (anti-inflamatório intestinal)',
+      'A sulfassalazina é um DMARD convencional eficaz em AR, com benefício adicional em <strong>artrite associada a doença inflamatória intestinal</strong>. Atua por modulação imune complexa (sulfapiridina) e tem alguma absorção sistémica do componente 5-ASA. <strong>Pode ser usada em monoterapia ou em combinação</strong> com MTX e hidroxicloroquina (esquema "tripla DMARD" com evidência de eficácia comparável aos biológicos em certos cenários — estudo TEAR). É considerada <strong>segura na gravidez e amamentação</strong>.',
+      'Iniciar 500 mg/dia · Titular gradualmente (500 mg/semana) até 2–3 g/dia em 2–3 tomas',
+      'Oral, com refeições (reduz desconforto GI)',
+      'Titulação lenta minimiza intolerância. Beber bastante água (>2 L/dia) para reduzir cristalúria. Suplementar com ácido fólico 1 mg/dia — a sulfassalazina interfere com a absorção. Demora 6-12 semanas a fazer efeito.',
+      'Custo baixo a moderado (genérico, comparticipado SNS)',
+      'Náuseas, vómitos, dispepsia (frequentes nas primeiras semanas — minimizam com titulação lenta). Rash cutâneo (variável de ligeiro a Stevens-Johnson — suspender e reavaliar). <strong>Contraindicada em alergia a sulfamidas, deficiência de G6PD, porfiria</strong>. Discrasias hematológicas (neutropenia, anemia hemolítica, trombocitopenia). Hepatotoxicidade. Oligospermia reversível em homens. Não interage significativamente com MTX — pode combinar-se.'
+    )],
+    ['<strong>Esquema "tripla DMARD"</strong>: MTX + Sulfassalazina + Hidroxicloroquina — eficácia comparável a biológicos em ensaios head-to-head (TEAR, BeST), mas com custo significativamente inferior',
+     'Adicionar MTX se progressão ou critérios de doença moderada',
+     'Corticoide em baixa dose como ponte se atividade inflamatória ainda significativa',
+     'AINE para alívio sintomático em períodos de exacerbação (com vigilância renal e GI)',
+     'Reabilitação e fisioterapia desde o início — preservação de função articular'],
+    ['AINE como tratamento isolado — não trava a progressão da AR',
+     'Iniciar sem avaliação reumatológica em diagnóstico recente — referenciação obrigatória',
+     'Hidroxicloroquina sem rastreio oftalmológico de base e periódico',
+     'Sulfassalazina em alergia a sulfamidas conhecida'],
+    'Tratamento crónico mantido enquanto eficaz e tolerado. Reavaliação em 3 meses para escalonamento se sem resposta.',
+    ['Manter atividade física regular adaptada (caminhada, hidroterapia, ioga, Tai Chi)',
+     'Dieta mediterrânica — efeito anti-inflamatório modesto',
+     'Cessação tabágica obrigatória — o tabaco agrava AR e reduz resposta ao tratamento',
+     'Reabilitação e fisioterapia — preservação de mobilidade articular',
+     'Suporte psicológico — a doença crónica afeta humor e qualidade de vida',
+     'Apoio: Liga Portuguesa Contra as Doenças Reumáticas (www.lpcdr.org.pt)'],
+    ['Hemograma, função hepática e renal: basal, 4-8 semanas, depois cada 3 meses',
+     'Avaliação oftalmológica basal (hidroxicloroquina) e anual após 5 anos de tratamento',
+     'PCR e VSG para resposta inflamatória',
+     'DAS28, CDAI ou SDAI para resposta clínica (treat-to-target)',
+     'Radiografia anual de mãos, punhos, pés nos 2 primeiros anos',
+     'Avaliação reumatológica trimestral inicial, depois semestral'],
+    {elderly: isOld ? 'No idoso, dose máxima de hidroxicloroquina 5 mg/kg/dia (peso real). Sulfassalazina é geralmente bem tolerada. Risco de quedas — precaução com tonturas iniciais.' : '',
+     pregnancy: 'Hidroxicloroquina e sulfassalazina são SEGURAS na gravidez e amamentação — DMARDs de eleição em mulheres em idade fértil ou a planear engravidar. MTX e leflunomida estão CONTRAINDICADOS.',
+     costNote: 'Ambos são genéricos amplamente comparticipados pelo SNS. O esquema "tripla DMARD" (MTX + SSZ + HCQ) tem custo total inferior a 50€/mês e eficácia comparável a biológicos em alguns cenários.'},
+    !followup ? 'IMPORTANTE: o doente NÃO faz acompanhamento regular em reumatologia — referenciação urgente é essencial para diagnóstico formal, estratificação e plano terapêutico. Atraso na introdução de DMARD piora prognóstico (window of opportunity).' : ''
   );
 }
 
