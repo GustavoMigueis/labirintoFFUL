@@ -622,8 +622,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
     <div class="d-row rev"><div class="d-inf">
       <h2 style="color:#059669">Osteoporose</h2>
       <p>Doença metabólica óssea caracterizada pela redução da densidade mineral óssea e deterioração da microarquitetura do tecido ósseo, aumentando o risco de fraturas. Em Portugal, estima-se que 1 em cada 3 mulheres com mais de 50 anos e 1 em cada 5 homens tenham osteoporose. A fratura da anca é a complicação mais grave, associada a elevada mortalidade.</p>
-      <div style="background:#d1fae5;border-radius:10px;padding:12px 16px;font-size:13px;color:#059669;margin-bottom:14px">Conteúdo detalhado e quiz terapêutico em desenvolvimento.</div>
-      <button class="btn-purple" style="background:#059669;opacity:0.5;cursor:not-allowed">Em breve</button>
+      <button class="btn-purple" style="background:#059669" onclick="openDisease('osteoporose')">Saber Mais</button>
     </div><div class="d-vis" style="background:#d1fae5;min-height:220px"></div></div>
   </div>
   <div class="quote-band"><p class="qt">&ldquo;Wherever the art of medicine is loved, there is also a love of humanity.&rdquo;</p><p class="qa">&mdash; Hipocrates</p></div>
@@ -714,6 +713,7 @@ var DIMG = {
   alzheimer: '',
   drc: '',
   artrite: '',
+  osteoporose: '',
   hta: "/images/img_hta.png",
   eam: "/images/img_eam.png",
   ic:  "/images/img_ic.png",
@@ -721,8 +721,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', drc:'renal', artrite:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', drc:'Doença Renal Crónica', artrite:'Artrite Reumatoide', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', drc:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', drc:'Doença Renal Crónica', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -801,6 +801,11 @@ var DINTRO = {
     'A artrite reumatoide (AR) é uma <strong>doença autoimune, inflamatória e crónica</strong> em que o sistema imunitário ataca as próprias articulações, causando inflamação persistente. Afeta sobretudo <strong>mãos, punhos, pés e joelhos</strong>, geralmente de forma <strong>bilateral e simétrica</strong>. Em Portugal, é a doença reumática inflamatória mais prevalente, afetando cerca de 0,3 a 0,7% da população.',
     'Os sintomas mais característicos incluem <strong>dor articular, rigidez matinal com duração superior a 30 a 60 minutos</strong>, inchaço nas articulações, fadiga e diminuição progressiva da mobilidade. Sem tratamento adequado, a doença pode provocar <strong>destruição articular irreversível, deformações e incapacidade funcional significativa</strong>. Em casos mais graves, pode haver atingimento pulmonar, ocular ou cardiovascular.',
     'O tratamento tem como objetivo <strong>controlar a inflamação, prevenir a progressão da doença e preservar a função articular</strong>, sendo fundamental uma abordagem precoce e individualizada. A escolha terapêutica depende da gravidade da doença, da resposta aos tratamentos anteriores e das características do doente. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
+  ],
+  osteoporose: [
+    'A osteoporose é uma <strong>doença óssea crónica</strong> caracterizada pela diminuição da densidade e qualidade do osso, aumentando o <strong>risco de fraturas</strong>, especialmente da anca, coluna e punho. É mais frequente em <strong>mulheres após a menopausa</strong>, em idosos, em pessoas sob corticoterapia prolongada e em indivíduos com défice de cálcio ou vitamina D. Em Portugal, estima-se que afete cerca de 800 000 pessoas, sendo responsável por um número significativo de fraturas com impacto grave na qualidade de vida e autonomia.',
+    'A doença evolui muitas vezes <strong>sem sintomas</strong> até ocorrer uma fratura, razão pela qual é frequentemente designada como a <em>doença silenciosa</em>. Os principais fatores de risco incluem <strong>idade avançada, menopausa, baixo peso, sedentarismo, tabagismo, consumo excessivo de álcool, corticoterapia prolongada e história familiar de fraturas</strong>. O diagnóstico é confirmado por <strong>densitometria óssea (DXA)</strong>, que mede a densidade mineral óssea.',
+    'O tratamento tem como objetivo <strong>reduzir o risco de fraturas, travar a perda óssea</strong> e, em alguns casos, estimular a formação de novo osso. A escolha terapêutica depende da gravidade da doença, dos fatores de risco individuais e das características do doente. A <strong>suplementação com cálcio e vitamina D é a base de qualquer abordagem</strong>. Use o quiz abaixo para perceber qual a opção mais adequada ao seu perfil.'
   ]
 };
 
@@ -975,7 +980,18 @@ var Qu = {
   ar_adverse:    q('ar_adverse',   'Tem efeitos secundários com a medicação atual?', [o('A','Sim',{ar_adverse:true}),o('B','Não',{ar_adverse:false})]),
   ar_bio:        q('ar_bio',       'Já lhe foi proposta terapêutica biológica?', [o('A','Sim',{ar_bio:true}),o('B','Não',{ar_bio:false})]),
   ar_osteo:      q('ar_osteo',     'Tem osteoporose ou risco aumentado de fraturas?', [o('A','Sim',{ar_osteo:true}),o('B','Não',{ar_osteo:false})]),
-  ar_followup:   q('ar_followup',  'Faz análises e acompanhamento regular em reumatologia?', [o('A','Sim',{ar_followup:true}),o('B','Não',{ar_followup:false})])
+  ar_followup:   q('ar_followup',  'Faz análises e acompanhamento regular em reumatologia?', [o('A','Sim',{ar_followup:true}),o('B','Não',{ar_followup:false})]),
+  op_diag:     q('op_diag',     'Já foi diagnosticado com osteoporose?', [o('A','Sim',{op_diag:true}),o('B','Não',{op_diag:false})]),
+  op_fracture: q('op_fracture', 'Já sofreu alguma fratura após pequena queda ou trauma ligeiro?', [o('A','Sim',{op_fracture:true}),o('B','Não',{op_fracture:false})]),
+  op_age65:    q('op_age65',    'Tem mais de 65 anos?', [o('A','Sim',{op_age65:true}),o('B','Não',{op_age65:false})]),
+  op_meno:     q('op_meno',     'É mulher pós-menopausa?', [o('A','Sim',{op_meno:true}),o('B','Não',{op_meno:false})]),
+  op_steroids: q('op_steroids', 'Faz corticoterapia prolongada (ex: prednisolona durante vários meses)?', [o('A','Sim',{op_steroids:true}),o('B','Não',{op_steroids:false})]),
+  op_family:   q('op_family',   'Tem história familiar de osteoporose ou fratura da anca?', [o('A','Sim',{op_family:true}),o('B','Não',{op_family:false})]),
+  op_weight:   q('op_weight',   'Tem baixo peso ou perda de massa muscular?', [o('A','Sim',{op_weight:true}),o('B','Não',{op_weight:false})]),
+  op_suppl:    q('op_suppl',    'Faz suplementação de cálcio ou vitamina D?', [o('A','Sim',{op_suppl:true}),o('B','Não',{op_suppl:false})]),
+  op_meds:     q('op_meds',     'Já toma medicação para osteoporose?', [o('A','Não',{op_meds:'none'}),o('B','Sim, controlada',{op_meds:'controlled'}),o('C','Sim, mas com novas fraturas',{op_meds:'uncontrolled'})]),
+  op_falls:    q('op_falls',    'Tem dificuldade de mobilidade ou risco de quedas?', [o('A','Sim',{op_falls:true}),o('B','Não',{op_falls:false})]),
+  op_dexa:     q('op_dexa',     'Realizou densitometria óssea recentemente?', [o('A','Sim',{op_dexa:true}),o('B','Não',{op_dexa:false})])
 };
 
 var DQ = {
@@ -994,7 +1010,8 @@ var DQ = {
   epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence'],
   alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds'],
   drc:            ['drc_diag','drc_dm','drc_hta','drc_edema','drc_gfr','drc_age65','drc_anemia','drc_polimed','drc_worsen'],
-  artrite:        ['ar_diag','ar_stiffness','ar_swelling','ar_daily','ar_age65','ar_infections','ar_meds','ar_mtx','ar_adverse','ar_bio','ar_osteo','ar_followup']
+  artrite:        ['ar_diag','ar_stiffness','ar_swelling','ar_daily','ar_age65','ar_infections','ar_meds','ar_mtx','ar_adverse','ar_bio','ar_osteo','ar_followup'],
+  osteoporose:    ['op_diag','op_fracture','op_age65','op_meno','op_steroids','op_family','op_weight','op_suppl','op_meds','op_falls','op_dexa']
 };
 
 function tags() {
@@ -1078,6 +1095,7 @@ function getOutcome() {
   if (id==='alzheimer') return alzheimerO(t);
   if (id==='drc') return drcO(t);
   if (id==='artrite') return artriteO(t);
+  if (id==='osteoporose') return osteoporoseO(t);
 }
 
 
@@ -3377,6 +3395,315 @@ function artriteO(t) {
      pregnancy: 'Hidroxicloroquina e sulfassalazina são SEGURAS na gravidez e amamentação — DMARDs de eleição em mulheres em idade fértil ou a planear engravidar. MTX e leflunomida estão CONTRAINDICADOS.',
      costNote: 'Ambos são genéricos amplamente comparticipados pelo SNS. O esquema "tripla DMARD" (MTX + SSZ + HCQ) tem custo total inferior a 50€/mês e eficácia comparável a biológicos em alguns cenários.'},
     !followup ? 'IMPORTANTE: o doente NÃO faz acompanhamento regular em reumatologia — referenciação urgente é essencial para diagnóstico formal, estratificação e plano terapêutico. Atraso na introdução de DMARD piora prognóstico (window of opportunity).' : ''
+  );
+}
+
+function osteoporoseO(t) {
+  var diag       = (t.op_diag     === true);
+  var fracture   = (t.op_fracture === true);
+  var isOld      = (t.op_age65    === true);
+  var isMeno     = (t.op_meno     === true);
+  var steroids   = (t.op_steroids === true);
+  var family     = (t.op_family   === true);
+  var lowWeight  = (t.op_weight   === true);
+  var hasSuppl   = (t.op_suppl    === true);
+  var medsNone   = (t.op_meds     === 'none');
+  var medsCtrl   = (t.op_meds     === 'controlled');
+  var medsUnctrl = (t.op_meds     === 'uncontrolled');
+  var falls      = (t.op_falls    === true);
+  var hasDexa    = (t.op_dexa     === true);
+
+  /* Resultado 5 — Doença muito grave (teriparatida — anabólico ósseo) */
+  if (medsUnctrl && fracture && isOld) return res(
+    'Resultado 5: Osteoporose Muito Grave — Teriparatida (Anabólico Ósseo)',
+    'Estimulação ativa da formação de novo osso por 24 meses',
+    [drug(
+      'Teriparatida',
+      'Análogo recombinante da hormona paratiroideia (PTH 1-34) — agente anabólico ósseo',
+      'A teriparatida é o <strong>único fármaco que aumenta ATIVAMENTE a formação de novo osso</strong> (todos os outros — bifosfonatos, denosumab, raloxifeno — apenas travam a reabsorção). Administrada em pulsos diários, simula o efeito anabólico paradoxal da PTH endógena: <strong>estimula os osteoblastos</strong> mais do que os osteoclastos, levando a ganho líquido de massa óssea, melhoria da microarquitetura trabecular e <strong>redução muito significativa do risco de novas fraturas vertebrais</strong> (~65%). Está reservada à <strong>osteoporose muito grave</strong> — múltiplas fraturas vertebrais, T-score muito baixo (≤-3,5) ou falha terapêutica a outros agentes. A duração é limitada a <strong>24 meses ao longo da vida</strong> e exige transição obrigatória subsequente para um anti-reabsortivo (bifosfonato ou denosumab) para consolidar os ganhos — sem essa transição, há perda óssea rápida.',
+      '20 mcg subcutâneo 1x/dia, durante <strong>no máximo 24 meses ao longo da vida</strong>',
+      'Subcutâneo (caneta pré-cheia, abdómen ou coxa), 1x/dia à mesma hora',
+      'Conservar no frigorífico (2-8°C). Usar a caneta durante 28 dias após o primeiro uso e descartar (mesmo que ainda tenha conteúdo). Tomar sentado ou deitado nas primeiras administrações (risco de tonturas/hipotensão ortostática). Ao fim de 24 meses, transição obrigatória para bifosfonato ou denosumab.',
+      'Custo muito elevado (~300–500€/mês sem comparticipação) · Comparticipação SNS em osteoporose grave com critérios estritos',
+      'Náuseas, tonturas, cefaleias, cãibras (frequentes nas primeiras semanas — habitualmente transitórias). Hipercalcemia ligeira (vigiar se predisposição). Hipotensão ortostática nas primeiras doses — administrar deitado/sentado e levantar lentamente. <strong>CONTRAINDICADA em doença de Paget óssea, hipercalcemia, irradiação óssea prévia, neoplasia óssea (incluindo metástases), hiperparatiroidismo primário</strong>, gravidez e amamentação. Não usar mais de 24 meses cumulativos.'
+    ), drug(
+      'Cálcio + Vitamina D (manter sempre)',
+      'Suplementação para mineralização do novo osso formado',
+      'A formação de osso novo estimulada pela teriparatida exige <strong>substrato adequado de cálcio e vitamina D</strong>. Sem suplementação, o efeito anabólico é parcialmente neutralizado e há risco de hipocalcemia.',
+      'Cálcio: 1000–1200 mg/dia · Vitamina D: 800–2000 UI/dia',
+      'Oral, doses divididas com refeições',
+      'Manter durante todo o tratamento e na transição para anti-reabsortivo.',
+      'Custo muito baixo',
+      'Hipercalcemia ligeira é mais frequente sob teriparatida — vigiar.'
+    )],
+    ['<strong>Após os 24 meses</strong>: transição obrigatória para bifosfonato (alendronato 70 mg/sem) ou denosumab (60 mg SC cada 6 meses) — sem este passo perde-se o ganho ósseo',
+     'Romosozumab (anti-esclerostina) — agente dual anabólico/anti-reabsortivo, em alternativa à teriparatida; uso restrito',
+     'Avaliação por reumatologia e/ou endocrinologia obrigatória — reavaliação cada 3 meses',
+     'Densitometria óssea (DXA) baseline e aos 12 e 24 meses',
+     'Investigação de causas secundárias: hiperparatiroidismo, mieloma, doença celíaca, hipertiroidismo'],
+    ['Iniciar sem corrigir hipocalcemia e défice de vitamina D',
+     'Usar mais de 24 meses ao longo da vida (risco oncológico em modelos animais — osteossarcoma)',
+     'Combinar com bifosfonato em SIMULTÂNEO (perde-se o efeito anabólico)',
+     'Suspender a teriparatida sem transição — perda óssea rápida em meses'],
+    'Tratamento por 24 meses (máximo na vida). Transição obrigatória subsequente para anti-reabsortivo (bifosfonato ou denosumab) por mais ≥24 meses para consolidar ganhos.',
+    ['Exercício físico de impacto adaptado e treino de força — sinérgico com efeito anabólico',
+     'Prevenção rigorosa de quedas: calçado, iluminação, barras de apoio, retirar tapetes',
+     'Cessação tabágica e moderação alcoólica obrigatórias',
+     'Avaliação dentária prévia (apesar de risco menor de osteonecrose comparativamente aos bifosfonatos)',
+     'Apoio multidisciplinar: nutrição, fisioterapia, terapia ocupacional',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt) e Associação Nacional Contra a Osteoporose (APOROS)'],
+    ['DXA basal, 12 e 24 meses · cálcio sérico e ácido úrico cada 6 meses',
+     'Função renal e PTH baseline',
+     '25-OH-vitamina D antes de iniciar e cada 6 meses (alvo >30 ng/mL)',
+     'Marcadores de remodelação óssea (P1NP — formação; CTX — reabsorção) — opcionais para avaliar resposta',
+     'Avaliação de novas fraturas (Rx coluna se dor súbita)',
+     'Acompanhamento especializado obrigatório'],
+    {elderly: 'Em > 75 anos com múltiplas fraturas, a teriparatida tem o melhor perfil benefício/risco entre os agentes — elimina o problema de adesão à toma oral e tem eficácia rápida (redução de fraturas em 6-12 meses).',
+     costNote: 'Custo elevado mas comparticipado pelo SNS em critérios rigorosos: T-score ≤ -3,5 com fraturas vertebrais, ou falha a anti-reabsortivos. Custo-eficácia favorável dada a redução drástica de fraturas vertebrais (~65%).'},
+    'CRÍTICO: a transição para um anti-reabsortivo após os 24 meses NÃO é opcional — sem ela, todos os ganhos ósseos são perdidos em 12-18 meses. Plano deve ser definido à partida com reumatologia/endocrinologia.'
+  );
+
+  /* Resultado 4 — Osteoporose grave / fraturas múltiplas (denosumab) */
+  if (medsUnctrl || (fracture && diag)) return res(
+    'Resultado 4: Osteoporose Grave / Falha Terapêutica — Denosumab',
+    'Inibidor potente da reabsorção óssea — alternativa aos bifosfonatos',
+    [drug(
+      'Denosumab',
+      'Anticorpo monoclonal humano anti-RANKL',
+      'O denosumab é um <strong>anticorpo monoclonal totalmente humano</strong> que se liga ao RANKL (Receptor Activator of Nuclear factor κB Ligand), bloqueando a maturação, função e sobrevivência dos osteoclastos. <strong>Reduz a reabsorção óssea de forma potente e reversível</strong>, com aumentos de DMO superiores aos bifosfonatos e redução do risco de fraturas vertebrais (~70%), não-vertebrais (~20%) e da anca (~40%) em estudos chave (FREEDOM). É uma <strong>excelente alternativa aos bifosfonatos</strong> em doentes com intolerância gastrointestinal, esofagopatia, ou insuficiência renal moderada (pode usar-se em TFG <35 mL/min, ao contrário dos bifosfonatos). <strong>ALERTA CRÍTICO: NÃO interromper sem transição planeada</strong> — a suspensão sem ponte para bifosfonato causa <strong>efeito rebote com perda óssea rápida e risco aumentado de fraturas vertebrais múltiplas</strong> nos meses seguintes.',
+      '60 mg subcutâneo a cada 6 meses (Prolia)',
+      'Subcutâneo (abdómen, coxa ou braço), em ambulatório de reumatologia ou centro de saúde, a cada 6 meses',
+      'NUNCA atrasar mais de 1-2 meses entre doses — risco de rebote. <strong>Suplementar SEMPRE com cálcio (≥1000 mg/dia) e vitamina D (≥800 UI/dia)</strong> antes e durante o tratamento — risco de hipocalcemia grave se carência prévia, especialmente em insuficiência renal. Avaliação dentária prévia.',
+      'Custo elevado (~200–300€/injeção sem comparticipação) · Comparticipação SNS com critérios',
+      '<strong>Hipocalcemia</strong> (corrigir vitamina D e cálcio antes — risco grave em insuficiência renal). Infeções cutâneas (celulite no local). <strong>Osteonecrose da mandíbula</strong> (raro, especialmente após procedimentos dentários invasivos — avaliação dentária prévia obrigatória). Fraturas atípicas do fémur com uso muito prolongado (>5 anos). Reações no local de injeção. <strong>Efeito rebote em descontinuação não controlada</strong> — fraturas vertebrais múltiplas em meses.'
+    )],
+    ['<strong>Manter cálcio + vitamina D em todas as doses</strong> — não opcional',
+     'Avaliação dentária antes do início e cada 12 meses',
+     'Romosozumab (anti-esclerostina) — alternativa em osteoporose muito grave',
+     'Bifosfonatos (zoledronato IV, alendronato oral) — opções alternativas se intolerância ao denosumab',
+     'Investigar causas secundárias: hiperparatiroidismo, doença celíaca, mieloma'],
+    ['<strong>Suspender denosumab sem transição para bifosfonato</strong> — risco grave de fraturas vertebrais em rebound',
+     'Procedimentos dentários invasivos (extrações, implantes) sem informar o reumatologista — risco de osteonecrose da mandíbula',
+     'Uso em hipocalcemia não corrigida — risco de tetania, arritmias',
+     'Atrasar > 2 meses entre doses sem cobertura',
+     'Vacinas vivas durante imunossupressão (precaução geral)'],
+    'Tratamento crónico, geralmente por 5-10 anos. Após este período, transição planeada para bifosfonato (alendronato ou zoledronato) para consolidar os ganhos.',
+    ['Exercício físico regular adaptado (caminhada, natação, treino de força com supervisão)',
+     'Prevenção de quedas: iluminação, calçado antiderrapante, óculos atualizados, retirar tapetes',
+     'Dieta rica em cálcio (lacticínios magros, sardinha enlatada, brócolos) e vitamina D (peixes gordos, exposição solar)',
+     'Cessação tabágica e moderação alcoólica',
+     'Higiene oral cuidada e visitas regulares ao dentista',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt)'],
+    ['Cálcio sérico antes de cada injeção (especialmente se insuficiência renal)',
+     '25-OH-vitamina D anual (alvo >30 ng/mL)',
+     'Função renal antes de cada injeção',
+     'DXA cada 1-2 anos para monitorizar resposta',
+     'Avaliação dentária basal e cada 12 meses',
+     'Vigilância de novas fraturas (Rx coluna se dor súbita)'],
+    {elderly: isOld ? 'No idoso, o denosumab é frequentemente preferido aos bifosfonatos orais por melhor adesão (1 injeção a cada 6 meses vs comprimido semanal complexo) e segurança em insuficiência renal moderada.' : '',
+     costNote: 'Comparticipação SNS em osteoporose com critérios (T-score, fraturas prévias). Apesar do custo unitário elevado, a relação custo-eficácia é favorável dada a alta eficácia e melhor adesão.'},
+    'IMPORTANTE: a interrupção do denosumab sem transição programada é uma das principais causas de fraturas vertebrais inesperadas. Qualquer suspensão deve ser planeada com início de bifosfonato (zoledronato IV ou alendronato oral) imediatamente após.'
+  );
+
+  /* Resultado 6 — Mulher pós-menopausa sem diagnóstico nem fratura prévia (raloxifeno como prevenção) */
+  if (isMeno && !diag && !fracture) return res(
+    'Resultado 6: Mulher Pós-Menopausa — Raloxifeno (SERM)',
+    'Modulador seletivo dos recetores de estrogénio — proteção óssea e mamária',
+    [drug(
+      'Raloxifeno',
+      'SERM — Modulador Seletivo dos Recetores de Estrogénio',
+      'O raloxifeno é um <strong>modulador seletivo dos recetores de estrogénio (SERM)</strong> com efeitos tecido-específicos: <strong>agonista estrogénico no osso</strong> (preserva a densidade óssea e reduz fraturas vertebrais ~30-50%) e <strong>antagonista no tecido mamário e endometrial</strong> (reduz incidência de cancro da mama hormono-dependente em ~50-70% em estudos como o STAR). Indicado em <strong>mulher pós-menopausa</strong> com osteoporose ou risco aumentado, particularmente em quem também tem <strong>risco de cancro da mama</strong>. Não trata sintomas vasomotores da menopausa (afrontamentos podem mesmo agravar) e <strong>não protege contra fraturas da anca</strong> (ao contrário dos bifosfonatos) — o seu efeito principal é nas fraturas vertebrais.',
+      '60 mg/dia oral',
+      'Oral, 1x/dia, com ou sem alimentos, à mesma hora',
+      'Pode ser tomado a qualquer hora do dia. Não exige restrições alimentares específicas.',
+      'Custo moderado · Comparticipação SNS em osteoporose pós-menopausa',
+      '<strong>Risco tromboembólico aumentado</strong> (TVP, embolia pulmonar) — semelhante ao da terapêutica hormonal de substituição; <strong>CONTRAINDICADO em antecedentes de TEV ou trombofilia</strong>. Suspender 72h antes de cirurgia ou imobilização prolongada (e durante todo o período de imobilização). Pode causar ou <strong>agravar afrontamentos</strong> (fogachos) — desconfortável em mulheres recentemente em menopausa. Cãibras nas pernas. Síndrome gripal ligeiro. <strong>Não protege contra fraturas da anca</strong> — não é primeira escolha em risco vertebral + anca alto.'
+    )],
+    ['Cálcio (1000-1200 mg/dia) + Vitamina D (800-2000 UI/dia) sempre associados',
+     'Bifosfonato (alendronato, risedronato) se também houver risco de fratura da anca',
+     'Denosumab se intolerância ou risco moderado-grave',
+     'Terapêutica hormonal de substituição (THS) — pode ser opção em jovens pós-menopausa com sintomas vasomotores significativos, sob avaliação ginecológica (decisão partilhada)',
+     'Bazedoxifeno + estrogénios conjugados — alternativa SERM com efeito vasomotor positivo'],
+    ['<strong>Antecedentes pessoais de TEV (TVP, embolia pulmonar)</strong> — contraindicação absoluta',
+     'Imobilização prolongada sem suspender (cirurgia, internamento, viagem longa em avião)',
+     'Mulher pré-menopausa — não indicado',
+     'Doente com afrontamentos significativos não controlados — pode agravar',
+     'Doença hepática grave'],
+    'Tratamento crónico (mantido enquanto persistir o risco). Reavaliar aos 5 anos.',
+    ['Exercício físico regular: caminhada, treino de força, exercícios de impacto e equilíbrio',
+     'Dieta rica em cálcio (lacticínios magros, vegetais de folha verde escura, sardinha) e vitamina D',
+     'Cessação tabágica obrigatória — duplica risco trombótico em SERM',
+     'Limitar álcool',
+     'Hidratação em viagens longas (mexer pernas a cada 2h, meias de compressão)',
+     'Comunicar imediatamente sintomas suspeitos de TVP (dor/edema unilateral perna) ou TEP (dispneia súbita)',
+     'Apoio: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt)'],
+    ['DXA basal e cada 2 anos',
+     '25-OH-vitamina D anual (alvo >30 ng/mL) e cálcio sérico',
+     'Avaliação ginecológica anual (mama e endométrio — apesar do efeito protetor)',
+     'Avaliação do risco trombótico em cada consulta',
+     'Função hepática anual',
+     'Avaliação de novas fraturas vertebrais (perda de altura, Rx coluna se dor)'],
+    {elderly: isOld ? 'Em > 70 anos, preferir bifosfonatos ou denosumab — o raloxifeno não protege contra fraturas da anca, que é a complicação de maior morbi-mortalidade neste grupo etário.' : '',
+     pregnancy: 'Não aplicável — uso exclusivo em mulher pós-menopausa.',
+     costNote: 'Custo moderado, comparticipado pelo SNS em osteoporose pós-menopausa. A vantagem dual (osso + mama) torna-o atrativo em quem tem risco familiar de cancro da mama hormono-dependente.'},
+    family ? 'História familiar de osteoporose presente — confirmar avaliação completa por reumatologia para definir a melhor estratégia de longo prazo. O raloxifeno é especialmente útil se houver também história familiar de cancro da mama.' : ''
+  );
+
+  /* Resultado 3 — Idoso com risco aumentado (zoledronato IV anual) */
+  if (isOld && (falls || steroids)) return res(
+    'Resultado 3: Idoso de Alto Risco — Ácido Zoledrónico IV',
+    'Bifosfonato intravenoso anual — máxima adesão e potência',
+    [drug(
+      'Ácido Zoledrónico',
+      'Bifosfonato intravenoso de alta potência',
+      'O ácido zoledrónico é um <strong>bifosfonato IV de muito alta potência</strong>, com a mesma ação dos bifosfonatos orais (inibição dos osteoclastos via inibição da farnesil pirofosfato sintetase) mas administrado <strong>uma única vez por ano</strong> em perfusão IV. Estudo HORIZON demonstrou redução de <strong>fraturas vertebrais (~70%), não-vertebrais (~25%) e da anca (~40%)</strong>. A administração anual elimina o problema de adesão à toma oral semanal complexa (jejum, posição vertical 30 min) — particularmente útil em <strong>idosos com polimedicação, dificuldade de mobilidade ou intolerância oral</strong>. Também é a primeira escolha em <strong>osteoporose induzida por corticoides</strong>.',
+      '5 mg IV em perfusão de 15 minutos, <strong>1 vez por ano</strong> (Aclasta)',
+      'Hospital de dia ou ambulatório especializado',
+      '<strong>Hidratação adequada antes e depois</strong> (≥500 mL antes da perfusão; manter boa hidratação 24-48h após). Paracetamol 1 g preventivo no momento da perfusão e nas 24-72h seguintes pode prevenir/atenuar a síndrome gripal. <strong>Cálcio + vitamina D obrigatórios</strong> antes (corrigir défice) e durante todo o tratamento.',
+      'Custo moderado a elevado (~200–400€/administração) · Comparticipação SNS em critérios definidos',
+      '<strong>Síndrome gripal transitória nas 24-72h após a 1.ª administração</strong> (febre, mialgias, cefaleias — ocorre em ~30% dos doentes; habitualmente autolimitada e menos frequente nas administrações subsequentes; paracetamol preventivo ajuda). <strong>Hipocalcemia</strong> — corrigir cálcio e vitamina D ANTES. Toxicidade renal (<strong>contraindicado se TFG <35 mL/min</strong>) — perfusão lenta e hidratação adequada são essenciais. Osteonecrose da mandíbula (raro — avaliação dentária prévia obrigatória). Fibrilhação auricular (relação ainda discutida).'
+    ), drug(
+      'Cálcio + Vitamina D (sempre associados)',
+      'Suplementação para prevenção de hipocalcemia e mineralização',
+      'Sem suplementação adequada de cálcio e vitamina D, o efeito anti-reabsortivo do zoledronato pode causar <strong>hipocalcemia clinicamente relevante</strong>, particularmente em idosos com hipovitaminose D (muito prevalente em Portugal).',
+      'Cálcio 1000–1200 mg/dia · Vitamina D 800–2000 UI/dia (corrigir défice antes da perfusão)',
+      'Oral, doses divididas com refeições',
+      'Iniciar pelo menos 2 semanas antes da perfusão; manter durante todo o tratamento.',
+      'Custo muito baixo',
+      'Hipercalcemia se doses excessivas. Litíase renal se predisposição.'
+    )],
+    ['Alendronato 70 mg/sem ou risedronato 35 mg/sem orais — alternativa se preferência por toma oral e capacidade de cumprir as regras de toma',
+     'Denosumab 60 mg SC cada 6 meses — alternativa se TFG <35 mL/min',
+     'Avaliação dentária antes do início (osteonecrose da mandíbula)',
+     'Investigação de causas secundárias se osteoporose precoce ou grave (hiperparatiroidismo, hipertiroidismo, mieloma, doença celíaca)',
+     'Reabilitação para prevenção de quedas (consulta de quedas, fisioterapia, treino de equilíbrio)'],
+    ['Iniciar sem corrigir hipocalcemia ou défice de vitamina D — risco de tetania',
+     'TFG <35 mL/min — contraindicado',
+     'Procedimentos dentários invasivos no período pós-perfusão sem informar reumatologia',
+     'Atrasar a hidratação ou administrar perfusão em <15 min — risco renal',
+     'AINE concomitantes em doses elevadas — potencia toxicidade renal'],
+    'Tratamento anual, geralmente durante 3-5 anos. Após esse período, ponderar drug holiday em função da DMO e do risco de fratura.',
+    ['Exercício físico de impacto adaptado (caminhada, dança, treino de força com supervisão)',
+     'Prevenção rigorosa de quedas: iluminação, calçado antiderrapante, retirar tapetes, barras de apoio na casa de banho, óculos atualizados',
+     'Avaliação anual da medicação habitual (psicotrópicos, hipotensores, hipoglicemiantes — todos aumentam risco de queda)',
+     'Cessação tabágica e moderação alcoólica',
+     'Dieta rica em cálcio (lacticínios magros, sardinha, vegetais verdes) e vitamina D (peixes gordos, exposição solar)',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt) e APOROS'],
+    ['Função renal e cálcio sérico antes de cada perfusão (anual)',
+     '25-OH-vitamina D antes de iniciar e cada 6-12 meses (alvo >30 ng/mL)',
+     'DXA basal e cada 2 anos',
+     'Avaliação dentária basal e cada 12 meses',
+     'Avaliação do risco de quedas em cada consulta',
+     'Vigilância de novas fraturas (perda de altura, dor súbita coluna)'],
+    {elderly: 'O zoledronato IV anual é frequentemente a primeira escolha no idoso polimedicado — elimina o problema de adesão e da toma matinal complexa do alendronato oral. Hidratação e função renal são as principais precauções.',
+     costNote: 'Custo unitário moderado-elevado mas administração anual única — custo-eficácia favorável vs alendronato oral semanal quando há problemas de adesão. Comparticipação SNS com critérios.'},
+    steroids ? 'IMPORTANTE: corticoterapia prolongada — o ácido zoledrónico é a primeira escolha na osteoporose induzida por corticoides (estudo HORIZON-Steroid). Idealmente iniciar nos primeiros 3 meses de corticoterapia para prevenir perda óssea aguda.' : (falls ? 'Risco aumentado de quedas — encaminhar para consulta de quedas/fisioterapia. A medicação anti-osteoporótica reduz o risco de fratura, mas não substitui a prevenção comportamental.' : '')
+  );
+
+  /* Resultado 2 — Osteoporose confirmada (alendronato/risedronato oral, primeira linha) */
+  if (diag) return res(
+    'Resultado 2: Osteoporose Confirmada — Bifosfonato Oral (1.ª Linha)',
+    'Alendronato ou Risedronato semanal — pedra angular do tratamento',
+    [drug(
+      'Alendronato (ou Risedronato)',
+      'Bifosfonato oral — inibidor da reabsorção óssea pelos osteoclastos',
+      'Os <strong>bifosfonatos orais são a primeira linha</strong> no tratamento da osteoporose confirmada, com mais de 25 anos de evidência sólida. Ligam-se à hidroxiapatite no osso e <strong>inibem a atividade dos osteoclastos</strong> através da inibição da farnesil pirofosfato sintetase, reduzindo a reabsorção óssea e aumentando a densidade mineral óssea. Reduzem o risco de <strong>fraturas vertebrais (~50%), não-vertebrais (~20%) e da anca (~40%)</strong>. O alendronato é o mais usado e estudado; o risedronato é uma alternativa equivalente (eventualmente melhor tolerado em alguns doentes). Têm a particularidade de exigir <strong>regras estritas de administração</strong> para evitar esofagite e garantir absorção (a biodisponibilidade oral dos bifosfonatos é baixíssima, <1%, e qualquer alimento ou cálcio anula a absorção).',
+      'Alendronato: 70 mg <strong>1x/semana</strong> (ou 10 mg/dia) · Risedronato: 35 mg 1x/semana (ou 150 mg/mês ou 5 mg/dia)',
+      'Oral, em jejum, ao acordar, sempre no mesmo dia da semana',
+      '<strong>REGRAS OBRIGATÓRIAS:</strong> tomar em jejum, ao acordar, com um copo cheio de água (200 mL); permanecer sentado ou em pé (não deitar) durante 30 minutos; não comer, beber (exceto água), nem tomar outros medicamentos durante 30-60 minutos. Estas regras existem para reduzir o risco de esofagite e maximizar a absorção. Suplementar SEMPRE com cálcio e vitamina D, mas separadas pelo menos 30 min do bifosfonato.',
+      'Custo baixo (~5–20€/mês comparticipado pelo SNS)',
+      '<strong>Esofagite e ulceração esofágica</strong> se mal administrado — contraindicado em acalásia, esófago de Barrett, estenose esofágica, incapacidade de permanecer em pé/sentado 30 min. Dispepsia, dor abdominal. <strong>CONTRAINDICADO se TFG <35 mL/min</strong>. Osteonecrose da mandíbula (raro, mais frequente após procedimentos dentários invasivos — avaliação dentária prévia recomendada). Fratura atípica do fémur com uso muito prolongado (>5 anos — reavaliar necessidade aos 3-5 anos com drug holiday se DMO estabilizada). Hipocalcemia se carência prévia.'
+    ), drug(
+      'Cálcio + Vitamina D (sempre associados — toma separada do bifosfonato)',
+      'Suplementação para prevenção de hipocalcemia e mineralização',
+      'Sem suplementação adequada, o efeito anti-reabsortivo dos bifosfonatos pode causar hipocalcemia. A suplementação é também essencial em doentes com baixa ingestão alimentar de cálcio (frequente em idosos).',
+      'Cálcio: 1000–1200 mg/dia (ajustar conforme ingestão dietética) · Vitamina D: 800–2000 UI/dia',
+      'Oral, doses divididas com refeições — separadas pelo menos 30 min do bifosfonato',
+      'Verificar 25-OH-vitamina D — corrigir défice grave antes do início.',
+      'Custo muito baixo',
+      'Hipercalcemia em doses excessivas. Litíase renal em predisposição. Obstipação (cálcio).'
+    )],
+    ['Risedronato 35 mg/sem ou 150 mg/mês — alternativa se intolerância ao alendronato',
+     'Ácido zoledrónico IV anual — alternativa se intolerância oral, dificuldade de adesão, polimedicação ou TFG na zona limítrofe',
+     'Denosumab 60 mg SC cada 6 meses — alternativa em insuficiência renal moderada (TFG <35) ou intolerância',
+     'Investigação de causas secundárias em osteoporose precoce ou grave (hiperparatiroidismo, hipertiroidismo, mieloma, doença celíaca, hipovitaminose D severa)',
+     'Avaliação de risco com ferramenta FRAX (https://frax.shef.ac.uk)'],
+    ['Tomar deitado ou após refeição — risco de esofagite e nenhuma absorção',
+     'Tomar com café, sumo, leite ou outros líquidos que não água — anula absorção',
+     'Combinar com cálcio na mesma toma — anula absorção',
+     'Procedimentos dentários invasivos sem informar o reumatologista — risco de osteonecrose mandibular',
+     'TFG <35 mL/min — contraindicado',
+     'AINE em alta dose prolongada — potencia esofagite e toxicidade renal'],
+    'Tratamento crónico geralmente por 3-5 anos. Reavaliação aos 3-5 anos: se DMO estabilizada e baixo risco, pode considerar-se "drug holiday" (interrupção temporária); manter se persistência de alto risco.',
+    ['Exercício físico regular adaptado: caminhada, treino de força com supervisão, exercícios de equilíbrio (Tai Chi)',
+     'Prevenção de quedas: iluminação, calçado antiderrapante, retirar tapetes soltos, barras de apoio na casa de banho, óculos atualizados',
+     'Dieta rica em cálcio (lacticínios magros, sardinha enlatada com espinhas, brócolos, espinafres) e vitamina D (peixes gordos, ovos, exposição solar moderada)',
+     'Cessação tabágica obrigatória — o tabaco acelera perda óssea e aumenta risco de fratura',
+     'Limitar álcool (<2 unidades/dia)',
+     'Higiene oral cuidada e visitas regulares ao dentista',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt) e APOROS'],
+    ['DXA cada 2 anos para monitorizar resposta',
+     '25-OH-vitamina D anual (alvo >30 ng/mL) e cálcio sérico cada 6-12 meses',
+     'Função renal anual',
+     'Avaliação dentária basal e cada 12 meses',
+     'Marcadores de remodelação óssea (CTX) opcional para avaliar adesão e resposta',
+     'Reavaliação aos 3-5 anos para ponderar drug holiday'],
+    {elderly: isOld ? 'No idoso, considerar zoledronato IV anual ou denosumab SC semestral em vez do alendronato oral — melhor adesão e elimina o problema da toma matinal complexa em jejum com posição vertical 30 min.' : '',
+     costNote: 'Alendronato e risedronato são genéricos amplamente comparticipados pelo SNS — custo total muito baixo. Adesão é o principal preditor de eficácia — se má adesão, considerar formulação semanal vs diária ou IV anual.'},
+    !hasDexa ? 'IMPORTANTE: realizar DXA basal antes de iniciar tratamento — fundamental para confirmar diagnóstico, definir estratégia e permitir monitorização da resposta.' : (steroids ? 'Corticoterapia em curso — preferir zoledronato IV ou denosumab pela maior eficácia na osteoporose induzida por corticoides.' : '')
+  );
+
+  /* Resultado 1 — Prevenção / osteopenia / risco ligeiro (Cálcio + Vitamina D + estilo de vida) */
+  return res(
+    'Resultado 1: Prevenção e Osteopenia — Cálcio + Vitamina D + Estilo de Vida',
+    'Suplementação mineral e vitamínica + medidas não farmacológicas',
+    [drug(
+      'Cálcio',
+      'Suplementação mineral — substrato estrutural do osso',
+      'O <strong>cálcio é o principal mineral estrutural do osso</strong> (~99% do cálcio corporal está no esqueleto). A ingestão diária recomendada em adultos é 1000-1200 mg/dia, idealmente obtida através da alimentação (lacticínios, vegetais de folha verde escura, sardinha enlatada com espinhas, tofu, frutos secos). A suplementação só se justifica para completar o défice — excessos podem causar litíase renal e, em doses muito elevadas, calcificações vasculares com possível impacto cardiovascular. Em prevenção primária e em osteopenia, o cálcio + vitamina D são a base de qualquer abordagem, com efeito modesto mas consistente na redução de fraturas (sobretudo em idosos institucionalizados).',
+      '1000–1200 mg/dia (alimentação + suplemento, ajustado conforme ingestão dietética) · NÃO ultrapassar 2000 mg/dia',
+      'Oral, doses divididas com refeições (máximo 500 mg por toma para melhor absorção)',
+      'Verificar primeiro a ingestão alimentar — se já consumir lacticínios diariamente, o suplemento pode ser desnecessário ou só parcial. Separar do bifosfonato (se em curso) por pelo menos 30 min.',
+      'Custo muito baixo (~5-15€/mês)',
+      'Excesso pode causar <strong>hipercalcemia</strong> (anorexia, náuseas, fraqueza), <strong>litíase renal</strong> (dor lombar, hematúria) e, em doses muito elevadas e prolongadas, possível aumento do risco cardiovascular (calcificações). Obstipação. Reduz absorção de levotiroxina, ferro e algumas tetraciclinas — separar tomas.'
+    ), drug(
+      'Vitamina D (Colecalciferol — D3)',
+      'Suplementação vitamínica — essencial para absorção de cálcio',
+      'A <strong>vitamina D é essencial para a absorção intestinal de cálcio</strong> e para a sua incorporação no osso. O défice é <strong>extremamente prevalente em Portugal</strong> (>50% dos adultos, >80% em idosos institucionalizados) — apesar do clima ensolarado. As principais fontes são a <strong>síntese cutânea por exposição solar</strong> (15-20 min/dia em horário seguro), peixes gordos (salmão, sardinha, atum), gema de ovo, e suplementação. Em défice grave, podem ser necessárias <strong>doses de carga</strong> prescritas pelo médico (50 000 UI/semana durante 8-12 semanas) seguidas de manutenção.',
+      'Manutenção: 800–2000 UI/dia (colecalciferol D3) · Défice grave: dose de carga conforme prescrição médica',
+      'Oral, 1x/dia, com refeição gordurosa (vitamina D é lipossolúvel — gordura aumenta absorção)',
+      'Pode ser tomada diariamente (800-2000 UI), semanalmente (5000-7000 UI) ou mensalmente (25000-50000 UI) — equivalência aproximada. Manter durante todo o ano (no inverno a síntese cutânea é insuficiente em Portugal).',
+      'Custo muito baixo',
+      'Doses muito elevadas e prolongadas podem causar <strong>hipercalcemia, hipercalciúria e litíase renal</strong>. Em doses recomendadas, perfil de segurança excelente. Verificar 25-OH-vitamina D após 3 meses de suplementação — alvo >30 ng/mL (75 nmol/L). Doses excessivas raras com formulações orais habituais.'
+    )],
+    ['<strong>Exercício físico de impacto e treino de força</strong> — caminhada rápida, corrida ligeira, dança, musculação supervisionada — estimula a formação óssea',
+     'Exposição solar moderada (15-20 min/dia em horário seguro) — síntese cutânea de vitamina D',
+     'Dieta rica em cálcio: lacticínios magros (3 porções/dia), sardinha enlatada com espinhas, brócolos, espinafres, tofu, frutos secos',
+     'Cessação tabágica — o tabaco acelera perda óssea',
+     'Moderação alcoólica (<2 unidades/dia)',
+     'DXA basal em mulheres ≥65 anos, homens ≥70 anos, ou mais cedo se fatores de risco (menopausa precoce, corticoterapia, baixo peso, história familiar)',
+     'Reavaliação periódica do risco com ferramenta FRAX (https://frax.shef.ac.uk)'],
+    ['Excesso de cálcio (>2000 mg/dia) — risco de litíase renal e possíveis efeitos cardiovasculares',
+     'Vitamina D em doses muito elevadas sem prescrição (>4000 UI/dia prolongado) — risco de hipercalcemia',
+     'Tabagismo e excesso de álcool — aceleram perda óssea',
+     'Sedentarismo prolongado — fator de risco modificável major',
+     'Dietas excessivamente restritivas em proteína ou em lacticínios sem alternativas adequadas'],
+    'Manutenção indefinida. Reavaliação anual de fatores de risco e DXA conforme indicação clínica.',
+    ['<strong>Exercício físico regular</strong>: 150 min/semana de atividade aeróbica de impacto + 2-3x/semana de treino de força',
+     '<strong>Prevenção de quedas</strong> (mesmo sem osteoporose confirmada): iluminação, calçado adequado, óculos atualizados, ambiente seguro',
+     'Dieta mediterrânica equilibrada com cálcio e vitamina D adequados',
+     'Manter peso saudável (IMC 20-25 kg/m²) — baixo peso é fator de risco para osteoporose',
+     'Cessação tabágica obrigatória',
+     'Exposição solar moderada e regular',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt) e APOROS'],
+    ['DXA basal e cada 2 anos a partir dos 65 anos (mulheres) ou 70 anos (homens), ou antes se fatores de risco',
+     '25-OH-vitamina D anual em risco (idosos, institucionalizados, pele escura, pouca exposição solar)',
+     'Cálcio sérico e função renal cada 1-2 anos se em suplementação',
+     'Reavaliação anual de fatores de risco (FRAX)',
+     'Avaliação de novas fraturas (perda de altura ≥2 cm, dor súbita coluna)'],
+    {elderly: isOld ? 'Em > 65 anos, considerar dose de manutenção de vitamina D mais elevada (1000-2000 UI/dia) e DXA imediata. A síntese cutânea é menos eficaz com a idade. Avaliação do risco de quedas é prioridade.' : '',
+     costNote: 'Cálcio e vitamina D genéricos têm custo muito baixo (~5-15€/mês). A medida mais custo-eficaz em prevenção primária é a combinação de exercício físico regular + dieta adequada + cessação tabágica — gratuita.'},
+    family ? 'IMPORTANTE: tem história familiar de osteoporose — antecipar a primeira DXA (não esperar pelos 65 anos) e otimizar fatores de risco modificáveis o mais cedo possível.' : (lowWeight ? 'Baixo peso é fator de risco importante para osteoporose — manter ingestão calórica e proteica adequada e considerar avaliação nutricional.' : (steroids ? 'Corticoterapia prolongada — risco aumentado de osteoporose; considerar bifosfonato profilático mesmo sem osteoporose confirmada (especialmente se >7,5 mg/dia de prednisolona >3 meses).' : ''))
   );
 }
 
