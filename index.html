@@ -431,6 +431,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
           <span style="background:#e0f2fe;color:#0891b2;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Asma</span>
           <span style="background:#e0f2fe;color:#0891b2;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">DPOC</span>
+          <span style="background:#e0f2fe;color:#0891b2;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Pneumonia</span>
         </div>
         <button class="btn-purple" style="background:#0891b2" onclick="showPage('resp')">Explorar &rarr;</button>
       </div>
@@ -561,7 +562,17 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
       <div class="d-vis" style="background:#e0f7ff;min-height:240px"></div>
     </div>
 
-  
+    <div class="d-row">
+      <div class="d-vis" style="background:#e0f7ff;min-height:240px"></div>
+      <div class="d-inf">
+        <h2>Pneumonia Adquirida na Comunidade</h2>
+        <p>Infeção aguda dos pulmões contraída fora do ambiente hospitalar, resultante da inflamação dos alvéolos por bactérias, vírus ou, mais raramente, fungos. Os sintomas típicos incluem febre elevada, tosse com expetoração, dispneia e dor torácica pleurítica.</p>
+        <p>É uma das infeções respiratórias mais frequentes e uma das principais causas de internamento hospitalar por doença infecciosa em Portugal — sobretudo em idosos, crianças e pessoas com doenças crónicas. A vacinação antipneumocócica e antigripal são as principais medidas de prevenção.</p>
+        <button class="btn-purple" style="background:#0891b2" onclick="openDisease('pac')">Saber Mais</button>
+      </div>
+    </div>
+
+
   </div>
 
   <div class="quote-band">
@@ -755,6 +766,7 @@ function showPage(id) {
 var DIMG = {
   dpoc: '',
   asma: '',
+  pac: '',
   dm2: '',
   ansiedade: '',
   depressao: '',
@@ -774,8 +786,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm1:'metab', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm1:'Diabetes Mellitus Tipo 1', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', pac:'resp', dm1:'metab', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', pac:'Pneumonia Adquirida na Comunidade', dm1:'Diabetes Mellitus Tipo 1', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -811,6 +823,11 @@ var DINTRO = {
     'A Doença Pulmonar Obstrutiva Crónica (DPOC) é uma doença respiratória progressiva caracterizada por limitação persistente do fluxo aéreo. Resulta de uma resposta inflamatória crónica das vias aéreas e do parênquima pulmonar a partículas ou gases nocivos, sendo o tabagismo o principal fator de risco responsável por cerca de 85% dos casos.',
     'A DPOC engloba duas condições que frequentemente coexistem: a <strong>bronquite crónica</strong>, definida por tosse com produção de expetoração durante pelo menos três meses por ano em dois anos consecutivos, e o <strong>enfisema pulmonar</strong>, caracterizado pela destruição progressiva dos alvéolos. O sintoma mais limitante é a <strong>dispneia progressiva</strong> — inicialmente apenas em esforço, mas que vai agravando até surgir em repouso nos casos mais avançados.',
     'Ao contrário da asma, a DPOC não tem cura e a limitação do fluxo de ar é maioritariamente irreversível. No entanto, o tratamento farmacológico adequado permite <strong>reduzir sintomas, prevenir exacerbações e melhorar significativamente a qualidade de vida</strong>. A cessação tabágica é a intervenção mais eficaz para travar a progressão da doença. Use o quiz abaixo para perceber qual a abordagem terapêutica mais adequada ao seu perfil.'
+  ],
+  pac: [
+    'A pneumonia adquirida na comunidade (PAC) é uma <strong>infeção aguda dos pulmões</strong> contraída fora do ambiente hospitalar, resultante da inflamação dos alvéolos pulmonares por bactérias, vírus ou, mais raramente, fungos. O preenchimento dos alvéolos com secreções compromete a troca gasosa e pode evoluir rapidamente para insuficiência respiratória. É uma das infeções respiratórias mais frequentes em Portugal, sobretudo em idosos, crianças e pessoas com doenças crónicas, sendo uma das principais causas de internamento hospitalar por doença infecciosa.',
+    'Os sintomas mais característicos incluem <strong>febre elevada com arrepios, tosse frequentemente produtiva com expetoração, dificuldade respiratória (dispneia), dor torácica ao respirar fundo ou tossir, cansaço e fraqueza marcados</strong>. Em idosos, a pneumonia pode manifestar-se de forma <strong>atípica</strong> — com confusão mental, sonolência ou deterioração do estado geral sem febre evidente — o que frequentemente atrasa o diagnóstico e agrava o prognóstico.',
+    'O tratamento depende da gravidade da doença, avaliada por scores clínicos como o <strong>CRB-65</strong>, e do agente infecioso mais provável. A maioria dos casos ligeiros pode ser tratada em ambulatório com antibioterapia oral, mas casos moderados a graves requerem hospitalização e antibioterapia intravenosa. A <strong>vacinação antipneumocócica e anti-gripal</strong> são as principais medidas de prevenção. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
   ],
   asma: [
     'A asma é uma doença inflamatória crónica das vias aéreas, caracterizada por obstrução variável e reversível do fluxo de ar. Esta obstrução resulta de uma combinação de broncoconstrição, inflamação da mucosa brônquica e aumento da produção de muco.',
@@ -972,6 +989,19 @@ var Qu = {
   as_preg:    q('as_preg',    'Está grávida?', [o('A','Sim',{as_preg:true}),o('B','Não',{as_preg:false})]),
   as_copd:    q('as_copd',    'Tem outras doenças respiratórias (ex: DPOC)?', [o('A','Sim',{as_copd:true}),o('B','Não',{as_copd:false})]),
   as_inhaler: q('as_inhaler', 'Consegue usar corretamente um inalador?', [o('A','Sim',{as_inhaler:true}),o('B','Não, ou não tenho a certeza',{as_inhaler:false})]),
+  pac_diag:      q('pac_diag',      'Tem diagnóstico de pneumonia recente?', [o('A','Sim',{pac_diag:true}),o('B','Não',{pac_diag:false})]),
+  pac_fever:     q('pac_fever',     'Tem febre alta (>38°C)?', [o('A','Sim',{pac_fever:true}),o('B','Não',{pac_fever:false})]),
+  pac_cough:     q('pac_cough',     'Tem tosse com expectoração?', [o('A','Sim',{pac_cough:true}),o('B','Não',{pac_cough:false})]),
+  pac_breath:    q('pac_breath',    'Tem dificuldade em respirar mesmo em repouso?', [o('A','Sim',{pac_breath:true}),o('B','Não',{pac_breath:false})]),
+  pac_chest:     q('pac_chest',     'Sente dor no peito ao respirar fundo ou tossir?', [o('A','Sim',{pac_chest:true}),o('B','Não',{pac_chest:false})]),
+  pac_chills:    q('pac_chills',    'Tem arrepios ou calafrios?', [o('A','Sim',{pac_chills:true}),o('B','Não',{pac_chills:false})]),
+  pac_fatigue:   q('pac_fatigue',   'Sente cansaço extremo ou fraqueza?', [o('A','Sim',{pac_fatigue:true}),o('B','Não',{pac_fatigue:false})]),
+  pac_confusion: q('pac_confusion', 'Tem confusão mental ou sonolência anormal?', [o('A','Sim',{pac_confusion:true}),o('B','Não',{pac_confusion:false})]),
+  pac_hydrate:   q('pac_hydrate',   'Consegue alimentar-se e hidratar-se normalmente?', [o('A','Sim',{pac_hydrate:true}),o('B','Não',{pac_hydrate:false})]),
+  pac_age65:     q('pac_age65',     'Tem mais de 65 anos?', [o('A','Sim',{pac_age65:true}),o('B','Não',{pac_age65:false})]),
+  pac_chronic:   q('pac_chronic',   'Tem doenças crónicas (diabetes, cardíacas, respiratórias)?', [o('A','Sim',{pac_chronic:true}),o('B','Não',{pac_chronic:false})]),
+  pac_hosp:      q('pac_hosp',      'Foi internado recentemente por infeção respiratória?', [o('A','Sim',{pac_hosp:true}),o('B','Não',{pac_hosp:false})]),
+  pac_smoke:     q('pac_smoke',     'Fuma ou fumou anteriormente?', [o('A','Sim',{pac_smoke:true}),o('B','Não',{pac_smoke:false})]),
   dp_smoke:   q('dp_smoke',   'Fuma ou fumou durante muitos anos?', [o('A','Sim',{dp_smoke:true}),o('B','Não',{dp_smoke:false})]),
   dp_breath:  q('dp_breath',  'Sente falta de ar no dia a dia?', [o('A','Apenas em esforço intenso',{dp_breath:'mild'}),o('B','Em atividades normais (caminhar, subir escadas)',{dp_breath:'moderate'}),o('C','Mesmo em repouso',{dp_breath:'severe'})]),
   dp_cough:   q('dp_cough',   'Tem tosse com expetoração frequente?', [o('A','Sim',{dp_cough:true}),o('B','Não',{dp_cough:false})]),
@@ -1112,6 +1142,7 @@ var DQ = {
   dm2: ['dm_weight','dm_lifestyle','dm_control','dm_cardio','dm_renal','dm_hypo','dm_inject','dm_age65','dm_meds'],
   dpoc: ['dp_smoke','dp_breath','dp_cough','dp_hosp','dp_exac','dp_inhaler','dp_age65','dp_cardiac','dp_smoking'],
   asma: ['as_freq','as_night','as_hosp','as_sos','as_allergy','as_child','as_preg','as_copd','as_inhaler'],
+  pac:  ['pac_diag','pac_fever','pac_cough','pac_breath','pac_chest','pac_chills','pac_fatigue','pac_confusion','pac_hydrate','pac_age65','pac_chronic','pac_hosp','pac_smoke'],
   hta: ['hta_diag','hta_bp','hta_age65','hta_comorbid2','hta_weight','hta_habits','hta_meds2','hta_symptoms'],
   eam: ['eam_chest','eam_irrad','eam_symptoms','eam_risk','eam_smoke','eam_prev','eam_meds','eam_rest'],
   ic:  ['age','sex','preg','icFEVE','icNYHA','icDM','renal','cost'],
@@ -1196,6 +1227,7 @@ function getOutcome() {
   var id = QS.disease;
   var t = tags();
   if (id==='dm1') return dm1O(t);
+  if (id==='pac') return pacO(t);
   if (id==='dm2') return dm2O(t);
   if (id==='dpoc') return dpocO(t);
   if (id==='asma') return asmaO(t);
@@ -4713,6 +4745,312 @@ function dm1O(t) {
      pregnancy: 'Em gravidez, doses de basal aumentam 50-100% no 3.º trimestre. Glargina e degludeca cada vez mais usadas com segurança crescente; aspart e lispro são as prandiais de eleição.',
      costNote: 'Glargina e degludeca comparticipadas pelo SNS em DM1. Custo total mensal para o doente é geralmente baixo. Bomba de insulina e CGM também comparticipados em critérios.'},
     !diag ? 'IMPORTANTE: confirmar diagnóstico de DM1 com anticorpos (anti-GAD, anti-IA2, anti-insulina) e péptido C — distingue de DM2 e de diabetes monogénica (MODY). O tratamento difere substancialmente.' : (thirst && urine && weight ? 'Tríade clássica de DM1 (polidipsia + poliúria + perda de peso) — encaminhamento URGENTE a endocrinologia com início de insulina sem demora. Verificar cetonas para excluir DKA.' : '')
+  );
+}
+
+function pacO(t) {
+  var diag      = (t.pac_diag      === true);
+  var fever     = (t.pac_fever     === true);
+  var cough     = (t.pac_cough     === true);
+  var breath    = (t.pac_breath    === true);
+  var chest     = (t.pac_chest     === true);
+  var chills    = (t.pac_chills    === true);
+  var fatigue   = (t.pac_fatigue   === true);
+  var confusion = (t.pac_confusion === true);
+  var hydrate   = (t.pac_hydrate   === true);
+  var isOld     = (t.pac_age65     === true);
+  var chronic   = (t.pac_chronic   === true);
+  var hosp      = (t.pac_hosp      === true);
+  var smoke     = (t.pac_smoke     === true);
+
+  /* Resultado 6 — Insuficiência respiratória grave (oxigenoterapia + AB IV largo espetro) */
+  if (breath && confusion) return res(
+    'Resultado 6: EMERGÊNCIA — Insuficiência Respiratória Grave',
+    'Oxigenoterapia hospitalar + antibioterapia IV de largo espetro',
+    [drug(
+      'Oxigenoterapia',
+      'Suporte respiratório — primeira prioridade',
+      'A combinação de <strong>dispneia em repouso e confusão mental</strong> indica hipoxemia grave (SpO2 <94% em ar ambiente) e é uma <strong>EMERGÊNCIA MÉDICA</strong>. A confusão é frequentemente o primeiro sinal de hipoxia cerebral em pneumonia grave, sobretudo em idosos. O tratamento exige hospitalização imediata, oxigenoterapia titulada e antibioterapia IV de largo espetro empírica (sem esperar pelos resultados microbiológicos). A demora aumenta significativamente a mortalidade — cada hora de atraso na primeira dose de antibiótico em pneumonia grave aumenta a mortalidade em 5-10%.',
+      'Cânula nasal: 2-4 L/min · Máscara de Venturi 28-40% · Cânula nasal de alto fluxo (HFNO) 30-60 L/min · Objetivo SpO2 94-98% (88-92% se DPOC)',
+      'Hospitalar — enfermaria ou UCI conforme gravidade',
+      'Avaliação imediata em SU. Se falência respiratória progressiva apesar de oxigenoterapia convencional: <strong>VNI (BiPAP)</strong> ou ventilação mecânica invasiva em UCI. Monitorização contínua de SpO2, frequência respiratória e estado mental.',
+      'Hospitalar (incluído nos cuidados pelo SNS) · Oxigenoterapia domiciliária comparticipada se necessidade crónica após alta',
+      'Risco de toxicidade do oxigénio em uso prolongado a alta concentração. Em DPOC: limitar SpO2 a 88-92% para evitar retenção de CO2. Riscos da ventilação mecânica: barotrauma, infeção nosocomial, lesão pulmonar.'
+    ), drug(
+      'Ceftriaxona + Azitromicina IV (esquema empírico)',
+      'Antibioterapia IV de largo espetro — cobertura de pneumococos e atípicos',
+      'O esquema empírico padrão em pneumonia grave hospitalizada combina <strong>ceftriaxona</strong> (cefalosporina de 3.ª geração com excelente atividade contra Streptococcus pneumoniae, incluindo estirpes resistentes à penicilina) com <strong>azitromicina</strong> (macrólido com cobertura para agentes atípicos como Legionella pneumophila e Mycoplasma — frequentemente envolvidos em pneumonias graves). Em UCI ou em doente com fatores de risco para Pseudomonas (DPOC grave, bronquiectasias, internamento recente), substitui-se a ceftriaxona por <strong>piperacilina-tazobactam</strong> ou outro anti-pseudomonas.',
+      'Ceftriaxona 1-2 g IV 1x/dia + Azitromicina 500 mg IV 1x/dia · Ou Piperacilina-tazobactam 4,5 g IV 8/8h se UCI/risco Pseudomonas',
+      'Endovenoso, em meio hospitalar',
+      'Iniciar nas <strong>primeiras 4 horas</strong> da chegada (idealmente na 1.ª hora). Colher hemoculturas e antigenúria (Legionella, pneumococo) ANTES da 1.ª dose. Considerar <strong>de-escalar</strong> para terapêutica oral (amoxicilina+clavulânico OU levofloxacina) após 48-72h se melhoria clínica e tolerância oral.',
+      'Hospitalar (custo SNS)',
+      'Risco de Clostridium difficile — vigiar diarreia. Trombocitopenia, disfunção hepática (ceftriaxona). Prolongamento QT (azitromicina) — vigiar ECG se arritmias. Reações alérgicas a beta-lactâmicos. Disfunção renal — ajustar dose. Pseudomonas se fator de risco — não sub-cobrir.'
+    )],
+    ['Hidratação IV cuidada (cristaloides) — equilíbrio entre euvolemia e prevenção de sobrecarga (especialmente em IC associada)',
+     'Levofloxacina 750 mg IV (monoterapia em alergia a beta-lactâmicos)',
+     'Corticoide sistémico (hidrocortisona 200 mg/dia) em pneumonia com choque séptico ou ARDS — controverso, decisão individualizada',
+     'Profilaxia antitrombótica (HBPM) se imobilizado',
+     'Reabilitação respiratória precoce'],
+    ['Atrasar a 1.ª dose de antibiótico — cada hora aumenta mortalidade',
+     'Suspender oxigénio sem confirmar SpO2 estável',
+     'Subdosagem em sépsis grave (volume de distribuição aumentado)',
+     'AINEs em sépsis com disfunção renal',
+     'Manter doente em casa após confusão de novo + dispneia — emergência'],
+    'Internamento até estabilização (mínimo 5-7 dias na maioria dos casos graves). Reabilitação respiratória após alta.',
+    ['<strong>LIGAR 112 ou ir IMEDIATAMENTE à urgência</strong> se confusão + dificuldade respiratória',
+     'Acompanhante presente para informar equipa médica (idosos podem não verbalizar sintomas)',
+     'Levar lista de medicação habitual e antecedentes',
+     'Após alta: reabilitação respiratória, vacinação atualizada (pneumocócica + gripe + COVID-19)',
+     'Cessação tabágica obrigatória se aplicável'],
+    ['SpO2 contínua + frequência respiratória + estado mental (Glasgow)',
+     'Gasometria arterial seriada · Lactato (rastreio de sépsis)',
+     'PCR e procalcitonina (resposta ao tratamento)',
+     'Hemoculturas (antes da 1.ª dose AB), antigenúrias',
+     'Radiografia torácica de controlo às 48-72h',
+     'Função renal e hepática diárias',
+     'Hemograma diário (vigilância de complicações)'],
+    {elderly: 'No idoso, a confusão pode ser o ÚNICO sintoma de pneumonia (apresentação atípica). A FEBRE pode estar AUSENTE em 20-30% dos casos. Limiar baixo de suspeita.',
+     costNote: 'Antibioterapia IV em internamento totalmente coberta pelo SNS. O custo principal é o tempo de internamento (UCI custa ~3000€/dia).'},
+    'EMERGÊNCIA MÉDICA: confusão + dispneia em repouso = pneumonia grave até prova em contrário. NÃO atrasar transporte ao SU. Ligar 112.'
+  );
+
+  /* Resultado 4 — Pneumonia grave / risco elevado (Ceftriaxona IV) */
+  if (breath || confusion || (isOld && chronic)) return res(
+    'Resultado 4: Pneumonia Grave — Ceftriaxona IV (Hospitalização)',
+    'Antibioterapia IV em internamento — CRB-65 ≥ 2',
+    [drug(
+      'Ceftriaxona',
+      'Cefalosporina de 3.ª geração — antibioterapia hospitalar de eleição',
+      'A <strong>ceftriaxona</strong> é a primeira escolha em pneumonia adquirida na comunidade que requer hospitalização (CRB-65 ≥ 2). Inibe a síntese da parede bacteriana com <strong>ação bactericida de largo espetro</strong>: cobertura excelente para <em>Streptococcus pneumoniae</em> (incluindo estirpes com resistência intermédia à penicilina), <em>Haemophilus influenzae</em>, <em>Moraxella catarrhalis</em> e a maioria dos bacilos Gram-negativos. <strong>NÃO cobre agentes atípicos</strong> (Legionella, Mycoplasma, Chlamydophila) — por isso é frequentemente <strong>combinada com azitromicina ou levofloxacina</strong> em pneumonia hospitalizada. Tem semivida longa (8h) que permite <strong>administração 1x/dia</strong>, simplificando logisticamente o tratamento.',
+      '1-2 g IV 1x/dia · Combinar com Azitromicina 500 mg IV 1x/dia se suspeita de atípicos · Duração total 7-10 dias (3-5 IV + restante oral)',
+      'Endovenoso ou intramuscular (com lidocaína) em meio hospitalar',
+      'Iniciar nas primeiras 4 horas. Hemoculturas e antigenúrias antes da 1.ª dose. <strong>De-escalar para terapêutica oral</strong> (amoxicilina+clavulânico ou levofloxacina) após 48-72h de melhoria clínica e tolerância oral — reduz tempo de internamento.',
+      'Hospitalar (custo SNS)',
+      'Diarreia, náuseas. Risco de <strong>Clostridium difficile</strong>. Reação alérgica em alérgicos a beta-lactâmicos (5-10% têm reação cruzada com penicilinas). Trombocitopenia, leucopenia (raras). Falsa positividade no teste de Coombs. Em recém-nascidos: precipitação biliar com cálcio — não usar com Ringer-Lactato.'
+    ), drug(
+      'Levofloxacina (alternativa oral ou IV em alergia a beta-lactâmicos)',
+      'Fluoroquinolona com excelente cobertura pneumocócica e atípica',
+      'A <strong>levofloxacina</strong> é uma <strong>fluoroquinolona respiratória</strong> com excelente cobertura tanto de pneumococos como de agentes atípicos (Legionella, Mycoplasma, Chlamydophila) — pode ser usada em <strong>monoterapia</strong>. É a alternativa de eleição em alergia a beta-lactâmicos. A formulação <strong>oral tem biodisponibilidade ~99%</strong>, equivalente à IV — útil em pneumonia moderada que pode ser tratada em ambulatório ou para de-escalar internamento. <strong>EMA emitiu alertas sobre fluoroquinolonas</strong>: risco de tendinopatia (especialmente do tendão de Aquiles em > 65 anos ou corticoterapia), prolongamento QT, neuropatia periférica e raros eventos psiquiátricos.',
+      '750 mg IV ou oral 1x/dia · Duração 5-7 dias (curso curto possível)',
+      'Endovenoso ou oral (mesma dose, biodisponibilidade ~99%)',
+      'Pode ser usada em monoterapia. Vigiar QT em doente com cardiopatia. Evitar em < 18 anos, gravidez, e em doentes com história de tendinopatia. Reduzir dose se TFG < 50 mL/min.',
+      'Comparticipado pelo SNS',
+      'Tendinopatia (tendão de Aquiles) — risco aumentado em > 65 e em corticoterapia. Prolongamento QT — vigiar em arritmias. Disglicemia em diabéticos. Convulsões (raras, em epilépticos). Disbiose intestinal e Clostridium difficile. Fotossensibilidade.'
+    )],
+    ['<strong>Piperacilina-Tazobactam</strong> 4,5 g IV 8/8h em fatores de risco para Pseudomonas (DPOC grave, bronquiectasias, internamento recente, antibioterapia recente)',
+     'Vancomicina ou Linezolida se suspeita de MRSA (raro em PAC mas crescente)',
+     'De-escalar para terapêutica oral após 48-72h: amoxicilina+clavulânico 875/125 mg 2x/dia OU levofloxacina 750 mg/dia oral',
+     'Adjuvantes: hidratação IV cuidada, profilaxia antitrombótica (HBPM), oxigenoterapia se SpO2 <94%',
+     'Pesquisa microbiológica: hemoculturas, antigenúria pneumocócica e Legionella, expectoração, eventualmente PCR multiplex respiratório'],
+    ['Adiar antibioterapia para esperar resultados microbiológicos — iniciar empiricamente nas primeiras 4h',
+     'Monoterapia com macrólido em pneumonia grave (resistência pneumocócica crescente)',
+     'AINEs em sépsis com disfunção renal',
+     'Levofloxacina em < 18 anos, grávida, ou em alta intensidade desportiva (tendinopatia)',
+     'Suspender de imediato apenas com melhoria febril — completar curso prescrito'],
+    'Internamento até estabilização (3-7 dias). Antibioterapia total 7-10 dias (3-5 IV, depois oral). Reavaliação em 48-72h.',
+    ['Repouso e posição semi-sentada para facilitar respiração',
+     'Hidratação adequada (oral ou IV)',
+     'Oxigenoterapia se SpO2 < 94%',
+     'Cessação tabágica obrigatória — fator de risco major',
+     'Vacinação antipneumocócica + gripe + COVID-19 após resolução',
+     'Reabilitação respiratória após alta — fisioterapia torácica'],
+    ['SpO2 contínua, frequência respiratória, temperatura, frequência cardíaca em cada turno',
+     'PCR e leucocitose para resposta ao tratamento',
+     'Hemoculturas, antigenúrias (Legionella, pneumococo) antes da 1.ª dose',
+     'Radiografia torácica baseline e às 48-72h se sem melhoria',
+     'Função renal/hepática a cada 48h em IV',
+     'Procalcitonina seriada — marcador de bacteremia e duração de tratamento',
+     'Critérios de de-escalação: apirexia 24h, FR < 24/min, SpO2 > 92% em ar ambiente, alimentação oral'],
+    {elderly: 'Em > 65 anos com comorbilidades, limiar baixo de internamento. Apresentação atípica frequente (confusão, queda, deterioração geral sem febre).',
+     costNote: 'Custo hospitalar coberto pelo SNS. Levofloxacina genérica oral é económica e pode reduzir tempo de internamento via de-escalação.'},
+    smoke ? 'Tabagismo é fator de risco major para PAC (multiplica risco por 2-3) — encaminhar para consulta de cessação tabágica após resolução.' : (chronic ? 'Doença crónica de base — reforçar vacinação antipneumocócica (Prevenar 13 + Pneumovax 23) anual e gripe sazonal.' : '')
+  );
+
+  /* Resultado 3 — Pneumonia atípica (Mycoplasma, Legionella, Chlamydophila) */
+  if (fever && !cough && !chest) return res(
+    'Resultado 3: Suspeita de Pneumonia Atípica — Azitromicina',
+    'Macrólido com cobertura intracelular para agentes atípicos',
+    [drug(
+      'Azitromicina',
+      'Macrólido — antibiótico bacteriostático com atividade intracelular',
+      'A <strong>pneumonia atípica</strong> apresenta-se de forma <strong>insidiosa</strong>: febre baixa a moderada, <strong>tosse seca</strong> (não produtiva), cefaleias, mialgias, fadiga marcada e radiografia frequentemente com <strong>infiltrado intersticial bilateral</strong> (e não consolidação lobar típica). É causada por agentes intracelulares — <strong><em>Mycoplasma pneumoniae</em></strong> (jovens e adultos saudáveis), <strong><em>Chlamydophila pneumoniae</em></strong>, e <strong><em>Legionella pneumophila</em></strong> (associada a sistemas de água, mais grave). Os <strong>beta-lactâmicos NÃO são eficazes</strong> contra estes agentes (não atravessam a parede celular bacteriana das atípicas), pelo que se usa um <strong>macrólido (azitromicina)</strong> ou <strong>doxiciclina</strong> que têm boa penetração intracelular.',
+      '500 mg/dia oral durante 3-5 dias (duração curta porque o efeito persiste por concentração tecidular elevada)',
+      'Oral, 1x/dia, com ou sem alimentos · 1.ª dose pode ser dupla (500 mg seguido de 250 mg/dia x 4 dias)',
+      'Tomar à mesma hora todos os dias. Eficácia mantém-se vários dias após o fim do curso (semivida tecidular longa). Se sem melhoria em 48-72h, reavaliar — possível resistência ou diagnóstico alternativo.',
+      'Custo moderado (~8-15€) · Comparticipado',
+      '<strong>Prolongamento do QT</strong> — evitar em arritmias, doença CV grave, em uso de outros fármacos QT-prolongadores (antipsicóticos, antiarrítmicos, alguns antifúngicos). <strong>Resistência crescente em Portugal</strong> — pneumococos resistentes a macrólidos atingem 20-30% (motivo pelo qual NÃO se usa em monoterapia em pneumonia grave). Interações: aumenta níveis de varfarina, digoxina, ciclosporina. Diarreia, náuseas. Hepatotoxicidade rara. Ototoxicidade reversível em doses altas.'
+    ), drug(
+      'Doxiciclina (alternativa em alergia a macrólidos)',
+      'Tetraciclina com excelente cobertura de atípicos',
+      'A <strong>doxiciclina</strong> é uma alternativa eficaz em alergia ou intolerância aos macrólidos, com cobertura para <em>Mycoplasma</em>, <em>Chlamydophila</em> e razoável para <em>Legionella</em>. <strong>Mais económica</strong> que a azitromicina e sem risco de prolongamento do QT. Bem tolerada na maioria dos doentes.',
+      '100 mg 2x/dia oral durante 7 dias',
+      'Oral, com bastante água, em posição vertical (sentado/em pé) para evitar esofagite',
+      'Não tomar com lacticínios, antiácidos com cálcio/magnésio/alumínio ou ferro nas 2 horas antes/depois (quelação). Tomar em posição vertical e não deitar nas 30 minutos após (esofagite).',
+      'Custo baixo (~5-10€)',
+      '<strong>CONTRAINDICADA na gravidez e em crianças < 8 anos</strong> (manchas dentárias permanentes, alterações ósseas). Esofagite e ulceração esofágica se mal administrada. Fotossensibilidade — proteção solar obrigatória. Disbiose intestinal. Aumento da pressão intracraniana (raro).'
+    )],
+    ['Levofloxacina 750 mg/dia (5 dias) — alternativa em monoterapia, especialmente se Legionella suspeita',
+     'Confirmar etiologia: antigenúria de Legionella, PCR para Mycoplasma',
+     'Hidratação adequada e antitérmicos',
+     'Cessação tabágica',
+     'Em casos graves de Legionella: hospitalização e levofloxacina IV preferida'],
+    ['Beta-lactâmicos (amoxicilina, ceftriaxona) em monoterapia para pneumonia atípica — NÃO funcionam',
+     'Combinar azitromicina com fármacos que prolongam o QT sem vigilância',
+     'Doxiciclina na gravidez ou em crianças < 8 anos',
+     'Lacticínios na hora da toma de doxiciclina',
+     'Ignorar fontes de Legionella (sistemas de água, jacuzzis, viagens recentes) — investigação epidemiológica'],
+    'Curso curto: azitromicina 3-5 dias OU doxiciclina 7 dias. Reavaliação em 48-72h se sem melhoria.',
+    ['Hidratação oral abundante (>2 L/dia)',
+     'Antitérmicos para conforto (paracetamol)',
+     'Repouso',
+     'Cessação tabágica',
+     'Investigar fontes de Legionella se aplicável (viagens recentes, jacuzzis, sistemas de água)',
+     'Vacinação atualizada após resolução'],
+    ['Temperatura, FR e SpO2 diariamente',
+     'PCR e radiografia em 5-7 dias se sem melhoria',
+     'ECG se uso de azitromicina em arritmia/risco QT',
+     'Antigenúria Legionella se suspeita epidemiológica',
+     'PCR Mycoplasma e Chlamydophila se diagnóstico clínico equívoco',
+     'Função hepática se uso prolongado'],
+    {pregnancy: 'Azitromicina é segura na gravidez (categoria B). Doxiciclina contraindicada — preferir azitromicina ou eritromicina.',
+     costNote: 'Doxiciclina genérica é mais económica que azitromicina. Levofloxacina é mais cara mas permite curso curto.'},
+    'NOTA: a apresentação atípica (febre + tosse seca + sem dor torácica) é mais frequente em jovens e adultos saudáveis. Em idosos com mesma apresentação, pensar também em pneumonia bacteriana com sintomas atenuados.'
+  );
+
+  /* Resultado 2 — Pneumonia moderada / fatores de risco (amoxicilina + clavulânico) */
+  if (chronic || isOld || hosp) return res(
+    'Resultado 2: Pneumonia Moderada / Fatores de Risco — Amoxicilina + Clavulânico',
+    'Beta-lactâmico de espetro alargado para doentes com comorbilidades',
+    [drug(
+      'Amoxicilina + Ácido Clavulânico (Augmentin)',
+      'Beta-lactâmico + inibidor de beta-lactamase',
+      'A combinação <strong>amoxicilina + ácido clavulânico</strong> é a primeira escolha oral em <strong>pneumonia moderada</strong> com fatores de risco — idade avançada, comorbilidades (diabetes, IC, DPOC), internamento recente. O <strong>ácido clavulânico inibe as beta-lactamases</strong> produzidas por bactérias resistentes (sobretudo <em>Haemophilus influenzae</em> e <em>Moraxella catarrhalis</em>, frequentemente envolvidos em doentes com DPOC), <strong>ampliando o espetro</strong> da amoxicilina. Cobre também alguns anaeróbios — útil em suspeita de aspiração (idoso com disfagia, refluxo, AVC).',
+      '875/125 mg 2x/dia oral (formulação padrão) · Ou 1000/125 mg 2x/dia em peso > 80 kg ou pneumonia mais marcada · Duração 7-10 dias',
+      'Oral, com refeições para reduzir desconforto GI',
+      'Tomar de 12/12h. Não exceder 14 dias (risco hepatotóxico do clavulânico em uso prolongado). Considerar adicionar azitromicina 500 mg/dia se suspeita de atípicos concomitantes (jovens, infiltrado intersticial).',
+      'Comparticipado pelo SNS · Custo baixo a moderado (~8-20€)',
+      '<strong>Diarreia mais frequente que com amoxicilina simples</strong> (clavulânico é a causa) — tomar com alimento ligeiro, considerar probiótico (Lactobacillus). <strong>Hepatotoxicidade rara mas documentada</strong> — não exceder 14 dias; vigiar AST/ALT em uso prolongado. Rash cutâneo (excluir alergia a penicilinas — questionar antecedentes). Disbiose intestinal e Clostridium difficile possíveis. Em insuficiência renal: ajustar dose.'
+    )],
+    ['Levofloxacina 750 mg/dia oral (5 dias) — alternativa em alergia a beta-lactâmicos ou intolerância digestiva grave',
+     'Adicionar Azitromicina 500 mg/dia x 5 dias se suspeita de atípicos concomitantes',
+     'Cefuroxima axetil 500 mg 2x/dia — alternativa cefalosporínica oral',
+     'Hidratação adequada, antitérmicos, repouso',
+     'Reavaliação em 48-72h se sem melhoria — considerar internamento'],
+    ['Não completar o curso prescrito por melhoria precoce — causa frequente de resistências',
+     'Combinar com outros antibióticos sem indicação específica',
+     'Atrasar reavaliação se sem melhoria em 72h',
+     'Probióticos podem ser úteis para reduzir diarreia mas não substituem o antibiótico'],
+    'Antibioterapia oral 7-10 dias. Reavaliação às 48-72h.',
+    ['Hidratação abundante (>2 L/dia)',
+     'Repouso relativo · Posição semi-sentada para facilitar respiração',
+     'Antitérmicos (paracetamol 1 g 6/6h) para conforto',
+     'Cessação tabágica obrigatória se aplicável',
+     'Probiótico (Lactobacillus) durante o curso para reduzir diarreia',
+     'Após resolução: vacinação antipneumocócica + gripe + COVID-19'],
+    ['Temperatura 2x/dia, SpO2 com oxímetro caseiro · Reavaliação em 48-72h',
+     'Atenção a sinais de agravamento: dispneia em repouso, confusão, dor torácica intensa → SU',
+     'Radiografia de controlo em 4-6 semanas para confirmar resolução (sobretudo em > 50 anos ou fumador — exclui neoplasia subjacente)',
+     'PCR ou hemograma se evolução não favorável',
+     'Função renal/hepática se uso > 14 dias'],
+    {elderly: isOld ? 'Em > 65 anos, limiar baixo para internamento. Apresentação atípica frequente — vigiar confusão, queda, deterioração geral mesmo sem febre.' : '',
+     pregnancy: 'Amoxicilina+clavulânico é seguro na gravidez (categoria B). Adicionar azitromicina se atípicos.',
+     costNote: 'Custo baixo. Genérico amplamente comparticipado pelo SNS.'},
+    chronic ? 'Doente com doença crónica — vacinação antipneumocócica (Prevenar 13 + Pneumovax 23) e gripe sazonal são essenciais para prevenção de novas pneumonias.' : (hosp ? 'Internamento recente por infeção respiratória — risco de agentes resistentes (Pseudomonas, MRSA). Avaliar necessidade de espetro alargado se nova pneumonia próxima do internamento.' : '')
+  );
+
+  /* Resultado 5 — Sintomas sem diagnóstico confirmado (paracetamol + investigação) */
+  if (fever && !diag) return res(
+    'Resultado 5: Sintomas Suspeitos — Investigação e Controlo Sintomático',
+    'Paracetamol como adjuvante; antibiótico apenas se diagnóstico confirmado',
+    [drug(
+      'Paracetamol',
+      'Analgésico e antipirético — controlo sintomático',
+      'O <strong>paracetamol</strong> é o antitérmico de primeira escolha enquanto se investiga a etiologia da febre. Atua centralmente no hipotálamo, inibindo a síntese de prostaglandinas, sem efeitos anti-inflamatórios ou antiagregantes (vantagem em doentes anticoagulados ou com úlcera). Útil também para a <strong>dor torácica pleurítica</strong>. <strong>É um adjuvante, NUNCA tratamento da pneumonia</strong>: se for confirmada origem bacteriana, é obrigatória antibioterapia prescrita por médico.',
+      '1 g 3-4x/dia oral (máximo 4 g/dia em adulto saudável) · Reduzir para 500 mg em peso < 50 kg ou doença hepática · Crianças: 15 mg/kg 6/6h',
+      'Oral, com ou sem alimentos · Forma efervescente em doente com disfagia',
+      'Não exceder 4 g/dia. Não combinar com outros medicamentos contendo paracetamol (preparados antigripais frequentemente combinam paracetamol). Álcool aumenta hepatotoxicidade — evitar durante curso.',
+      'Custo muito baixo (< 2€) · Sem prescrição',
+      'Hepatotoxicidade por sobredosagem (acidente ou intencional) — antídoto N-acetilcisteína em emergência. Em alcoólicos crónicos ou desnutridos, hepatotoxicidade pode ocorrer com doses terapêuticas. Sem efeitos GI ou plaquetários — vantagem em úlcera ou anticoagulação.'
+    ), drug(
+      'Investigação Médica Estruturada',
+      'NÃO automedicar com antibióticos — diagnóstico primeiro',
+      'A febre isolada (sem tosse típica, sem dor torácica, sem dispneia) <strong>não é diagnóstica de pneumonia</strong> e pode corresponder a múltiplas causas: infeções virais (gripe, COVID-19), infeções urinárias, gastroenterite, COVID-19, virose comum. <strong>O diagnóstico de pneumonia exige avaliação médica</strong> com exame físico (auscultação pulmonar — fervores), radiografia torácica (consolidação ou infiltrado) e habitualmente análises (hemograma, PCR). A automedicação com antibióticos em febre é uma das principais causas de <strong>resistência antibiótica em Portugal</strong>.',
+      'Consulta médica em 24-48h se febre persiste · SU se sintomas de alarme (dispneia em repouso, confusão, dor torácica intensa)',
+      'Consulta de centro de saúde, médico de família, ou serviço de urgência conforme gravidade',
+      'Levar lista de medicação habitual e antecedentes. Idealmente medir temperatura ao longo do dia (perfil térmico). Indicar viagens recentes, contactos com doentes, vacinação.',
+      'Consulta SNS — gratuita ou com taxa moderadora · Privado: variável',
+      'Atrasar diagnóstico de pneumonia bacteriana em alguns dias pode permitir progressão para gravidade que requer hospitalização.'
+    )],
+    ['<strong>Ibuprofeno 400 mg 6/6h</strong> — alternativa antitérmica/anti-inflamatória; útil em dor pleurítica; evitar em IR, úlcera, IC, anticoagulação',
+     'Hidratação oral abundante (>2 L/dia)',
+     'Repouso relativo até diagnóstico',
+     'Avaliar sintomas de alarme: dispneia em repouso, confusão, dor torácica intensa, hemoptise',
+     'Investigação dirigida: PCR rápido (gripe, SARS-CoV-2), análises de sangue, eventualmente radiografia torácica'],
+    ['<strong>Automedicar com antibióticos</strong> — causa principal de resistência bacteriana em Portugal',
+     'Combinar paracetamol com outros medicamentos com paracetamol (preparados gripais)',
+     'Álcool durante o curso (hepatotoxicidade)',
+     'Adiar consulta médica se febre persistir > 48-72h',
+     'AINEs em IR, úlcera, IC ou anticoagulação'],
+    'Investigação inicial 24-48h. Se confirmada pneumonia bacteriana, antibioterapia conforme gravidade.',
+    ['<strong>Hidratação oral abundante</strong> (>2 L/dia)',
+     'Repouso relativo',
+     'Cessação tabágica imediata se fumador',
+     'Humidificação do ar',
+     'Atenção a sinais de alarme — IR à urgência se: dispneia em repouso, confusão, dor torácica intensa, SpO2 < 92% (oxímetro caseiro), hemoptise',
+     'Após resolução: vacinação atualizada (pneumocócica, gripe, COVID-19)'],
+    ['Temperatura 2-3x/dia (perfil térmico)',
+     'SpO2 com oxímetro caseiro (alarme se < 94%)',
+     'Frequência respiratória (FR > 24/min é sinal de alarme)',
+     'Estado mental — qualquer confusão de novo é sinal de alarme em idoso',
+     'Reavaliação médica em 24-72h conforme evolução'],
+    {elderly: isOld ? 'Em > 65 anos, febre isolada com fadiga marcada exige avaliação médica em 24h — apresentação atípica de pneumonia é frequente.' : '',
+     costNote: 'Paracetamol é genérico e barato. Investigação no SNS é gratuita ou com taxa moderadora.'},
+    fatigue ? 'Fadiga marcada com febre persistente — exige avaliação médica em 24-48h, não esperar mais.' : ''
+  );
+
+  /* Resultado 1 — Pneumonia ligeira (default) — amoxicilina ambulatório */
+  return res(
+    'Resultado 1: Pneumonia Ligeira em Ambulatório — Amoxicilina',
+    'Beta-lactâmico de primeira linha em adulto saudável (CRB-65 = 0)',
+    [drug(
+      'Amoxicilina',
+      'Beta-lactâmico (aminopenicilina) — primeira linha em PAC ligeira',
+      'A <strong>amoxicilina</strong> é a primeira escolha em pneumonia adquirida na comunidade <strong>ligeira</strong> (CRB-65 = 0: sem confusão, FR < 30/min, PA sistólica ≥ 90 mmHg, idade < 65 anos). É <strong>bactericida contra <em>Streptococcus pneumoniae</em></strong> — o agente mais frequente da PAC (responsável por 30-50% dos casos com etiologia identificada). Em Portugal, a <strong>resistência pneumocócica à penicilina é baixa</strong> (< 5% de alta resistência), por isso a amoxicilina em dose alta continua a ser eficaz. NÃO cobre agentes atípicos — em jovem com tosse seca persistente sem expetoração, considerar alternativamente um macrólido. Ciclo curto (5-7 dias) é tão eficaz como ciclos longos em casos ligeiros.',
+      '500 mg a 1 g 3x/dia oral · Duração 5-7 dias (casos ligeiros) a 7-10 dias',
+      'Oral, com ou sem alimentos, à mesma hora todos os dias para manter níveis séricos estáveis',
+      '<strong>COMPLETAR SEMPRE o ciclo</strong> mesmo com melhoria rápida — interrupção precoce favorece resistências. Se sem melhoria em 48-72h, contactar médico — possível pneumonia atípica ou agente resistente.',
+      'Custo muito baixo (~3-10€) · Comparticipado pelo SNS',
+      'Efeitos GI (náuseas, diarreia ligeira) frequentes — tomar com alimento ligeiro. <strong>Rash cutâneo</strong> — pode ser eritema benigno ou alergia (nestes casos suspender). <strong>Reação anafilática</strong> em alérgicos a penicilinas (raro mas grave). Disbiose intestinal e candidíase oral/vaginal possíveis. Em mononucleose: rash quase universal (não é alergia, mas evitar amoxicilina nesta situação).'
+    )],
+    ['<strong>Azitromicina</strong> 500 mg/dia 3-5 dias — alternativa em alergia a penicilinas; útil se suspeita de atípicos',
+     '<strong>Doxiciclina</strong> 100 mg 2x/dia 7 dias — alternativa em alergia a penicilinas e macrólidos',
+     'Cefuroxima axetil 500 mg 2x/dia — alternativa cefalosporínica',
+     'Hidratação oral abundante, antitérmicos (paracetamol), repouso',
+     'Reavaliação se sem melhoria em 48-72h'],
+    ['Interromper antes de completar o ciclo prescrito',
+     'Combinar com outros antibióticos sem indicação',
+     'Manter tabagismo durante a doença',
+     'AINEs em alta dose se IR ou IC',
+     'Atrasar reavaliação se sem melhoria > 72h'],
+    'Antibioterapia 5-7 dias (até 7-10 em alguns casos). Reavaliação clínica em 48-72h.',
+    ['<strong>Hidratação abundante</strong> (>2 L/dia)',
+     'Repouso relativo · Não voltar ao trabalho até apirexia 24-48h',
+     'Antitérmicos (paracetamol 1 g 6/6h ou ibuprofeno 400 mg 8/8h se sem contraindicações)',
+     'Posição semi-sentada para facilitar respiração',
+     'Cessação tabágica obrigatória se aplicável',
+     'Após resolução: vacinação antipneumocócica + gripe + COVID-19',
+     'Recursos: DGS — Programa Nacional para as Doenças Respiratórias (www.dgs.pt)'],
+    ['Temperatura 2x/dia (perfil térmico)',
+     'SpO2 com oxímetro caseiro — alarme se < 94%',
+     'Frequência respiratória — alarme se > 24/min',
+     'Estado geral — recuperação esperada em 5-7 dias',
+     'Reavaliação médica em 48-72h se sem melhoria',
+     'Radiografia de controlo em 4-6 semanas se > 50 anos ou fumador (exclusão de neoplasia)',
+     'Sinais de alarme — IR à urgência se: dispneia em repouso, confusão, dor torácica intensa, SpO2 < 92%'],
+    {elderly: 'Em > 65 anos, limiar mais baixo para internamento (mesmo com sintomas iniciais ligeiros). Apresentação atípica frequente — qualquer confusão ou queda exige avaliação urgente.',
+     pregnancy: 'Amoxicilina é segura na gravidez (categoria B). Considerar adicionar azitromicina se suspeita de atípicos.',
+     costNote: 'Custo praticamente desprezável. Amoxicilina genérica está entre os antibióticos mais económicos disponíveis.'},
+    smoke ? 'Tabagismo é fator de risco major para PAC e pior prognóstico. Aproveitar o episódio para cessação tabágica — encaminhar para consulta dedicada após resolução.' : (!hydrate ? 'Doente sem capacidade de hidratação adequada — considerar reavaliação médica para internamento ou hidratação parentérica.' : '')
   );
 }
 
