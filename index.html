@@ -169,7 +169,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
 .biblio-item a:hover{text-decoration:underline}
 
 /* DD-HERO decorative rule (cor dinamica via openDisease) */
-.dd-hero hr{border:none;background:#7c3aed;height:3px;width:70px;border-radius:2px;margin:14px auto 0}
+/* DD-HERO decorative rule — geometria e cor são aplicadas inline pelo openDisease() para garantir cor dinâmica do grupo. */
 
 /* PER-PAGE HEADING COLORS — cor de cada grupo de doencas
    Alvo restrito a .dc-top .sec-title e .d-inf h2 para nao colidir
@@ -817,9 +817,9 @@ var DINTRO = {
 function openDisease(id) {
   /* Build the page HTML */
   var intro = DINTRO[id];
-  var c = colorFor(id);
-  var html = '<div class="dd-hero"><h1 style="color:' + c + '">' + DNAME[id] + '</h1>'
-           + '<hr style="background:' + c + '"></div>';
+  var groupColor = DCOLOR[DGROUP[id]] || '#7c3aed';
+  var html = '<div class="dd-hero"><h1 style="color:' + groupColor + '">' + DNAME[id] + '</h1>'
+           + '<hr style="background:' + groupColor + ';height:3px;width:70px;border-radius:2px;border:none;margin:12px auto;"></div>';
   html += '<div class="dd-body">';
   for (var i = 0; i < intro.length; i++) html += '<p class="dd-p">' + intro[i] + '</p>';
   html += '<div class="qbox"><div class="qbox-title">Quiz Terapêutico</div>';
