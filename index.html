@@ -61,7 +61,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;border-bott
 /* TWO COL */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
 .col-vis{background:#ede9fe;border-radius:16px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
-.col-vis svg{width:35%;opacity:0.3}
 .col-text h2{font-size:25px;font-weight:700;color:#7c3aed;margin-bottom:14px;text-decoration:underline;text-underline-offset:4px}
 .col-text p{font-size:14px;color:#475569;line-height:1.9;margin-bottom:12px}
 
@@ -242,8 +241,8 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
         <p>O percurso de um médicamento no organismo humano resulta da interacao entre múltiplos fatores, incluindo a via de administração, a forma farmacêutica, a dose e as caracteristicas fisiológicas do doente. A compreensao destes processos e essencial para garantir a eficácia terapêutica e a segurança no uso dos médicamentos.</p>
         <p>Este projeto foi concebido como uma plataforma digital interativa que propoe uma abordagem inovadora a aprendizagem da fármacologia. Em vez de uma exposicao teorica tradicional, o utilizador e colocado no centro do processo, sendo desafiado a tomar decisões que influenciam diretamente o destino do fármaco e os resultados terapêuticos.</p>
       </div>
-      <div class="col-vis" style="background:none;width:100%;min-height:300px">
-        <svg width="100%" viewBox="0 0 680 460" role="img" style="display:block;border-radius:16px">
+      <div class="col-vis" style="background:none;width:100%;min-height:320px;padding:0;display:block;overflow:hidden;aspect-ratio:auto">
+        <svg width="100%" viewBox="0 0 680 460" preserveAspectRatio="xMidYMid meet" role="img" style="display:block;width:100%;border-radius:16px">
           <title>Labirinto de Fármacos</title>
           <desc>Ilustração artística de um labirinto retangular com quatro anéis concêntricos e pílulas coloridas</desc>
           <rect width="680" height="460" fill="#fff8ee"/>
@@ -478,6 +477,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
       <div style="padding:24px 28px">
         <p style="font-size:13px;color:#475569;line-height:1.85;margin-bottom:20px">A diabetes mellitus afeta cerca de 14% dos adultos portugueses, sendo Portugal um dos países com maior prevalência na Europa. A obesidade, a dislipidemia e a síndrome metabólica são fatores de risco intimamente ligados que amplificam o risco cardiovascular e renal.</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+          <span style="background:#fef3c7;color:#d97706;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Diabetes Tipo 1</span>
           <span style="background:#fef3c7;color:#d97706;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Diabetes Tipo 2</span>
           <span style="background:#fef3c7;color:#d97706;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Hipotiroidismo</span>
         </div>
@@ -646,6 +646,11 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
       <p>Condição em que a glândula tiroideia produz hormonas tiroideias insuficientes, resultando em abrandamento do metabolismo. Manifesta-se por fadiga, aumento de peso, intolerância ao frio, obstipação e depressão. É mais prevalente em mulheres e em pessoas com mais de 60 anos. O tratamento é simples e altamente eficaz.</p>
       <button class="btn-purple" style="background:#d97706" onclick="openDisease('hipotiroidismo')">Saber Mais</button>
     </div><div class="d-vis" style="background:#fef3c7;min-height:220px"></div></div>
+    <div class="d-row"><div class="d-vis" style="background:#fef3c7;min-height:220px"></div><div class="d-inf">
+      <h2 style="color:#d97706">Diabetes Mellitus Tipo 1</h2>
+      <p>Doença autoimune crónica em que o sistema imunitário destrói as células beta do pâncreas, levando à ausência de produção de insulina. Surge mais frequentemente em crianças, adolescentes e adultos jovens. Representa 5-10% dos casos de diabetes em Portugal. O tratamento exige insulina exógena para toda a vida, monitorização rigorosa da glicemia e educação terapêutica intensiva.</p>
+      <button class="btn-purple" style="background:#d97706" onclick="openDisease('dm1')">Saber Mais</button>
+    </div></div>
   </div>
   <div class="quote-band"><p class="qt">&ldquo;Wherever the art of medicine is loved, there is also a love of humanity.&rdquo;</p><p class="qa">&mdash; Hipocrates</p></div>
   <footer><div><p>Faculdade de Farmácia da Universidade de Lisboa</p><p>Labirinto de Fármacos | Seminário II &mdash; 2025/2026</p><p>Projeto educativo interativo sobre as doenças mais relevantes em Portugal e as suas abordagens terapêuticas</p></div><div class="f-logos"><div class="f-logo">ULisboa</div><div class="f-logo">Fac. Farm.</div></div></footer>
@@ -757,6 +762,7 @@ var DIMG = {
   epilepsia: '',
   alzheimer: '',
   parkinson: '',
+  dm1: '',
   drc: '',
   artrite: '',
   osteoporose: '',
@@ -768,8 +774,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', dm1:'metab', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', dm1:'Diabetes Mellitus Tipo 1', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -791,6 +797,11 @@ var DBGCOLOR = {
 };
 function colorFor(id) { return DCOLOR[DGROUP[id]] || '#7c3aed'; }
 var DINTRO = {
+  dm1: [
+    'A Diabetes Mellitus Tipo 1 é uma <strong>doença autoimune crónica</strong> em que o sistema imunitário destrói as células beta do pâncreas, responsáveis pela produção de insulina. Como resultado, o organismo deixa de produzir insulina de forma autónoma, sendo necessário <strong>tratamento com insulina exógena ao longo de toda a vida</strong>. Em Portugal, representa cerca de 5 a 10% de todos os casos de diabetes, surgindo mais frequentemente em crianças, adolescentes e adultos jovens.',
+    'Os sintomas mais característicos incluem <strong>sede excessiva (polidipsia), urinar frequentemente (poliúria), perda de peso inexplicável, fadiga intensa, visão turva e aumento da fome</strong>. Em casos graves e sem tratamento adequado, pode ocorrer <strong>cetoacidose diabética</strong> — uma complicação potencialmente fatal caracterizada pela acumulação de cetonas no sangue — que constitui uma emergência médica.',
+    'O tratamento é essencialmente baseado na <strong>administração de insulina</strong>, que não pode ser substituída por medicação oral. A gestão da diabetes tipo 1 requer uma abordagem intensiva e individualizada, combinando <strong>insulina basal e prandial, monitorização regular da glicemia, contagem de hidratos de carbono e educação terapêutica</strong>. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
+  ],
   dm2: [
     'A diabetes mellitus tipo 2 é uma doença metabólica crónica caracterizada por níveis elevados de glicose no sangue, resultantes de uma combinação de resistência à insulina e diminuição progressiva da secreção desta hormona pelo pâncreas. É a forma mais comum de diabetes, estando frequentemente associada a fatores como obesidade, sedentarismo e envelhecimento.',
     'A doença desenvolve-se de forma gradual e pode permanecer assintomática durante vários anos, sendo muitas vezes diagnosticada apenas após o aparecimento de complicações. Entre os sintomas mais comuns encontram-se o aumento da sede, urinar com frequência, fadiga e visão turva. Sem tratamento adequado, pode levar a complicações graves como doença cardiovascular, neuropatia, nefropatia e retinopatia.',
@@ -1040,6 +1051,16 @@ var Qu = {
   pk_wearing: q('pk_wearing', 'Sente que a medicação perde efeito antes da próxima toma?', [o('A','Sim',{pk_wearing:true}),o('B','Não',{pk_wearing:false})]),
   pk_dysk:    q('pk_dysk',    'Tem movimentos involuntários após a medicação?', [o('A','Sim',{pk_dysk:true}),o('B','Não',{pk_dysk:false})]),
   pk_age65:   q('pk_age65',   'Tem mais de 65 anos?', [o('A','Sim',{pk_age65:true}),o('B','Não',{pk_age65:false})]),
+  dm1_diag:    q('dm1_diag',    'Tem diagnóstico de diabetes tipo 1?', [o('A','Sim',{dm1_diag:true}),o('B','Não',{dm1_diag:false})]),
+  dm1_thirst:  q('dm1_thirst',  'Tem episódios frequentes de sede excessiva?', [o('A','Sim',{dm1_thirst:true}),o('B','Não',{dm1_thirst:false})]),
+  dm1_urine:   q('dm1_urine',   'Urina com muita frequência?', [o('A','Sim',{dm1_urine:true}),o('B','Não',{dm1_urine:false})]),
+  dm1_weight:  q('dm1_weight',  'Teve perda de peso sem explicação?', [o('A','Sim',{dm1_weight:true}),o('B','Não',{dm1_weight:false})]),
+  dm1_fatigue: q('dm1_fatigue', 'Sente sensação de cansaço constante?', [o('A','Sim',{dm1_fatigue:true}),o('B','Não',{dm1_fatigue:false})]),
+  dm1_hypo:    q('dm1_hypo',    'Tem episódios de hipoglicemia (queda dos níveis de açúcar no sangue)?', [o('A','Sim',{dm1_hypo:true}),o('B','Não',{dm1_hypo:false})]),
+  dm1_insulin: q('dm1_insulin', 'Utiliza insulina diariamente?', [o('A','Sim',{dm1_insulin:true}),o('B','Não',{dm1_insulin:false})]),
+  dm1_monitor: q('dm1_monitor', 'Faz controlo regular da glicemia?', [o('A','Sim',{dm1_monitor:true}),o('B','Não',{dm1_monitor:false})]),
+  dm1_dka:     q('dm1_dka',     'Já teve cetoacidose diabética?', [o('A','Sim',{dm1_dka:true}),o('B','Não',{dm1_dka:false})]),
+  dm1_endo:    q('dm1_endo',    'Tem acompanhamento em endocrinologia?', [o('A','Sim',{dm1_endo:true}),o('B','Não',{dm1_endo:false})]),
   drc_diag:    q('drc_diag',   'Tem diagnóstico de doença renal crónica?', [o('A','Sim',{drc_diag:true}),o('B','Não',{drc_diag:false})]),
   drc_dm:      q('drc_dm',     'Tem diabetes?', [o('A','Sim',{drc_dm:true}),o('B','Não',{drc_dm:false})]),
   drc_hta:     q('drc_hta',    'Tem hipertensão arterial?', [o('A','Sim',{drc_hta:true}),o('B','Não',{drc_hta:false})]),
@@ -1087,6 +1108,7 @@ var Qu = {
 };
 
 var DQ = {
+  dm1: ['dm1_diag','dm1_thirst','dm1_urine','dm1_weight','dm1_fatigue','dm1_hypo','dm1_insulin','dm1_monitor','dm1_dka','dm1_endo'],
   dm2: ['dm_weight','dm_lifestyle','dm_control','dm_cardio','dm_renal','dm_hypo','dm_inject','dm_age65','dm_meds'],
   dpoc: ['dp_smoke','dp_breath','dp_cough','dp_hosp','dp_exac','dp_inhaler','dp_age65','dp_cardiac','dp_smoking'],
   asma: ['as_freq','as_night','as_hosp','as_sos','as_allergy','as_child','as_preg','as_copd','as_inhaler'],
@@ -1173,6 +1195,7 @@ function res(title, phase, drugs, alts, avoid, dur, life, mon, notes, alert) {
 function getOutcome() {
   var id = QS.disease;
   var t = tags();
+  if (id==='dm1') return dm1O(t);
   if (id==='dm2') return dm2O(t);
   if (id==='dpoc') return dpocO(t);
   if (id==='asma') return asmaO(t);
@@ -4422,6 +4445,274 @@ function parkinsonO(t) {
     {elderly: isOld ? 'No idoso, a rasagilina é geralmente bem tolerada (perfil mais limpo que selegilina). Em sintomas mais marcados, considerar passar a levodopa em vez de adicionar agonista DA (que tem mais efeitos adversos cognitivos no idoso).' : '',
      costNote: 'Custo moderado. A relação custo-eficácia justifica-se pelo perfil de segurança superior à selegilina e pela toma única diária (melhor adesão).'},
     mood ? 'Depressão e ansiedade frequentemente comórbidas no Parkinson — tratamento ativo recomendado. Sertralina ou escitalopram (ISRS) são as primeiras escolhas; evitar antidepressivos tricíclicos (efeitos anticolinérgicos pioram cognição e obstipação).' : (sleep ? 'Alterações do sono são muito frequentes — perturbação comportamental do sono REM (RBD) é frequente e merece avaliação especializada (clonazepam ou melatonina podem ajudar).' : '')
+  );
+}
+
+function dm1O(t) {
+  var diag    = (t.dm1_diag    === true);
+  var thirst  = (t.dm1_thirst  === true);
+  var urine   = (t.dm1_urine   === true);
+  var weight  = (t.dm1_weight  === true);
+  var fatigue = (t.dm1_fatigue === true);
+  var hypo    = (t.dm1_hypo    === true);
+  var insulin = (t.dm1_insulin === true);
+  var monitor = (t.dm1_monitor === true);
+  var dka     = (t.dm1_dka     === true);
+  var endo    = (t.dm1_endo    === true);
+
+  /* Resultado 4 — Glucagon (hipoglicemia + cetoacidose — emergência) */
+  if (hypo && dka) return res(
+    'Resultado 4: Emergência Glicémica — Glucagon e Plano de Resgate',
+    'Hipoglicemia grave e história de cetoacidose: protocolo de emergência obrigatório',
+    [drug(
+      'Glucagon (kit injetável ou spray nasal)',
+      'Hormona hiperglicemiante — antagonista funcional da insulina',
+      'O <strong>glucagon</strong> é a principal hormona contra-reguladora da insulina. Estimula a <strong>glicogenólise hepática</strong> (libertação rápida de glicose armazenada no fígado) e a <strong>gliconeogénese</strong>, elevando a glicemia em 10-15 minutos. É o tratamento de eleição na <strong>hipoglicemia grave com perda de consciência, convulsões ou impossibilidade de ingestão oral</strong> — situação em que o doente não consegue receber açúcar por via oral. Disponível em duas formas práticas: <strong>kit IM/SC tradicional</strong> (GlucaGen 1 mg) que requer reconstituição e injeção, ou <strong>spray nasal</strong> (Baqsimi 3 mg) — recente, sem necessidade de reconstituição nem agulha, ideal para uso por leigos sem formação técnica.',
+      'Kit injetável: 1 mg IM ou SC · Spray nasal: 3 mg numa única narina · Em crianças <25 kg: 0,5 mg IM/SC',
+      'Administrado por outra pessoa (família, cuidador, colega) em situação de emergência',
+      'TODOS os doentes com DM1 devem ter glucagon em casa, no trabalho/escola e em qualquer local frequente. <strong>Família e contactos próximos DEVEM ser treinados</strong> para administrá-lo. Posicionar o doente em posição lateral de segurança (vómitos pós-administração frequentes). Após recuperação da consciência, dar imediatamente HC de absorção rápida (sumo) seguido de HC complexo (pão, bolacha) e contactar a equipa médica.',
+      'Comparticipado pelo SNS em DM1 (custo moderado para o doente) · Spray nasal mais caro mas crescente disponibilidade',
+      'Náuseas e vómitos pós-administração (frequentes — esperado, não é falha do tratamento). <strong>Sem efeito se reservas hepáticas de glicogénio esgotadas</strong>: jejum prolongado, álcool nas últimas horas, hipoglicemia repetida — nestes casos, o glucagon FALHA e é necessário glicose IV. Por isso, em hipoglicemia + álcool, chamar 112 imediatamente. Validade do kit: verificar trimestralmente (medicação caducada perde eficácia).'
+    ), drug(
+      'Plano de Educação para Cetoacidose',
+      'Prevenção e reconhecimento precoce de DKA',
+      'A história de <strong>cetoacidose diabética (DKA)</strong> indica risco elevado de recorrência. A DKA resulta de défice absoluto ou relativo de insulina, levando a hiperglicemia grave, cetonemia e acidose metabólica. Sintomas precoces: poliúria, polidipsia, náuseas, dor abdominal, hálito cetónico (frutado), respiração rápida e profunda (Kussmaul). Em fases avançadas: alteração da consciência. <strong>Regras dos dias de doença ("sick day rules") devem ser ensinadas a todos os doentes com DM1</strong>: nunca suspender insulina basal; medir glicemia 2-4h; medir cetonas (sangue ou urina) se glicemia >250 mg/dL ou em doença aguda; aumentar ingestão de líquidos; contactar equipa se cetonemia >0,6 mmol/L ou cetonúria moderada/grave.',
+      'Educação contínua em consulta — não é fármaco mas é "tratamento" essencial',
+      'Implementação na vida diária com revisões periódicas',
+      'Plano escrito personalizado: doses de correção em função da glicemia e cetonas, contactos de urgência, critérios de ida ao SU.',
+      'Sem custo direto — disponível nas consultas hospitalares e na APDP',
+      'A omissão de educação é uma das principais causas de DKA recorrente em DM1. Identificar fatores precipitantes: infeções, omissão de doses, dispositivos de insulina avariados (bombas), gravidez não planeada.'
+    )],
+    ['<strong>Glicose IV</strong> (10-25 g de dextrose 30%) em ambulância/SU se glucagon falhar ou se via venosa disponível',
+     'Cetonemia capilar (Optium Xceed, β-hidroxibutirato) — mais específica que cetonúria; deve ser ferramenta de uso doméstico',
+     'Reavaliação imediata da estratégia de insulina — considerar bomba com sensor (CGM) integrado e desligamento automático na hipoglicemia',
+     'Educação rigorosa sobre álcool — fator precipitante muito frequente de hipoglicemia grave',
+     'Contacto de emergência (linha SOS Diabetes) acessível 24/7'],
+    ['Confiar apenas no glucagon em jejum prolongado ou após álcool — pode falhar (chamar 112)',
+     'Suspender insulina basal mesmo durante doença aguda — precipita DKA',
+     'Ignorar sintomas iniciais de DKA — polidipsia, dor abdominal, náuseas em doente com DM1 obrigam a verificar cetonas',
+     'Adiar a chamada do 112 quando há perda de consciência ou suspeita de DKA',
+     'Conduzir após hipoglicemia grave sem confirmar glicemia capilar normal'],
+    'Plano permanente. Reavaliação trimestral em consulta. Renovar kit de glucagon a cada 18 meses (validade).',
+    ['<strong>Glucagon disponível em casa, trabalho/escola e bagagem de viagem</strong>',
+     'Família e cuidadores treinados (sessão prática anual)',
+     'Pulseira ou cartão de identificação médica',
+     'App de monitorização (mySugr, FreeStyle LibreLink) com partilha familiar',
+     'Açúcar de absorção rápida sempre acessível (pastilhas de glicose, sumo) — antes do glucagon se ainda consciente',
+     'Recursos: <strong>Associação Protetora dos Diabéticos de Portugal (APDP)</strong> — www.apdp.pt; linha SOS Diabetes',
+     'Plano de "sick day rules" escrito e revisto'],
+    ['Glicemia capilar antes/após cada refeição e ao deitar (mínimo 4-7x/dia) — ou CGM contínuo',
+     'Cetonas capilares se glicemia >250 mg/dL ou em doença aguda',
+     'HbA1c trimestral · função renal anual',
+     'Avaliação anual de complicações (retinopatia, nefropatia, neuropatia)',
+     'Reavaliação dos episódios graves: contagem por trimestre, fatores precipitantes'],
+    {pregnancy: 'Em mulheres com DM1 a planear engravidar: HbA1c <6,5%, ácido fólico, CGM obrigatório. Hipoglicemia grave aumenta risco fetal — equipa multidisciplinar (endocrinologia + obstetrícia).',
+     costNote: 'Glucagon comparticipado pelo SNS em DM1. Spray nasal (Baqsimi) tem custo superior mas vantagem importante para uso por leigos sem formação técnica. CGM comparticipado em DM1 com critérios.'},
+    'EMERGÊNCIA: hipoglicemia grave + história de DKA = risco vital. Reforçar plano de resgate, treinar família, e considerar passar a bomba de insulina com sensor integrado (sistemas semi-automáticos reduzem hipoglicemia grave em ~50%).'
+  );
+
+  /* Resultado 5 — Educação terapêutica e autogestão (sem monitorização ou sem endo) */
+  if (!monitor || !endo) return res(
+    'Resultado 5: Educação Terapêutica — Pilar do Tratamento da DM1',
+    'A educação é considerada um "fármaco" de primeira linha em DM1',
+    [drug(
+      'Educação Terapêutica Estruturada',
+      'Programa de autogestão da diabetes — equipa multidisciplinar',
+      'A <strong>educação terapêutica</strong> é a intervenção com maior impacto na qualidade de vida e no prognóstico da DM1. Sem ela, mesmo a melhor terapêutica farmacológica falha. Os componentes essenciais são: (1) <strong>monitorização da glicemia</strong> — capilar 4-7x/dia ou CGM (Freestyle Libre, Dexcom) com TIR >70% (tempo no intervalo 70-180 mg/dL); (2) <strong>contagem de hidratos de carbono</strong> — base do ajuste da insulina prandial, ratio insulina:HC tipicamente 1 UI / 10-15g; (3) <strong>regras de correção</strong> para hiperglicemia (1 UI baixa ~30-50 mg/dL); (4) <strong>ajuste para exercício, doença e álcool</strong>; (5) <strong>regras dos dias de doença</strong> (sick day rules) — nunca suspender insulina basal mesmo em jejum. Em Portugal, está disponível em consultas hospitalares de diabetes e na APDP.',
+      'Programa contínuo: sessões iniciais intensivas (curso de 3-5 dias em centro especializado) + reforços anuais',
+      'Consultas multidisciplinares: endocrinologia + enfermagem especializada + nutricionista + psicólogo',
+      'Adesão à equipa de diabetes é essencial. Reavaliação anual da técnica de injeção, locais de injeção (lipohipertrofia), interpretação dos dados do CGM e ajuste de doses.',
+      'Sem custo direto pelo SNS em consultas hospitalares · APDP tem programas adicionais',
+      'A DM1 não tratada ou mal gerida é fatal a curto/médio prazo. A insulina é SEMPRE necessária em DM1 — não há alternativa farmacológica oral. Desfasamento entre conhecimento e prática é frequente: o doente sabe a teoria mas não aplica — abordagem comportamental e psicológica importante.'
+    ), drug(
+      'CGM — Monitorização Contínua de Glicose',
+      'Sensor subcutâneo de glicose intersticial em tempo real',
+      'O <strong>CGM (Continuous Glucose Monitoring)</strong> revolucionou a gestão da DM1 na última década. Sistemas como o <strong>FreeStyle Libre 2/3</strong> ou <strong>Dexcom G6/G7</strong> medem a glicose intersticial a cada 1-5 minutos durante 10-14 dias por sensor. Vantagens vs glicemia capilar: (1) <strong>centenas de medições/dia</strong> sem picadas; (2) <strong>tendências e velocidade de variação</strong> — permite ação preventiva; (3) <strong>alarmes de hipo/hiperglicemia</strong> noturnos; (4) <strong>partilha em tempo real</strong> com cuidadores (essencial em crianças); (5) <strong>TIR (time-in-range)</strong> como métrica clínica superior à HbA1c isolada. Em Portugal está comparticipado em critérios.',
+      'Sensor trocado a cada 10-14 dias · sem picada para calibração nas versões recentes',
+      'Aplicado no braço (Libre) ou abdómen (Dexcom) — o doente coloca em casa',
+      'Configurar alarmes (hipo <70 mg/dL, hiper >250 mg/dL). Partilha com cuidadores via app. Reavaliação trimestral da TIR e ajuste de insulina conforme padrões observados.',
+      'Comparticipação SNS em DM1 com critérios (Despacho 16/2018 e revisões) · custo elevado sem comparticipação',
+      'Adesivos podem causar irritação cutânea (rotação dos locais). Discrepâncias com glicemia capilar em valores extremos ou variação rápida. Necessita educação para interpretação de dados.'
+    )],
+    ['<strong>Bomba de insulina (CSII)</strong> em alternativa ao regime basal-bólus — em hipoglicemias graves recorrentes ou HbA1c persistentemente elevada',
+     'Sistemas de ansa fechada ("pâncreas artificial" — Tandem t:slim X2 com Control-IQ, Medtronic 780G) — bomba + CGM com algoritmo automático; reduzem TIR e hipoglicemia',
+     'App mySugr ou Glooko — registo, ajuste e telemonitorização',
+     'Grupos de pares (encontros APDP, online) — apoio psicológico e prático',
+     'Curso intensivo DAFNE-Portugal ou equivalente — abordagem flexível dependente da contagem de HC'],
+    ['Suspender insulina basal mesmo em jejum/doença — precipita DKA',
+     'Confiar apenas em HbA1c sem avaliar TIR e variabilidade glicémica',
+     'Ignorar dados do CGM — necessita ajuste contínuo, não apenas observação',
+     'Substituir consultas presenciais por telemonitorização sem revisão estruturada periódica',
+     'Tomar decisões clínicas major sem suporte da equipa de diabetes'],
+    'Programa contínuo para a vida — reforços periódicos e adaptação a fases da vida (adolescência, gravidez, menopausa, envelhecimento).',
+    ['Consultas regulares (mínimo trimestrais) com endocrinologia',
+     'Sessões com enfermagem especializada e nutricionista',
+     'Apoio psicológico — DM1 tem impacto major na qualidade de vida e saúde mental',
+     'Atividade física adaptada (ajustar insulina conforme tipo e duração)',
+     'Sono e gestão do stress — afetam diretamente a glicemia',
+     'App de registo e contagem de HC',
+     'Recursos: <strong>APDP</strong> (www.apdp.pt) · linha SOS Diabetes · grupos de apoio'],
+    ['HbA1c trimestral (alvo <7% adulto, <7,5% criança/adolescente, <6,5% pré-conceção)',
+     'TIR >70% (com CGM) — tempo entre 70-180 mg/dL',
+     'Glicemia capilar 4-7x/dia (mínimo se sem CGM)',
+     'Função renal (creatinina, albuminúria) anual',
+     'Fundoscopia/retinografia anual (rastreio de retinopatia)',
+     'Exame neurológico anual (rastreio de neuropatia)',
+     'Perfil lipídico, função tiroideia (associação a outras doenças autoimunes)',
+     'Avaliação dos pés (rastreio de pé diabético) anual'],
+    {elderly: 'No idoso com DM1, alvos individualizados — HbA1c pode ser mais permissivo (7,5-8%) para reduzir hipoglicemias graves. CGM particularmente útil pelos alarmes de hipoglicemia.',
+     pregnancy: 'Pré-conceção: HbA1c <6,5%, ácido fólico, CGM obrigatório, equipa multidisciplinar. Insulina (não há alternativa oral). Aspart e lispro seguras na gravidez. Glargina e degludeca: dados de segurança crescentes.',
+     costNote: 'CGM comparticipado pelo SNS em DM1. Bomba de insulina e sistemas de ansa fechada também comparticipados em critérios. APDP oferece formação e apoio gratuito.'},
+    'CRÍTICO: a educação é o fármaco mais importante na DM1. Sem ela, todas as outras intervenções (insulina, CGM, bomba) têm eficácia muito inferior. Encaminhar imediatamente para consulta de diabetes e APDP.'
+  );
+
+  /* Resultado 2 — Doente com DM1 confirmada, em insulina e a monitorizar — otimização prandial */
+  if (insulin && diag && monitor) return res(
+    'Resultado 2: Otimização Prandial — Insulina Aspart',
+    'Análogo ultra-rápido para controlo pós-prandial em regime basal-bólus',
+    [drug(
+      'Insulina Aspart (NovoRapid / Fiasp)',
+      'Análogo de insulina humana de ação ultra-rápida',
+      'A <strong>insulina aspart</strong> resulta da substituição da prolina B28 por ácido aspártico na molécula da insulina humana — modificação que reduz a tendência para autoagregação e <strong>acelera a absorção subcutânea</strong>. Início de ação em <strong>10-20 minutos</strong>, pico em 1-3h, duração 3-5h. Permite uma posologia mais fisiológica que a insulina humana regular: administrar <strong>0-15 minutos antes da refeição</strong> (ou imediatamente após em crianças com ingestão imprevisível). É o componente <strong>prandial do regime basal-bólus</strong>, complementando a insulina basal de longa duração. A formulação <strong>Fiasp (aspart + niacinamida)</strong> tem absorção ainda mais rápida — pode ser administrada até 20 minutos APÓS o início da refeição.',
+      'Calculada com base na <strong>contagem de hidratos de carbono</strong>: ratio insulina:HC tipicamente 1 UI / 10-15g de HC · Fator de correção: 1 UI baixa ~30-50 mg/dL · Doses individualizadas em consulta',
+      'Subcutânea (caneta ou seringa) ou bomba de insulina · Locais: abdómen (mais rápido), coxa, braço, glúteos · Rodar locais em rotação geométrica',
+      'Verificar aspeto antes da injeção (deve ser <strong>límpida e incolor</strong>; descartar se turva ou com partículas). Não administrar se não houver intenção imediata de comer. Ajustar à atividade física prevista (reduzir 25-50% se exercício intenso). Caneta a temperatura ambiente: máx 28 dias.',
+      'Comparticipado pelo SNS em DM1 (custo baixo para o doente)',
+      '<strong>Hipoglicemia pós-prandial</strong> se refeição menor que esperado ou exercício imprevisto — ter sempre HC de absorção rápida acessível (pastilhas de glicose, sumo). Lipohipertrofia se rotação inadequada (causa absorção errática — rever locais a cada consulta). Reações alérgicas locais ou sistémicas (raras com análogos modernos). Falha de absorção em locais com lipohipertrofia ou tecido cicatricial.'
+    )],
+    ['<strong>Insulina Lispro (Humalog)</strong> — alternativa equivalente em todos os aspetos clínicos',
+     '<strong>Insulina Glulisina (Apidra)</strong> — outra alternativa ultra-rápida',
+     '<strong>Fiasp (aspart + niacinamida)</strong> — absorção ainda mais rápida; útil em crianças e em pico pós-prandial difícil de controlar',
+     'Bomba de insulina (CSII) com aspart ou lispro — perfil mais fisiológico',
+     'Sistema de ansa fechada (Tandem Control-IQ, Medtronic 780G) — algoritmo automático'],
+    ['Administrar e adiar refeição — risco de hipoglicemia imediata',
+     'Misturar com insulina basal (glargina/degludeca) na mesma seringa — incompatível, separa precipitados',
+     'Reutilizar agulhas — causa lipohipertrofia e absorção errática',
+     'Usar caneta deixada exposta a calor (>30°C) ou frio (<2°C) — perde eficácia',
+     'Não verificar glicemia antes da refeição — risco de hipoglicemia se já estava baixa'],
+    'Tratamento permanente. Ajuste de doses periódico em consulta com endocrinologia.',
+    ['Refeições estruturadas com horários relativamente regulares',
+     'Contagem de HC consistente — usar app (mySugr, Carbs & Cals) ou consulta nutricional',
+     'Atividade física previsível ajuda a calibrar doses — diário de glicemia + exercício útil',
+     'Hidratação adequada',
+     'Apoio multidisciplinar e familiar — DM1 afeta toda a família'],
+    ['Glicemia pré e 2h pós-refeições (alvo pós-prandial <140 mg/dL idealmente)',
+     'Glicemia ao deitar e durante a noite (vigilância de hipoglicemia noturna)',
+     'TIR >70% se CGM',
+     'HbA1c trimestral · ajuste do ratio insulina:HC e fator de correção',
+     'Locais de injeção: vigilância de lipohipertrofia em cada consulta',
+     'Diário de exercício e ajustes correspondentes'],
+    {pregnancy: 'Aspart é segura na gravidez (categoria B). Necessidades de insulina aumentam significativamente no 2º e 3º trimestre. Equipa multidisciplinar.',
+     costNote: 'Comparticipação SNS total em DM1. Fiasp comparticipado mas com custo ligeiramente superior — vantagem em crianças com ingestão imprevisível.'},
+    fatigue ? 'Fadiga em DM1 com insulina pode resultar de hipoglicemia recorrente, hiperglicemia crónica, ou outras causas (anemia, hipotiroidismo — frequente em DM1 por autoimunidade associada). Pesquisa sistemática.' : ''
+  );
+
+  /* Resultado 3 — DM1 confirmada mas ainda sem insulina — alternativa Lispro */
+  if (!insulin && diag) return res(
+    'Resultado 3: Início de Insulinoterapia — Insulina Lispro',
+    'Análogo ultra-rápido como alternativa equivalente à aspart',
+    [drug(
+      'Insulina Lispro (Humalog)',
+      'Análogo de insulina de ação ultra-rápida',
+      'A <strong>insulina lispro</strong> foi o primeiro análogo de insulina ultra-rápida disponível, com inversão dos aminoácidos B28-B29 (lisina-prolina) que <strong>impede a autoagregação</strong> da insulina humana, permitindo absorção mais rápida. Perfil farmacocinético muito similar à aspart — início em 15 minutos, pico em 30-90 minutos, duração 2-4h. Indicada como <strong>componente prandial</strong> do regime basal-bólus em DM1 recém-diagnosticada ou em transição de outros esquemas. Disponível em formulação <strong>U-200 concentrada</strong> (Humalog U-200) para doentes com necessidades elevadas de insulina (raro em DM1).',
+      'Calculada com base na contagem de HC: ratio insulina:HC tipicamente 1 UI / 10-15g · Fator de correção 1 UI ~30-50 mg/dL · Início de tratamento em internamento ou hospital de dia para educação',
+      'Subcutânea 15 minutos antes das refeições ou imediatamente após · Caneta, seringa, ou bomba',
+      'Educação intensiva inicial obrigatória: técnica de injeção, contagem de HC, regras de correção, sinais de hipoglicemia, sick day rules. Reavaliação em 7-14 dias para ajuste de doses.',
+      'Comparticipado pelo SNS em DM1',
+      'Equivalente à aspart: hipoglicemia, lipohipertrofia, reações alérgicas raras, instabilidade térmica. Início mais lento que a Fiasp.'
+    ), drug(
+      'Insulina Glargina ou Degludeca (basal — combinada)',
+      'Componente basal indispensável do regime basal-bólus',
+      'A insulina lispro <strong>NUNCA é usada isoladamente em DM1</strong> — sem insulina basal, ocorre cetoacidose nas horas seguintes. O regime basal-bólus combina <strong>1-2 administrações/dia de insulina basal</strong> (glargina, degludeca) com <strong>3-4 administrações de insulina prandial</strong> (lispro/aspart) às refeições. Esta combinação simula o perfil fisiológico (secreção pancreática contínua + picos prandiais).',
+      'Glargina: 0,2-0,4 UI/kg/dia · Degludeca: 10 UI/dia inicial',
+      'Subcutânea 1x/dia à mesma hora (degludeca tolera flexibilidade)',
+      'Reavaliação semanal nas primeiras 2-4 semanas. Educação para sick day rules e prevenção de DKA.',
+      'Comparticipado pelo SNS',
+      'Risco de hipoglicemia (sobretudo noturna) — preferir degludeca em risco acrescido. Lipohipertrofia.'
+    )],
+    ['<strong>Insulina Aspart</strong> — alternativa equivalente; preferência regional/institucional ou tolerância individual',
+     'Insulina Glulisina (Apidra) — outra opção ultra-rápida',
+     'Bomba de insulina (CSII) — pode ser oferecida desde o diagnóstico em centros especializados',
+     'CGM (FreeStyle Libre, Dexcom) deve ser iniciado idealmente em paralelo',
+     'Internamento curto (3-5 dias) para educação inicial estruturada — prática comum em pediatria/endocrinologia'],
+    ['Iniciar lispro sem insulina basal — risco de DKA em horas',
+     'Adiar a primeira administração após o diagnóstico — DM1 não tratada progride para DKA',
+     'Educação superficial — base de erros futuros',
+     'Misturar lispro com glargina/degludeca na mesma seringa — incompatível',
+     'Suspender em jejum sem ajustar — manter basal sempre'],
+    'Tratamento permanente. A DM1 não tem cura — insulina é necessária para a vida.',
+    ['Educação intensiva inicial (curso de 3-5 dias em centro especializado)',
+     'Apoio psicológico — diagnóstico de DM1 é emocionalmente avassalador',
+     'Envolvimento da família/cuidadores',
+     'Plano nutricional adaptado (não restritivo) com contagem de HC',
+     'Material de monitorização desde o início (glicemia capilar + idealmente CGM)',
+     'Recursos: <strong>APDP</strong> (www.apdp.pt) — campos de férias para crianças/adolescentes, formação',
+     'App de registo e ajuste'],
+    ['Glicemia capilar mínima 4-7x/dia ou CGM',
+     'HbA1c às 3 semanas e depois trimestral',
+     'Cetonas se glicemia >250 mg/dL ou doença aguda',
+     'Função tiroideia (associação autoimune frequente)',
+     'Anticorpos: anti-GAD, anti-IA2, anti-insulina (confirmar etiologia autoimune)',
+     'Doença celíaca (rastreio inicial e periódico — alta prevalência em DM1)',
+     'Vigilância dos locais de injeção'],
+    {pregnancy: 'Mesma orientação que aspart — segura na gravidez. Doses sobem 50-100% até ao parto.',
+     costNote: 'Lispro e aspart são equivalentes em eficácia e custo. A escolha depende de disponibilidade institucional e tolerância individual.'},
+    'IMPORTANTE: a DM1 recém-diagnosticada beneficia muito do encaminhamento imediato a uma equipa multidisciplinar especializada (endocrinologia + enfermagem + nutrição + psicologia). A APDP tem recursos formativos específicos.'
+  );
+
+  /* Resultado 1 — DM1 — primeira linha basal (default) */
+  return res(
+    'Resultado 1: Componente Basal — Insulina Glargina ou Degludeca',
+    'Insulina de ação prolongada — pedra angular do regime basal-bólus',
+    [drug(
+      'Insulina Glargina (Lantus, Toujeo) ou Degludeca (Tresiba)',
+      'Análogo de insulina humana de ação prolongada',
+      'A <strong>insulina basal</strong> é o pilar do tratamento da DM1 — sem ela, ocorre cetoacidose em poucas horas. As insulinas modernas de ação prolongada têm perfil <strong>plano e estável</strong> ao longo de 20-24h (glargina) ou >42h (degludeca), simulando a secreção basal contínua das células beta saudáveis. <strong>Glargina U100 (Lantus)</strong>: 1x/dia, há mais tempo no mercado, ampla experiência. <strong>Glargina U300 (Toujeo)</strong>: concentrada, pico ainda menos pronunciado, menos hipoglicemia noturna. <strong>Degludeca (Tresiba)</strong>: semivida >25h, cinética muito estável, permite flexibilidade horária (mínimo 8h entre tomas) e tem evidência de menor hipoglicemia grave (estudo SWITCH).',
+      'Glargina U100: 0,2-0,4 UI/kg/dia (típico em DM1: 50% da dose total diária) · Glargina U300: equivalente · Degludeca: 10 UI/dia inicial · Ajuste conforme glicemia em jejum (alvo 80-130 mg/dL)',
+      'Subcutânea, 1x/dia à mesma hora · Locais: coxa, abdómen, glúteo, braço · Rotação dos locais',
+      'Iniciar com 50% da dose total diária estimada (a outra metade fica para insulina prandial). Titular conforme glicemia em jejum: subir 1-2 UI cada 2-3 dias se glicemia em jejum >130 mg/dL persistente. Conservar fechada em frigorífico (2-8°C). Aberta: temperatura ambiente até 28 dias (Lantus) ou 56 dias (Tresiba).',
+      'Comparticipado pelo SNS em DM1 (custo baixo para o doente) · Degludeca tem custo ligeiramente superior',
+      '<strong>Hipoglicemia</strong> (sobretudo noturna se dose excessiva — alvo glicemia em jejum 80-130 mg/dL). <strong>Lipodistrofia</strong> (lipohipertrofia ou lipoatrofia) se não rodar locais de injeção — causa absorção errática e hipoglicemia/hiperglicemia inexplicáveis. <strong>Não pode ser misturada com outras insulinas</strong> na mesma seringa (precipitação química). Conservação inadequada (temperatura) reduz potência.'
+    ), drug(
+      'Educação para o Regime Basal-Bólus',
+      'Combinação obrigatória com insulina prandial (aspart, lispro)',
+      'A insulina basal <strong>nunca é usada isoladamente em DM1</strong> — sem cobertura prandial, ocorre hiperglicemia pós-refeição grave. O regime basal-bólus padrão combina <strong>1x/dia de insulina basal</strong> + <strong>3-4x/dia de insulina prandial</strong> (lispro, aspart) às refeições. Esta combinação simula a fisiologia pancreática normal: secreção contínua + picos prandiais. Educação obrigatória: contagem de HC, regras de correção, sick day rules, prevenção de hipoglicemia.',
+      'Combinada com lispro/aspart às refeições — ratio 1 UI / 10-15g HC',
+      'Subcutânea com canetas ou bomba',
+      'Educação inicial intensiva. Reavaliação trimestral em consulta de diabetes.',
+      'Comparticipado',
+      'Sem cobertura prandial: hiperglicemia pós-prandial e progressão para DKA.'
+    )],
+    ['<strong>Insulina Detemir (Levemir)</strong> — análogo basal de ação intermédia (10-16h), pode requerer 2x/dia; usada em algumas situações específicas',
+     'NPH (insulina humana de ação intermédia) — usada apenas em contextos económicos restritos; perfil menos plano, mais hipoglicemia',
+     '<strong>Bomba de insulina (CSII)</strong> com infusão contínua de aspart/lispro — substitui a basal subcutânea em doentes com hipoglicemias graves recorrentes ou regimes complexos',
+     'Sistema de ansa fechada — bomba com sensor (CGM) integrado e algoritmo automático'],
+    ['<strong>Suspender insulina basal</strong> mesmo em jejum/doença/cirurgia — risco de DKA em horas',
+     'Misturar glargina ou degludeca com insulinas rápidas na mesma seringa',
+     'Substituir basal por bólus mais frequentes — perfil farmacocinético inadequado',
+     'Não rodar locais de injeção — lipohipertrofia → absorção errática',
+     'Conservar fora do frigorífico (não aberta) ou exposta a temperaturas extremas'],
+    'Tratamento permanente para a vida. Reavaliação trimestral em consulta especializada.',
+    ['<strong>Atividade física regular</strong> — adaptar doses; reduzir basal 10-20% antes de exercício prolongado',
+     'Dieta equilibrada com contagem de HC',
+     'Hidratação adequada',
+     'Sono regular — privação aumenta resistência à insulina',
+     'Apoio psicológico — DM1 tem alta prevalência de distress emocional',
+     'Evitar álcool em jejum (risco de hipoglicemia grave); se consumir, sempre com HC',
+     'Identificação médica permanente (pulseira, app de emergência)',
+     'Recursos: <strong>APDP</strong> (www.apdp.pt), grupos de apoio, formação contínua'],
+    ['Glicemia em jejum diária (alvo 80-130 mg/dL) — guia para titulação da basal',
+     'Glicemia capilar 4-7x/dia ou CGM (TIR >70%)',
+     'HbA1c trimestral (alvo <7% em adulto, <7,5% em criança/adolescente)',
+     'Cetonas se glicemia >250 mg/dL ou doença aguda',
+     'Função renal (creatinina, microalbuminúria) anual',
+     'Função tiroideia (alta prevalência de tiroidite autoimune associada)',
+     'Anticorpos celíacos a cada 2-3 anos',
+     'Fundoscopia, neurologia e exame dos pés anuais'],
+    {elderly: 'No idoso com DM1 (cada vez mais frequente — sobrevida aumentou), alvos individualizados — HbA1c 7,5-8% para reduzir hipoglicemias graves. Degludeca preferida pela menor variabilidade.',
+     pregnancy: 'Em gravidez, doses de basal aumentam 50-100% no 3.º trimestre. Glargina e degludeca cada vez mais usadas com segurança crescente; aspart e lispro são as prandiais de eleição.',
+     costNote: 'Glargina e degludeca comparticipadas pelo SNS em DM1. Custo total mensal para o doente é geralmente baixo. Bomba de insulina e CGM também comparticipados em critérios.'},
+    !diag ? 'IMPORTANTE: confirmar diagnóstico de DM1 com anticorpos (anti-GAD, anti-IA2, anti-insulina) e péptido C — distingue de DM2 e de diabetes monogénica (MODY). O tratamento difere substancialmente.' : (thirst && urine && weight ? 'Tríade clássica de DM1 (polidipsia + poliúria + perda de peso) — encaminhamento URGENTE a endocrinologia com início de insulina sem demora. Verificar cetonas para excluir DKA.' : '')
   );
 }
 
