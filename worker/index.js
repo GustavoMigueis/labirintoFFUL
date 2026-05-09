@@ -49,19 +49,41 @@ const CONTENT_TYPE_BY_EXT = {
   ico: 'image/x-icon',
 };
 
-async function serveImage(filename, env) {
+async function serveImage(filename, env, request) {
   if (!filename || filename.includes('/') || filename.includes('..')) {
     return errorResponse(400, 'Invalid filename');
   }
   if (!ALLOWED_IMAGE_EXT.test(filename)) {
     return errorResponse(400, 'Unsupported image type');
   }
-  if (!env.IMAGES) {
-    return errorResponse(500, 'R2 binding IMAGES not configured');
-  }
 
-  const object = await env.IMAGES.get(filename);
+  // 1. Tentar primeiro o bucket R2 (preferido — controlo total de cache, ETag, etc.)
+  const object = env.IMAGES ? await env.IMAGES.get(filename) : null;
+
   if (!object) {
+    // 2. Fallback: tentar como asset estático (pasta /images/ do repo).
+    //    NOTA: o assets binding tem not_found_handling = "single-page-application",
+    //    que serve index.html (HTML 200 OK) para paths inexistentes — por isso
+    //    precisamos de validar o Content-Type da resposta para evitar servir
+    //    HTML disfarçado de imagem.
+    if (env.ASSETS && request) {
+      try {
+        const assetResponse = await env.ASSETS.fetch(request);
+        const ct = (assetResponse.headers.get('Content-Type') || '').toLowerCase();
+        if (assetResponse.ok && ct.startsWith('image/')) {
+          // Acrescentar cache headers + CORS sem alterar o body
+          const headers = new Headers(assetResponse.headers);
+          headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+          for (const [k, v] of Object.entries(CORS_HEADERS)) headers.set(k, v);
+          return new Response(assetResponse.body, {
+            status: assetResponse.status,
+            headers,
+          });
+        }
+      } catch (e) {
+        // ignora; cai para 404
+      }
+    }
     return errorResponse(404, 'Image not found');
   }
 
@@ -220,7 +242,7 @@ export default {
 
       const imgMatch = path.match(/^\/images\/([^/]+)$/);
       if (imgMatch && (request.method === 'GET' || request.method === 'HEAD')) {
-        return await serveImage(decodeURIComponent(imgMatch[1]), env);
+        return await serveImage(decodeURIComponent(imgMatch[1]), env, request);
       }
 
       return errorResponse(404, 'Not found');
