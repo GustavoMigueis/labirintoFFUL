@@ -169,7 +169,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
 .biblio-item a:hover{text-decoration:underline}
 
 /* DD-HERO decorative rule (cor dinamica via openDisease) */
-.dd-hero hr{border:none;border-top:3px solid #7c3aed;width:60px;margin:14px auto 0}
+.dd-hero hr{border:none;background:#7c3aed;height:3px;width:70px;border-radius:2px;margin:14px auto 0}
 
 /* PER-PAGE HEADING COLORS — cor de cada grupo de doencas
    Alvo restrito a .dc-top .sec-title e .d-inf h2 para nao colidir
@@ -646,8 +646,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
     <div class="d-row rev"><div class="d-inf">
       <h2 style="color:#2563eb">Gota</h2>
       <p>Artropatia inflamatória crónica causada pela deposição de cristais de urato monossódico nas articulações e tecidos moles, resultante de hiperuricemia. Manifesta-se por crises de artrite aguda, habitualmente na primeira articulação metatarsofalângica. A gota está frequentemente associada a doença renal, hipertensão e síndrome metabólica.</p>
-      <div style="background:#dbeafe;border-radius:10px;padding:12px 16px;font-size:13px;color:#2563eb;margin-bottom:14px">Conteúdo detalhado e quiz terapêutico em desenvolvimento.</div>
-      <button class="btn-purple" style="background:#2563eb;opacity:0.5;cursor:not-allowed">Em breve</button>
+      <button class="btn-purple" style="background:#2563eb" onclick="openDisease('gota')">Saber Mais</button>
     </div><div class="d-vis" style="background:#dbeafe;min-height:220px"></div></div>
   </div>
   <div class="quote-band"><p class="qt">&ldquo;Wherever the art of medicine is loved, there is also a love of humanity.&rdquo;</p><p class="qa">&mdash; Hipocrates</p></div>
@@ -714,6 +713,7 @@ var DIMG = {
   drc: '',
   artrite: '',
   osteoporose: '',
+  gota: '',
   hta: "/images/img_hta.png",
   eam: "/images/img_eam.png",
   ic:  "/images/img_ic.png",
@@ -721,8 +721,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', drc:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', drc:'Doença Renal Crónica', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -806,6 +806,11 @@ var DINTRO = {
     'A osteoporose é uma <strong>doença óssea crónica</strong> caracterizada pela diminuição da densidade e qualidade do osso, aumentando o <strong>risco de fraturas</strong>, especialmente da anca, coluna e punho. É mais frequente em <strong>mulheres após a menopausa</strong>, em idosos, em pessoas sob corticoterapia prolongada e em indivíduos com défice de cálcio ou vitamina D. Em Portugal, estima-se que afete cerca de 800 000 pessoas, sendo responsável por um número significativo de fraturas com impacto grave na qualidade de vida e autonomia.',
     'A doença evolui muitas vezes <strong>sem sintomas</strong> até ocorrer uma fratura, razão pela qual é frequentemente designada como a <em>doença silenciosa</em>. Os principais fatores de risco incluem <strong>idade avançada, menopausa, baixo peso, sedentarismo, tabagismo, consumo excessivo de álcool, corticoterapia prolongada e história familiar de fraturas</strong>. O diagnóstico é confirmado por <strong>densitometria óssea (DXA)</strong>, que mede a densidade mineral óssea.',
     'O tratamento tem como objetivo <strong>reduzir o risco de fraturas, travar a perda óssea</strong> e, em alguns casos, estimular a formação de novo osso. A escolha terapêutica depende da gravidade da doença, dos fatores de risco individuais e das características do doente. A <strong>suplementação com cálcio e vitamina D é a base de qualquer abordagem</strong>. Use o quiz abaixo para perceber qual a opção mais adequada ao seu perfil.'
+  ],
+  gota: [
+    'A gota é uma <strong>doença inflamatória crónica</strong> causada pela deposição de cristais de ácido úrico (urato monossódico) nas articulações, resultante de níveis elevados de ácido úrico no sangue — condição designada <strong>hiperuricemia</strong>. É a forma mais comum de artrite inflamatória no adulto e afeta sobretudo homens, sendo mais prevalente após os 40 anos. Em Portugal, a sua prevalência tem vindo a aumentar, associada ao envelhecimento da população e a estilos de vida menos saudáveis.',
+    'A doença manifesta-se tipicamente por <strong>crises súbitas de dor intensa, vermelhidão, calor e inchaço articular</strong>, afetando com maior frequência a articulação do dedo grande do pé, mas também tornozelos, joelhos, mãos e cotovelos. Os principais fatores de risco incluem sexo masculino, obesidade, consumo de álcool, dieta rica em purinas (carnes vermelhas, vísceras, marisco), doença renal, uso de diuréticos e história familiar.',
+    'Sem tratamento adequado, a gota pode tornar-se crónica e provocar <strong>destruição articular, formação de tofos</strong> (depósitos visíveis de cristais), cálculos renais e progressão da doença renal. O tratamento divide-se em duas fases: <strong>controlo da crise aguda</strong> e <strong>prevenção de novas crises</strong> através da redução dos níveis de ácido úrico. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
   ]
 };
 
@@ -814,7 +819,7 @@ function openDisease(id) {
   var intro = DINTRO[id];
   var c = colorFor(id);
   var html = '<div class="dd-hero"><h1 style="color:' + c + '">' + DNAME[id] + '</h1>'
-           + '<hr style="border-top-color:' + c + '"></div>';
+           + '<hr style="background:' + c + '"></div>';
   html += '<div class="dd-body">';
   for (var i = 0; i < intro.length; i++) html += '<p class="dd-p">' + intro[i] + '</p>';
   html += '<div class="qbox"><div class="qbox-title">Quiz Terapêutico</div>';
@@ -991,7 +996,19 @@ var Qu = {
   op_suppl:    q('op_suppl',    'Faz suplementação de cálcio ou vitamina D?', [o('A','Sim',{op_suppl:true}),o('B','Não',{op_suppl:false})]),
   op_meds:     q('op_meds',     'Já toma medicação para osteoporose?', [o('A','Não',{op_meds:'none'}),o('B','Sim, controlada',{op_meds:'controlled'}),o('C','Sim, mas com novas fraturas',{op_meds:'uncontrolled'})]),
   op_falls:    q('op_falls',    'Tem dificuldade de mobilidade ou risco de quedas?', [o('A','Sim',{op_falls:true}),o('B','Não',{op_falls:false})]),
-  op_dexa:     q('op_dexa',     'Realizou densitometria óssea recentemente?', [o('A','Sim',{op_dexa:true}),o('B','Não',{op_dexa:false})])
+  op_dexa:     q('op_dexa',     'Realizou densitometria óssea recentemente?', [o('A','Sim',{op_dexa:true}),o('B','Não',{op_dexa:false})]),
+  go_diag:     q('go_diag',     'Já foi diagnosticado com gota?', [o('A','Sim',{go_diag:true}),o('B','Não',{go_diag:false})]),
+  go_crisis:   q('go_crisis',   'Tem crises súbitas de dor intensa numa articulação?', [o('A','Sim',{go_crisis:true}),o('B','Não',{go_crisis:false})]),
+  go_toe:      q('go_toe',      'A dor afeta sobretudo o dedo grande do pé?', [o('A','Sim',{go_toe:true}),o('B','Não',{go_toe:false})]),
+  go_uric:     q('go_uric',     'Tem ácido úrico elevado?', [o('A','Sim',{go_uric:'high'}),o('B','Não',{go_uric:'normal'}),o('C','Não sei',{go_uric:'unknown'})]),
+  go_age50:    q('go_age50',    'Tem mais de 50 anos?', [o('A','Sim',{go_age50:true}),o('B','Não',{go_age50:false})]),
+  go_weight:   q('go_weight',   'Tem excesso de peso ou obesidade?', [o('A','Sim',{go_weight:true}),o('B','Não',{go_weight:false})]),
+  go_alcohol:  q('go_alcohol',  'Consome álcool regularmente?', [o('A','Sim',{go_alcohol:true}),o('B','Não',{go_alcohol:false})]),
+  go_renal:    q('go_renal',    'Tem doença renal ou cálculos renais?', [o('A','Sim',{go_renal:true}),o('B','Não',{go_renal:false})]),
+  go_meds:     q('go_meds',     'Já toma medicação para gota?', [o('A','Não',{go_meds:'none'}),o('B','Sim, controlada',{go_meds:'controlled'}),o('C','Sim, mas continua com crises',{go_meds:'uncontrolled'})]),
+  go_freq:     q('go_freq',     'Tem mais de 2 crises por ano?', [o('A','Sim',{go_freq:true}),o('B','Não',{go_freq:false})]),
+  go_tophi:    q('go_tophi',    'Já desenvolveu tofos (caroços/depósitos de cristais)?', [o('A','Sim',{go_tophi:true}),o('B','Não',{go_tophi:false})]),
+  go_analysis: q('go_analysis', 'Faz análises regulares ao ácido úrico?', [o('A','Sim',{go_analysis:true}),o('B','Não',{go_analysis:false})])
 };
 
 var DQ = {
@@ -1011,7 +1028,8 @@ var DQ = {
   alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds'],
   drc:            ['drc_diag','drc_dm','drc_hta','drc_edema','drc_gfr','drc_age65','drc_anemia','drc_polimed','drc_worsen'],
   artrite:        ['ar_diag','ar_stiffness','ar_swelling','ar_daily','ar_age65','ar_infections','ar_meds','ar_mtx','ar_adverse','ar_bio','ar_osteo','ar_followup'],
-  osteoporose:    ['op_diag','op_fracture','op_age65','op_meno','op_steroids','op_family','op_weight','op_suppl','op_meds','op_falls','op_dexa']
+  osteoporose:    ['op_diag','op_fracture','op_age65','op_meno','op_steroids','op_family','op_weight','op_suppl','op_meds','op_falls','op_dexa'],
+  gota:           ['go_diag','go_crisis','go_toe','go_uric','go_age50','go_weight','go_alcohol','go_renal','go_meds','go_freq','go_tophi','go_analysis']
 };
 
 function tags() {
@@ -1096,6 +1114,7 @@ function getOutcome() {
   if (id==='drc') return drcO(t);
   if (id==='artrite') return artriteO(t);
   if (id==='osteoporose') return osteoporoseO(t);
+  if (id==='gota') return gotaO(t);
 }
 
 
@@ -3704,6 +3723,341 @@ function osteoporoseO(t) {
     {elderly: isOld ? 'Em > 65 anos, considerar dose de manutenção de vitamina D mais elevada (1000-2000 UI/dia) e DXA imediata. A síntese cutânea é menos eficaz com a idade. Avaliação do risco de quedas é prioridade.' : '',
      costNote: 'Cálcio e vitamina D genéricos têm custo muito baixo (~5-15€/mês). A medida mais custo-eficaz em prevenção primária é a combinação de exercício físico regular + dieta adequada + cessação tabágica — gratuita.'},
     family ? 'IMPORTANTE: tem história familiar de osteoporose — antecipar a primeira DXA (não esperar pelos 65 anos) e otimizar fatores de risco modificáveis o mais cedo possível.' : (lowWeight ? 'Baixo peso é fator de risco importante para osteoporose — manter ingestão calórica e proteica adequada e considerar avaliação nutricional.' : (steroids ? 'Corticoterapia prolongada — risco aumentado de osteoporose; considerar bifosfonato profilático mesmo sem osteoporose confirmada (especialmente se >7,5 mg/dia de prednisolona >3 meses).' : ''))
+  );
+}
+
+function gotaO(t) {
+  var diag       = (t.go_diag     === true);
+  var crisis     = (t.go_crisis   === true);
+  var toe        = (t.go_toe      === true);
+  var uricHigh   = (t.go_uric     === 'high');
+  var isOld      = (t.go_age50    === true);
+  var overweight = (t.go_weight   === true);
+  var alcohol    = (t.go_alcohol  === true);
+  var renal      = (t.go_renal    === true);
+  var medsNone   = (t.go_meds     === 'none');
+  var medsCtrl   = (t.go_meds     === 'controlled');
+  var medsUnctrl = (t.go_meds     === 'uncontrolled');
+  var frequent   = (t.go_freq     === true);
+  var tophi      = (t.go_tophi    === true);
+  var analysis   = (t.go_analysis === true);
+
+  /* Resultado 6 — Idoso com doença renal — ajuste individualizado */
+  if (renal && isOld) return res(
+    'Resultado 6: Doente Idoso com Doença Renal — Ajuste Individualizado',
+    'Adaptação cuidadosa de doses e evicção de fármacos nefrotóxicos',
+    [drug(
+      'Colchicina (dose ajustada à função renal)',
+      'Antigotoso anti-inflamatório — inibidor da polimerização da tubulina',
+      'Em idosos com <strong>insuficiência renal</strong>, a colchicina mantém-se útil mas requer <strong>ajuste rigoroso de dose</strong>. A sua eliminação é parcialmente renal e a toxicidade é cumulativa — <strong>contraindicada se TFG <30 mL/min</strong> em algumas guidelines (uso muito cuidadoso noutras). Em TFG 30-60: máximo 0,5 mg/dia. Em TFG <30: evitar ou usar com vigilância intensiva. <strong>Interações major</strong> com claritromicina, eritromicina, ciclosporina, verapamil, diltiazem (inibidores do CYP3A4 e P-gp) — risco de toxicidade fatal. Na população idosa, o risco de toxicidade neuromuscular (miopatia, rabdomiólise) e hematológica (citopenias) é particularmente elevado.',
+      'TFG 30-60 mL/min: máximo 0,5 mg/dia · TFG <30 mL/min: evitar (ou apenas em centros especializados com vigilância)',
+      'Oral, 1x/dia',
+      'Verificar SEMPRE a função renal antes de prescrever. Rever toda a medicação habitual para excluir interações major. Suspender imediatamente se diarreia, dor muscular ou alteração hematológica.',
+      'Custo baixo',
+      'Toxicidade aumentada em idosos: diarreia profusa, miopatia, neuropatia periférica, citopenias (neutropenia, trombocitopenia). <strong>Interações graves</strong> com claritromicina, ciclosporina, estatinas (sobretudo simvastatina) — podem causar morte por toxicidade colchicínica. Evitar associação com fibratos.'
+    ), drug(
+      'Prednisolona (alternativa quando colchicina e AINEs não são opção)',
+      'Corticosteroide sistémico — anti-inflamatório potente',
+      'Em <strong>idosos com insuficiência renal</strong> em quem AINEs estão contraindicados (nefrotóxicos) e a colchicina é mal tolerada, o <strong>corticosteroide oral em curso curto</strong> é uma alternativa eficaz e relativamente segura para a crise de gota. A injeção intra-articular é também muito útil em monoartrite acessível (joelho, tornozelo).',
+      'Prednisolona 30-40 mg/dia, 3-5 dias, com redução gradual ao longo de 7-10 dias · ou injeção intra-articular se monoarticular',
+      'Oral, de manhã com pequeno-almoço · IM ou intra-articular em ambulatório especializado',
+      'Vigiar glicemia (efeito hiperglicemiante — particularmente importante em diabéticos), tensão arterial e retenção de líquidos. Em diabéticos pode ser necessário ajuste temporário da medicação antidiabética.',
+      'Custo muito baixo',
+      'Hiperglicemia, hipertensão, retenção de líquidos, insónia, irritabilidade. Imunossupressão em uso prolongado. Risco de descompensação de diabetes ou IC. Em curso curto (<7 dias), o perfil de segurança é geralmente bom.'
+    ), drug(
+      'Alopurinol (dose reduzida) — manutenção a longo prazo',
+      'Inibidor da xantina oxidase — redução da produção de ácido úrico',
+      'O alopurinol é a primeira escolha de fármaco hipouricemiante mesmo em insuficiência renal, mas exige <strong>ajuste cuidadoso da dose à TFG</strong>. Iniciar com dose muito baixa (50 mg/dia se TFG <30) e aumentar lentamente (50 mg cada 2-4 semanas) até atingir o alvo de ácido úrico (<6 mg/dL) ou aparecer toxicidade. <strong>NÃO iniciar durante crise aguda</strong> — aguardar 2-4 semanas após resolução. Nos primeiros 6 meses, profilaxia com colchicina 0,5 mg/dia (se TFG permitir) ou prednisolona em baixa dose para prevenir crises de mobilização.',
+      'TFG <30 mL/min: iniciar 50 mg/dia · titulação muito lenta · dose máxima habitualmente 100-200 mg/dia',
+      'Oral, 1x/dia, com ou sem alimentos',
+      'Iniciar APÓS resolução da crise aguda. Suplementar com hidratação adequada (>1,5 L/dia, ajustado à função renal). Pesquisar HLA-B*5801 antes de iniciar em populações de alto risco (asiáticos descendentes Han, africanos) — risco aumentado de Stevens-Johnson.',
+      'Custo muito baixo',
+      'Rash cutâneo (suspender imediatamente — risco Stevens-Johnson/DRESS). Toxicidade aumentada em IR — citopenias, hepatotoxicidade. Interação grave com azatioprina e mercaptopurina (reduzir dose para 1/4). Vigiar hemograma e função hepática.'
+    )],
+    ['Febuxostato — alternativa em intolerância ao alopurinol; metabolismo predominantemente hepático (vantagem em IR moderada); precaução em doença CV estabelecida',
+     'Injeção intra-articular de corticoide em monoartrite — mínimos efeitos sistémicos',
+     'Hidratação adequada (>1,5 L/dia, ajustada à TFG)',
+     'Rever diuréticos tiazídicos e de ansa — todos aumentam o ácido úrico (substituir por outros anti-hipertensores se possível)',
+     'Avaliação nefrológica — gota e doença renal são bidirecionais (cada uma agrava a outra)'],
+    ['<strong>AINEs (ibuprofeno, naproxeno, diclofenac)</strong> — nefrotóxicos absolutos em insuficiência renal; piorando a função renal e a retenção de líquidos',
+     'Aspirina em dose baixa altera a excreção do ácido úrico — discutir com cardiologia o balanço CV vs gota',
+     'Tiazidas e diuréticos de ansa em alta dose — aumentam ácido úrico',
+     'Iniciar alopurinol durante crise aguda — pode prolongar crise',
+     'Doses altas de colchicina ou em associação com inibidores CYP3A4'],
+    'Tratamento crónico individualizado com seguimento por nefrologia e/ou reumatologia.',
+    ['<strong>Hidratação adequada</strong> ajustada à função renal (geralmente 1,5-2 L/dia, exceto se restrição por outras causas)',
+     'Dieta pobre em purinas: evitar vísceras, marisco, anchovas, sardinha, carnes vermelhas em excesso',
+     'Privilegiar lacticínios magros (efeito hipouricemiante moderado), cerejas (efeito anti-inflamatório), café (associado a menor risco de gota)',
+     'Limitação rigorosa de álcool (especialmente cerveja e bebidas destiladas)',
+     'Perda de peso gradual se obesidade (não dietas radicais — podem precipitar crises)',
+     'Cessação tabágica',
+     'Rever toda a medicação habitual com farmacêutico (interações major frequentes em polimedicados)',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt) e Sociedade Portuguesa de Nefrologia'],
+    ['Função renal (creatinina, TFG) e ionograma a cada 3-6 meses',
+     'Ácido úrico sérico cada 3 meses até atingir alvo (<6 mg/dL ou <5 mg/dL se tofos), depois semestral',
+     'Hemograma e função hepática anual (alopurinol)',
+     'Tensão arterial em cada consulta',
+     'Avaliação articular e dos tofos em consulta de reumatologia',
+     'Rastreio de cálculos renais (urocultura, eco renal se sintomas)'],
+    {elderly: 'No idoso com IR, o ajuste de dose é mais importante que a escolha do fármaco. Monitorização frequente e revisão periódica de toda a medicação habitual são essenciais — a polifarmácia no idoso é a principal causa de toxicidade colchicínica fatal.',
+     costNote: 'Os fármacos para gota são genéricos e amplamente comparticipados pelo SNS. O custo principal é a monitorização laboratorial frequente (creatinina, ácido úrico, hemograma).'},
+    'CRÍTICO: a doença renal e a gota são patologias que se agravam mutuamente — o tratamento adequado da gota travai a progressão da doença renal e vice-versa. Acompanhamento multidisciplinar (medicina interna, nefrologia, reumatologia) é frequentemente necessário.'
+  );
+
+  /* Resultado 5 — Gota crónica/tofácea/refratária — terapêutica combinada */
+  if (tophi || (frequent && medsUnctrl)) return res(
+    'Resultado 5: Gota Crónica / Tofácea — Terapêutica Combinada',
+    'Hipouricemiante em dose otimizada + profilaxia + estilo de vida',
+    [drug(
+      'Alopurinol (ou Febuxostato) — dose otimizada',
+      'Hipouricemiante — inibidor da xantina oxidase em dose ajustada para alvo terapêutico',
+      'Em <strong>gota tofácea ou refratária</strong>, o objetivo terapêutico é mais agressivo: <strong>ácido úrico sérico < 5 mg/dL</strong> (vs <6 mg/dL na gota não tofácea). Concentrações inferiores a 5 mg/dL aceleram a dissolução dos cristais de urato dos tofos e dos depósitos articulares — processo que pode demorar meses a anos. O alopurinol é a primeira escolha (titulação até 600-900 mg/dia se necessário); o febuxostato é alternativa quando há intolerância ou resposta inadequada. <strong>Combinar com profilaxia anti-inflamatória durante 6-12 meses</strong> (colchicina baixa dose) é essencial — a redução abrupta do ácido úrico pode mobilizar cristais e desencadear crises ("gout flares").',
+      'Alopurinol: titular até 300-900 mg/dia conforme necessário · Febuxostato: 80-120 mg/dia · Alvo: ácido úrico <5 mg/dL',
+      'Oral, 1x/dia',
+      'Manter durante toda a vida em gota tofácea. Os tofos podem demorar 12-24 meses a desaparecer com terapia adequada. NÃO interromper.',
+      'Custo baixo (alopurinol genérico) · médio (febuxostato)',
+      'Rash cutâneo, hepatotoxicidade, citopenias (alopurinol). Risco CV em doença CV estabelecida (febuxostato — alerta CARES). Necessidade de ajuste em IR.'
+    ), drug(
+      'Colchicina profilática (durante a otimização)',
+      'Antigotoso preventivo — evita crises de mobilização',
+      'A profilaxia com colchicina em <strong>baixa dose durante 6-12 meses</strong> a partir do início ou aumento do hipouricemiante é fundamental para prevenir as <strong>crises de mobilização ("gout flares")</strong> que ocorrem quando o ácido úrico sérico baixa rapidamente e os cristais começam a dissolver-se. Sem profilaxia, até 50% dos doentes têm crises nos primeiros meses de tratamento, levando à descontinuação prematura do hipouricemiante. Após 6-12 meses (quando os tofos se reduzem e o ácido úrico está controlado), a colchicina pode ser suspensa.',
+      '0,5 mg 1-2x/dia durante 6-12 meses (ou até resolução dos tofos)',
+      'Oral, à mesma hora todos os dias',
+      'Manter durante todo o período de otimização do hipouricemiante. Suspender se diarreia ou outros sintomas GI persistentes — reduzir dose para 0,5 mg dia sim/dia não.',
+      'Custo baixo',
+      'Diarreia, náuseas. Toxicidade neuromuscular em uso prolongado e em insuficiência renal. Interações major a vigiar.'
+    ), drug(
+      'Anti-inflamatório de resgate para crises intercorrentes',
+      'AINE ou corticoide para tratamento de crises agudas',
+      'Apesar da terapêutica de base, podem ocorrer <strong>crises intercorrentes</strong> nos primeiros 6-12 meses até estabilização. O doente deve ter um plano claro: AINE (naproxeno 500 mg 2x/dia, 5-7 dias) se sem contraindicações, ou corticoide oral (prednisolona 30-40 mg/dia, 3-5 dias com redução), ou injeção intra-articular se monoarticular. NÃO suspender o hipouricemiante durante a crise.',
+      'Conforme crise — AINE 5-7 dias · prednisolona 3-5 dias · ou intra-articular',
+      'Iniciar nas primeiras 12-24h da crise',
+      'Não suspender o hipouricemiante durante a crise — é um dos principais erros e prolonga as crises subsequentes.',
+      'Custo baixo',
+      'Específicos do fármaco escolhido (ver R2 e R6).'
+    )],
+    ['Pegloticase (uricase recombinante IV) — em gota tofácea grave refratária a tudo o resto, em centros muito especializados',
+     'Probenecide ou benzbromarona (uricosúricos) — alternativa ou adição em hipoexcreção, com hidratação adequada e alcalinização urinária',
+     'Avaliação cirúrgica para tofos volumosos com compromisso funcional',
+     'Investigação genética (HLA-B*5801) antes de iniciar alopurinol em populações de risco',
+     'Encaminhamento a reumatologia obrigatório — gota tofácea exige seguimento especializado'],
+    ['Suspender o hipouricemiante durante a crise — prolonga e agrava',
+     'Iniciar hipouricemiante sem profilaxia anti-inflamatória — crises de mobilização frequentes',
+     'Doses subterapêuticas — não atingir alvo é causa frequente de falha',
+     'Continuar dieta rica em purinas e álcool — antagoniza diretamente o tratamento',
+     'AINEs em alta dose ou crónicos sem proteção GI/renal'],
+    'Tratamento crónico, geralmente para a vida toda. Alvo de ácido úrico <5 mg/dL durante toda a fase de dissolução dos tofos (12-24 meses), depois <6 mg/dL para manutenção.',
+    ['<strong>Hidratação >2 L/dia</strong> — facilita excreção renal de urato',
+     '<strong>Dieta pobre em purinas</strong>: evitar vísceras (rim, fígado), carnes vermelhas em excesso, marisco, anchovas, sardinha',
+     'Privilegiar lacticínios magros, cerejas (efeito anti-inflamatório documentado em estudos), café, água',
+     '<strong>Limitação rigorosa do álcool</strong> — especialmente cerveja (rica em purinas) e bebidas destiladas; vinho em moderação tem menor impacto',
+     'Perda de peso gradual se obesidade (5-10% do peso corporal) — não dieta restritiva radical',
+     'Cessação tabágica',
+     'Discussão com médico assistente sobre substituição de diuréticos tiazídicos por outros anti-hipertensores (losartan tem efeito uricosúrico)',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt)'],
+    ['Ácido úrico sérico cada 3 meses até atingir alvo, depois cada 6 meses (alvo <5 mg/dL em gota tofácea)',
+     'Função renal e hepática cada 6 meses · hemograma anual',
+     'Avaliação articular e medição dos tofos em cada consulta',
+     'Ecografia ou DECT articular periódica (visualização dos depósitos de cristais e resposta ao tratamento)',
+     'Avaliação cardiovascular anual — gota é fator de risco CV independente',
+     'Densitometria óssea se uso prolongado de corticoides'],
+    {elderly: isOld ? 'Em idosos, ajustar doses e progressão mais lentamente. Vigiar interações medicamentosas (polifarmácia). Os tofos podem demorar mais tempo a desaparecer.' : '',
+     costNote: 'Alopurinol genérico tem custo praticamente desprezável. Febuxostato comparticipado em critérios. A pegloticase tem custo muito elevado e está reservada a centros especializados.'},
+    alcohol ? 'IMPORTANTE: o álcool é um dos principais fatores de descontrolo da gota — até 50% das crises podem estar relacionadas com consumo recente. A redução do álcool é tão importante quanto a medicação para o sucesso terapêutico.' : ''
+  );
+
+  /* Resultado 4 — Falha terapêutica ao alopurinol — febuxostato */
+  if (medsUnctrl && diag) return res(
+    'Resultado 4: Falha ou Intolerância ao Alopurinol — Febuxostato',
+    'Inibidor não purínico da xantina oxidase — alternativa potente',
+    [drug(
+      'Febuxostato',
+      'Inibidor não purínico seletivo da xantina oxidase',
+      'O <strong>febuxostato</strong> é uma alternativa ao alopurinol em doentes com intolerância (rash, hepatotoxicidade), alergia ou resposta inadequada (não atingem o alvo de ácido úrico em dose máxima de alopurinol). Tem o mesmo mecanismo (inibição da xantina oxidase) mas com <strong>maior seletividade e potência</strong>, e é metabolizado predominantemente pelo fígado — vantagem em <strong>insuficiência renal ligeira a moderada</strong> (não exige ajuste de dose). Estudo CARES (2018) sugeriu <strong>aumento de mortalidade cardiovascular</strong> em doentes com doença CV estabelecida em comparação com alopurinol — alerta da FDA e EMA. Por isso, deve usar-se com precaução em doentes com história de enfarte, AVC ou IC.',
+      'Iniciar com 80 mg/dia · Aumentar para 120 mg/dia se ácido úrico >6 mg/dL após 2-4 semanas · Alvo: ácido úrico <6 mg/dL (ou <5 mg/dL em gota tofácea)',
+      'Oral, 1x/dia, com ou sem alimentos',
+      'Iniciar APÓS resolução de crise aguda (aguardar 2-4 semanas). Associar profilaxia com colchicina 0,5 mg/dia durante 6 meses para prevenir crises de mobilização. Não exige ajuste em IR ligeira-moderada.',
+      'Custo médio (~20–50€/mês) · Comparticipação SNS em critérios específicos (intolerância ou falha ao alopurinol)',
+      '<strong>Risco cardiovascular aumentado</strong> em doença CV estabelecida (alerta CARES) — usar com precaução; ponderar manter alopurinol mesmo em sub-alvo nestes doentes. Crises de mobilização no início (mitigar com colchicina profilática). Elevação ligeira das transaminases. Náuseas, cefaleias, rash (mais raro que alopurinol). <strong>NÃO usar em associação com azatioprina ou mercaptopurina</strong> — risco de toxicidade hematológica grave.'
+    ), drug(
+      'Colchicina profilática (durante os primeiros 6 meses)',
+      'Antigotoso preventivo',
+      'Mesma indicação que no Resultado 5 — prevenir crises de mobilização nas primeiras semanas/meses do início ou troca de hipouricemiante.',
+      '0,5 mg 1-2x/dia durante 6 meses (ajustar à TFG)',
+      'Oral, 1x/dia',
+      'Manter durante 6 meses; depois suspender se sem crises e ácido úrico no alvo.',
+      'Custo baixo',
+      'Diarreia, náuseas. Toxicidade aumentada em IR.'
+    )],
+    ['Voltar a tentar alopurinol em dose mais alta com profilaxia anti-inflamatória se a "falha" foi por crises de mobilização (e não por sub-alvo verdadeiro)',
+     'Pegloticase (uricase IV) — gota tofácea refratária em centros especializados',
+     'Uricosúricos (probenecide, benzbromarona) — alternativa ou adição em hipoexcreção urinária',
+     'Investigação completa: análise quantitativa de urina 24h (avaliar excreção de urato), HLA-B*5801'],
+    ['Iniciar febuxostato durante crise aguda',
+     'Combinar com azatioprina ou mercaptopurina',
+     'Usar em doentes com doença CV recente (EAM, AVC, IC) sem ponderação benefício/risco',
+     'Suspender o hipouricemiante durante crise intercorrente',
+     'Doses subterapêuticas — sub-tratamento é causa frequente de "falha"'],
+    'Tratamento crónico, geralmente para a vida toda. Reavaliação aos 3 e 6 meses para confirmar atingir alvo.',
+    ['Hidratação adequada (>2 L/dia)',
+     'Dieta pobre em purinas — manter as mesmas regras que com alopurinol',
+     'Limitação do álcool',
+     'Perda de peso se obesidade',
+     'Vigilância cardiovascular acrescida em doentes com fatores de risco ou doença CV estabelecida',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt)'],
+    ['Ácido úrico sérico aos 2-4 meses (titulação) e depois cada 3-6 meses',
+     'Função hepática (transaminases) basal e cada 3-6 meses',
+     'Avaliação cardiovascular anual (sobretudo em risco CV elevado)',
+     'Função renal e hemograma cada 6-12 meses',
+     'Avaliação clínica de tofos e crises intercorrentes'],
+    {elderly: isOld ? 'No idoso, vigilância cardiovascular reforçada (alerta CARES). Em doentes com história de EAM/AVC/IC, ponderar manter alopurinol mesmo em sub-alvo, ou alternativas como uricosúricos.' : '',
+     costNote: 'Custo médio. Comparticipado pelo SNS em critérios específicos (alergia ao alopurinol, falha terapêutica documentada). Alternativa custo-eficaz quando o alopurinol não funciona ou não é tolerado.'},
+    'IMPORTANTE: a "falha ao alopurinol" deve ser bem caracterizada antes de trocar — frequentemente é dose inadequada (titulação insuficiente) ou má adesão. Em alguns doentes, dose alta de alopurinol (600-900 mg/dia) é eficaz e mais segura do ponto de vista CV que o febuxostato.'
+  );
+
+  /* Resultado 3 — Doente com diagnóstico ou crises frequentes — alopurinol prevenção */
+  if (frequent || diag) return res(
+    'Resultado 3: Prevenção de Novas Crises — Alopurinol (1.ª Linha)',
+    'Hipouricemiante de longo prazo — pedra angular do tratamento crónico',
+    [drug(
+      'Alopurinol',
+      'Inibidor da xantina oxidase — primeira linha em hipouricemia crónica',
+      'O <strong>alopurinol é a primeira linha</strong> no tratamento crónico da gota com indicação para terapêutica hipouricemiante (≥2 crises/ano, gota tofácea, gota com doença renal ou litíase úrica). Inibe a xantina oxidase, enzima que converte hipoxantina → xantina → ácido úrico, reduzindo a produção endógena de urato. <strong>Reduz a frequência de crises, dissolve os depósitos de cristais ao longo do tempo e previne complicações</strong> (artropatia gotosa, tofos, litíase úrica, doença renal). É barato, eficaz e bem estudado — primeira escolha global. <strong>Regra crítica: NÃO iniciar durante crise aguda</strong> — pode prolongar a crise; aguardar 2-4 semanas após resolução. Iniciar SEMPRE com profilaxia anti-inflamatória (colchicina 0,5 mg/dia durante 6 meses) para prevenir as <strong>crises de mobilização</strong>.',
+      'Iniciar 50-100 mg/dia · titulação 100 mg cada 2-4 semanas conforme ácido úrico · alvo habitual 300 mg/dia · pode ir até 600-900 mg/dia se necessário · alvo: ácido úrico <6 mg/dL (<5 mg/dL em gota tofácea)',
+      'Oral, 1x/dia, com ou sem alimentos · à mesma hora todos os dias',
+      '<strong>NÃO iniciar durante crise aguda</strong> — aguardar pelo menos 2-4 semanas após resolução. Profilaxia obrigatória com colchicina 0,5 mg/dia (ou prednisolona em baixa dose) durante 6 meses. Se surgir rash cutâneo, suspender IMEDIATAMENTE — risco de Stevens-Johnson e DRESS, sobretudo em portadores de HLA-B*5801.',
+      'Custo muito baixo (~3-10€/mês — um dos fármacos mais económicos da medicina) · Amplamente comparticipado pelo SNS',
+      '<strong>Rash cutâneo</strong> — pode evoluir para <strong>síndrome de Stevens-Johnson, NET ou DRESS</strong> (raro mas potencialmente fatal); maior risco em portadores do alelo <strong>HLA-B*5801</strong> (mais comum em asiáticos descendentes Han, africanos, alguns europeus). Considerar rastreio em populações de risco. Hepatotoxicidade. Citopenias. Em insuficiência renal: <strong>ajuste obrigatório</strong> (TFG <30: máximo 50-100 mg/dia). <strong>Interação grave com azatioprina e mercaptopurina</strong> — bloqueia o seu metabolismo, exigindo redução de dose para 25%. Crises de mobilização nos primeiros 6 meses (mitigar com colchicina profilática).'
+    ), drug(
+      'Colchicina profilática (primeiros 6 meses)',
+      'Profilaxia anti-inflamatória — prevenção de crises de mobilização',
+      'A colchicina em <strong>baixa dose durante os primeiros 6 meses</strong> de hipouricemiante é fundamental — sem ela, até 50% dos doentes têm crises nos primeiros meses (devido à mobilização dos cristais), o que leva muitas vezes à descontinuação errada do alopurinol. Após 6 meses, quando o ácido úrico está estabilizado no alvo e os depósitos começam a dissolver-se, a colchicina pode ser suspensa.',
+      '0,5 mg/dia (ou 0,5 mg dia sim/dia não se TFG reduzida) · durante 6 meses',
+      'Oral, 1x/dia, à mesma hora',
+      'Iniciar no mesmo dia ou poucos dias antes do alopurinol. Manter durante 6 meses (até 12 meses em alguns casos). Suspender se diarreia ou intolerância significativa.',
+      'Custo baixo',
+      'Diarreia (frequente — reduzir dose), náuseas. Toxicidade aumentada em IR. Interações major a vigiar.'
+    )],
+    ['Febuxostato — alternativa em intolerância/alergia ao alopurinol ou IR moderada',
+     'Probenecida ou benzbromarona (uricosúricos) — em hipoexcreção urinária comprovada, com hidratação e alcalinização',
+     'Losartan ou amlodipina (em vez de tiazidas) em hipertensos com gota — efeito uricosúrico ligeiro do losartan',
+     'Investigação metabólica completa (urina 24h para excreção de urato), HLA-B*5801 em populações de risco'],
+    ['Iniciar alopurinol durante crise aguda',
+     'Iniciar sem profilaxia com colchicina — risco de crises de mobilização',
+     'Continuar a tomar se rash cutâneo (mesmo ligeiro) — risco SJS/DRESS',
+     'Combinar com azatioprina ou mercaptopurina sem redução de dose',
+     'Tomar AINE concomitante em alta dose por longos períodos'],
+    'Tratamento crónico, geralmente para a vida toda. Reavaliação a cada 3-6 meses para confirmar atingir alvo (<6 mg/dL ou <5 em gota tofácea).',
+    ['Hidratação >2 L/dia — facilita a excreção renal de urato',
+     '<strong>Dieta pobre em purinas</strong>: evitar vísceras, marisco em excesso, anchovas, sardinha enlatada, carnes vermelhas em excesso',
+     'Privilegiar lacticínios magros, cerejas, café, abundante água',
+     'Limitar álcool — especialmente cerveja e bebidas destiladas; vinho em moderação tem menor impacto',
+     'Perda de peso gradual se obesidade (5-10% do peso corporal)',
+     'Cessação tabágica',
+     'Vigilância cardiovascular — gota é fator de risco CV independente',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt)'],
+    ['Ácido úrico sérico aos 2-4 semanas (titulação) e cada 3 meses até atingir alvo, depois semestral',
+     'Função renal e hepática basal e cada 6 meses',
+     'Hemograma anual',
+     'Avaliação clínica de crises e adesão em cada consulta',
+     'TFG anual para ajuste de dose',
+     'Em populações de risco — rastreio HLA-B*5801 antes do início'],
+    {elderly: isOld ? 'No idoso, iniciar com 50 mg/dia e titular mais lentamente. Vigiar função renal e interações com medicação habitual (especialmente azatioprina, varfarina, ciclosporina).' : '',
+     costNote: 'Alopurinol genérico tem custo praticamente desprezável (~3-5€/mês). Excelente relação custo-eficácia — uma das melhores intervenções da medicina interna.'},
+    !analysis ? 'IMPORTANTE: começar a fazer análises regulares ao ácido úrico — sem doseamento sérico, é impossível ajustar a dose para o alvo terapêutico.' : (alcohol ? 'O álcool é dos principais fatores de descontrolo da gota — a redução é tão importante quanto a medicação.' : '')
+  );
+
+  /* Resultado 2 — Crise aguda em doente sem doença renal — AINE */
+  if (crisis && !renal) return res(
+    'Resultado 2: Crise Aguda — AINE (1.ª Linha em Sem IR)',
+    'Naproxeno ou ibuprofeno em curso curto',
+    [drug(
+      'Naproxeno (preferido)',
+      'AINE — anti-inflamatório não esteroide, inibidor da COX-1 e COX-2',
+      'Os <strong>AINEs são primeira linha no tratamento da crise aguda de gota</strong> em doentes <strong>sem insuficiência renal, sem úlcera péptica e sem insuficiência cardíaca</strong>. Reduzem rapidamente a inflamação, dor e edema através da inibição das prostaglandinas. O <strong>naproxeno é geralmente preferido</strong> pela sua semivida mais longa (12 horas — permite 2 tomas/dia) e perfil cardiovascular relativamente favorável entre os AINEs. <strong>Iniciar nas primeiras 12-24h da crise</strong> — a eficácia é máxima quando administrado precocemente. O curso típico é de 5-7 dias até resolução completa dos sintomas.',
+      'Naproxeno 500 mg 2x/dia durante 5-7 dias · Ibuprofeno 400-800 mg 3x/dia · Diclofenac 50 mg 3x/dia',
+      'Oral, com refeições para minimizar irritação gástrica · iniciar nas primeiras 12-24h da crise',
+      'Sempre com alimentos. Associar inibidor da bomba de protões (omeprazol 20 mg/dia ou pantoprazol 40 mg/dia) se uso >5 dias, idade >65 anos, história de úlcera ou anticoagulação concomitante. Suspender assim que a crise resolver (5-7 dias).',
+      'Custo muito baixo (genéricos disponíveis OTC) · comparticipados pelo SNS sob receita',
+      '<strong>Risco gastrointestinal</strong> — úlcera, hemorragia digestiva alta (vigilância em idosos, história de úlcera, anticoagulantes); associar IBP em risco. <strong>Nefrotoxicidade</strong> — agravamento da função renal, retenção de líquidos, hipertensão; <strong>EVITAR em IR (TFG <60)</strong>. <strong>Risco cardiovascular</strong> — naproxeno é o AINE com melhor perfil CV mas todos aumentam ligeiramente o risco em uso prolongado. <strong>EVITAR em IC, hipertensão não controlada, doença CV instável</strong>. Não combinar com aspirina mesmo em baixa dose sem avaliação. Asma com sensibilidade aos AINEs.'
+    ), drug(
+      'Inibidor da Bomba de Protões (proteção gástrica)',
+      'Proteção gastrointestinal contra AINE',
+      'Em doentes com fatores de risco GI (idade >65 anos, história de úlcera péptica, anticoagulação, corticoide concomitante), o uso de AINE deve ser sempre acompanhado de IBP para reduzir o risco de úlcera e hemorragia digestiva.',
+      'Omeprazol 20 mg/dia · Pantoprazol 40 mg/dia · Esomeprazol 20-40 mg/dia',
+      'Oral, em jejum, 30 min antes da primeira refeição',
+      'Iniciar no mesmo dia que o AINE. Manter durante todo o curso e considerar manter mais alguns dias após.',
+      'Custo baixo',
+      'Geralmente bem tolerado em curso curto. Cefaleia, náuseas. Em uso prolongado: hipomagnesemia, défice de B12, risco de fratura osteoporótica e infeções entéricas.'
+    )],
+    ['<strong>Colchicina</strong> — alternativa de 1.ª linha quando AINE contraindicado (regime de baixa dose: 1 mg + 0,5 mg após 1 hora; depois 0,5 mg 2x/dia 3-5 dias)',
+     '<strong>Corticosteroide oral</strong> (prednisolona 30-40 mg/dia, 3-5 dias com redução) — alternativa quando AINE e colchicina contraindicados',
+     'Injeção intra-articular de corticosteroide em monoartrite acessível (joelho, tornozelo) — efeito local imediato',
+     'Aplicação local de gelo na articulação afetada (15-20 min, várias vezes/dia) — adjuvante simples mas eficaz'],
+    ['<strong>Aspirina</strong> mesmo em baixa dose — pode alterar a excreção de ácido úrico e prolongar a crise',
+     '<strong>Iniciar alopurinol durante a crise</strong> — pode prolongar e agravar; aguardar 2-4 semanas após resolução',
+     'AINE em IR (TFG <60) — risco de agravamento da função renal',
+     'AINE em IC, HTA não controlada ou doença CV instável',
+     'Combinar AINE com anticoagulante sem IBP e vigilância'],
+    'Crise aguda — 5-7 dias. Após resolução: avaliar indicação para terapêutica hipouricemiante crónica.',
+    ['<strong>Repouso da articulação afetada</strong> e elevação do membro',
+     'Aplicação de gelo (15-20 min, várias vezes ao dia) — alívio sintomático',
+     'Hidratação abundante (>2 L/dia)',
+     'EVITAR álcool durante a crise',
+     'EVITAR alimentos ricos em purinas durante a crise',
+     'Considerar avaliação por reumatologia se for primeira crise ou crises recorrentes',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt)'],
+    ['Função renal antes e durante o tratamento (vigiar mesmo sem IR baseline)',
+     'Tensão arterial em cada consulta',
+     'Sintomas GI — vigilância clínica diária',
+     'Hemograma se uso >7 dias',
+     'Após resolução: doseamento de ácido úrico para decidir terapêutica de manutenção'],
+    {elderly: isOld ? 'No idoso, AINE deve ser usado pelo menor tempo possível. Sempre com IBP. Em doente >75 anos ou polimedicado, preferir colchicina (dose ajustada) ou corticoide curto.' : '',
+     costNote: 'AINE genérico tem custo muito baixo. O custo principal é a vigilância e a gestão dos efeitos adversos em doentes de risco.'},
+    toe ? 'A apresentação típica (dor súbita, intensa, no dedo grande do pé) é altamente sugestiva de gota — confirmar com doseamento de ácido úrico (pode estar normal durante a crise; repetir em 2 semanas). Considerar análise do líquido sinovial em primeira crise.' : ''
+  );
+
+  /* Resultado 1 — Primeira crise / aguda — colchicina (default) */
+  return res(
+    'Resultado 1: Primeira Crise / Aguda — Colchicina',
+    'Inibidor da migração de neutrófilos — alternativa eficaz aos AINEs',
+    [drug(
+      'Colchicina',
+      'Antigotoso anti-inflamatório — inibidor da polimerização da tubulina',
+      'A <strong>colchicina é uma alternativa eficaz aos AINEs</strong> no tratamento da crise aguda de gota, sendo particularmente útil quando os AINEs estão contraindicados (insuficiência renal moderada, úlcera péptica, anticoagulação, IC). Inibe a polimerização da tubulina nos neutrófilos, bloqueando a sua migração para o local de inflamação e a sua capacidade de fagocitar os cristais de urato. <strong>É mais eficaz quando administrada nas primeiras 12-24 horas da crise</strong>; após 36 horas, a sua eficácia diminui significativamente. O <strong>regime de baixa dose moderna</strong> (1 mg + 0,5 mg após 1 hora; depois 0,5 mg 2x/dia 3-5 dias) tem eficácia comparável aos regimes antigos de alta dose mas com muito menor toxicidade gastrointestinal.',
+      '<strong>Regime de baixa dose:</strong> 1 mg imediatamente + 0,5 mg 1 hora depois (dose total de 1,5 mg no 1.º dia) · Manutenção: 0,5 mg 2x/dia durante 3-5 dias até resolução',
+      'Oral, com ou sem alimentos · iniciar o mais cedo possível após início da crise (idealmente <12-24h)',
+      'A toma com alimentos pode reduzir desconforto GI. Suspender se diarreia, vómitos ou outros sintomas GI significativos. Não repetir o regime em <3 dias. <strong>NÃO usar regimes antigos de alta dose</strong> (0,5 mg cada hora até efeito ou intolerância) — obsoletos e perigosos.',
+      'Custo baixo (~5-15€/curso) · comparticipado pelo SNS',
+      '<strong>Diarreia, náuseas, vómitos, dor abdominal</strong> — efeitos adversos mais frequentes; reduzir dose se surgirem. <strong>Toxicidade neuromuscular</strong> (miopatia, neuropatia) e <strong>citopenias</strong> em uso prolongado ou em insuficiência renal. <strong>Ajuste obrigatório se TFG <30 mL/min</strong> ou doença hepática grave. <strong>Interações major</strong> com claritromicina, eritromicina, ciclosporina, verapamil, diltiazem, estatinas (especialmente sinvastatina), inibidores da protease — risco de toxicidade fatal por inibição do CYP3A4 e P-gp.'
+    )],
+    ['<strong>AINE</strong> (naproxeno 500 mg 2x/dia, 5-7 dias) — alternativa de 1.ª linha em doentes sem IR/úlcera/IC; ver R2',
+     '<strong>Corticosteroide oral</strong> (prednisolona 30-40 mg/dia 3-5 dias com redução) — alternativa em doentes com múltiplas contraindicações',
+     'Injeção intra-articular de corticosteroide em monoartrite acessível — efeito local imediato com mínimos efeitos sistémicos',
+     'Aplicação de gelo na articulação afetada — adjuvante simples',
+     '<strong>Profilaxia futura</strong>: 0,5 mg/dia durante 6 meses no início de alopurinol/febuxostato (ver R3)'],
+    ['<strong>Aspirina</strong> mesmo em dose baixa — altera excreção de ácido úrico',
+     '<strong>Iniciar alopurinol durante crise</strong> — prolonga a crise; aguardar 2-4 semanas após resolução',
+     '<strong>Regimes antigos de alta dose</strong> (0,5 mg cada hora) — toxicidade severa, obsoletos',
+     'Combinar com inibidores potentes do CYP3A4 (claritromicina, ciclosporina) — risco de toxicidade fatal',
+     'Estatinas em alta dose (sobretudo sinvastatina) em uso prolongado de colchicina — risco de miopatia/rabdomiólise',
+     'Uso prolongado em insuficiência renal sem ajuste'],
+    'Crise aguda: 3-5 dias. Após resolução, avaliar indicação para terapêutica hipouricemiante crónica.',
+    ['Repouso da articulação afetada e elevação do membro',
+     'Aplicação de gelo (15-20 min, várias vezes ao dia)',
+     'Hidratação abundante (>2 L/dia) — acelera excreção de urato',
+     'EVITAR álcool durante a crise (especialmente cerveja e bebidas destiladas)',
+     'EVITAR alimentos ricos em purinas (vísceras, marisco, anchovas, sardinha)',
+     'Avaliação por reumatologia se primeira crise (confirmar diagnóstico e estratificar risco) ou crises recorrentes',
+     'Recursos: Sociedade Portuguesa de Reumatologia (www.spreumatologia.pt)'],
+    ['Sintomas GI — vigilância clínica diária (interromper se diarreia significativa)',
+     'Função renal antes do início se houver fatores de risco',
+     'Hemograma se uso >5 dias ou em doente com fatores de risco',
+     'Após resolução: doseamento de ácido úrico para decidir terapêutica de manutenção',
+     'Em uso prolongado (raro em crise aguda): CK (creatina-quinase) periódica para vigiar miopatia'],
+    {elderly: isOld ? 'No idoso, dose máxima 0,5 mg 1-2x/dia. Vigiar mais estritamente sintomas GI e neuromusculares. Rever toda a medicação habitual para excluir interações major (claritromicina, ciclosporina, estatinas).' : '',
+     costNote: 'Custo baixo. Genérico amplamente comparticipado. Excelente alternativa quando AINEs estão contraindicados — especialmente no idoso e em doente com IR ligeira.'},
+    toe ? 'A apresentação no dedo grande do pé (podagra) é altamente sugestiva de gota mas não exclusiva — confirmar com doseamento de ácido úrico (pode estar normal durante a crise; repetir 2 semanas depois). Em primeira crise, a análise do líquido sinovial confirma o diagnóstico.' : (uricHigh ? 'Ácido úrico já documentado como elevado — após resolução desta crise, é boa altura para discutir terapêutica hipouricemiante de longo prazo (alopurinol).' : '')
   );
 }
 
