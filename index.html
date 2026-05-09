@@ -99,7 +99,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
 .d-inf p{font-size:14px;color:#475569;line-height:1.85;margin-bottom:20px}
 
 /* DISEASE DETAIL */
-.dd-hero{background:linear-gradient(135deg,#ede9fe,#f0e6ff);padding:56px 40px;text-align:center}
+.dd-hero{padding:56px 40px;text-align:center}
 .dd-hero h1{font-size:clamp(26px,4vw,40px);font-weight:800;color:#7c3aed;letter-spacing:-0.5px}
 .dd-body{max-width:860px;margin:0 auto;padding:52px 40px}
 .dd-p{font-size:15px;color:#475569;line-height:1.9;margin-bottom:18px}
@@ -732,6 +732,16 @@ var DCOLOR = {
   reuma:  '#059669',   /* reumatologico — verde */
   renal:  '#2563eb'    /* renal — azul */
 };
+/* Versao atenuada (tint pastel) usada como fundo do dd-hero — mantém legibilidade do texto. */
+var DBGCOLOR = {
+  dc:     '#fce7eb',   /* vermelho muito claro */
+  resp:   '#e0f2f7',   /* ciano muito claro */
+  neuro:  '#ede9fb',   /* roxo muito claro */
+  mental: '#fce7f3',   /* rosa muito claro */
+  metab:  '#fef3c7',   /* ambar muito claro */
+  reuma:  '#d1fae5',   /* verde muito claro */
+  renal:  '#dbeafe'    /* azul muito claro */
+};
 function colorFor(id) { return DCOLOR[DGROUP[id]] || '#7c3aed'; }
 var DINTRO = {
   dm2: [
@@ -818,7 +828,8 @@ function openDisease(id) {
   /* Build the page HTML */
   var intro = DINTRO[id];
   var groupColor = DCOLOR[DGROUP[id]] || '#7c3aed';
-  var html = '<div class="dd-hero"><h1 style="color:' + groupColor + '">' + DNAME[id] + '</h1>'
+  var groupBg    = DBGCOLOR[DGROUP[id]] || '#f5f3ff';
+  var html = '<div class="dd-hero" style="background:' + groupBg + '"><h1 style="color:' + groupColor + '">' + DNAME[id] + '</h1>'
            + '<hr style="background:' + groupColor + ';height:3px;width:70px;border-radius:2px;border:none;margin:12px auto;"></div>';
   html += '<div class="dd-body">';
   for (var i = 0; i < intro.length; i++) html += '<p class="dd-p">' + intro[i] + '</p>';
