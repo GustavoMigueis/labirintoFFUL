@@ -515,6 +515,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
           <span style="background:#dbeafe;color:#2563eb;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Doença Renal Crónica</span>
           <span style="background:#dbeafe;color:#2563eb;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Gota</span>
+          <span style="background:#dbeafe;color:#2563eb;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Litíase Renal</span>
         </div>
         <button class="btn-purple" style="background:#2563eb" onclick="showPage('renal')">Explorar &rarr;</button>
       </div>
@@ -717,6 +718,11 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
       <p>Artropatia inflamatória crónica causada pela deposição de cristais de urato monossódico nas articulações e tecidos moles, resultante de hiperuricemia. Manifesta-se por crises de artrite aguda, habitualmente na primeira articulação metatarsofalângica. A gota está frequentemente associada a doença renal, hipertensão e síndrome metabólica.</p>
       <button class="btn-purple" style="background:#2563eb" onclick="openDisease('gota')">Saber Mais</button>
     </div><div class="d-vis" style="background:#dbeafe;min-height:220px;border:3px solid #93c5fd;border-radius:12px"><img src="/images/doenca_gota.png" style="width:100%;height:100%;object-fit:contain;padding:12px;box-sizing:border-box"/></div></div>
+    <div class="d-row"><div class="d-vis" style="background:#dbeafe;min-height:220px;border:3px solid #93c5fd;border-radius:12px"><img src="/images/doenca_litiase.png" style="width:100%;height:100%;object-fit:contain;padding:12px;box-sizing:border-box"/></div><div class="d-inf">
+      <h2 style="color:#2563eb">Litíase Renal</h2>
+      <p>Doença caracterizada pela formação de cálculos no trato urinário devido à acumulação e cristalização de substâncias presentes na urina. Manifesta-se por cólica renal — dor intensa lombar irradiada para a virilha — frequentemente associada a hematúria, náuseas e vómitos. É uma doença frequente em Portugal, com elevada taxa de recorrência, sendo mais comum em adultos entre os 30 e os 60 anos.</p>
+      <button class="btn-purple" style="background:#2563eb" onclick="openDisease('litiase')">Saber Mais</button>
+    </div></div>
   </div>
   <div class="quote-band"><p class="qt">&ldquo;Wherever the art of medicine is loved, there is also a love of humanity.&rdquo;</p><p class="qa">&mdash; Hipocrates</p></div>
   <footer><div><p>Faculdade de Farmácia da Universidade de Lisboa</p><p>Labirinto de Fármacos | Seminário II &mdash; 2025/2026</p><p>Projeto educativo interativo sobre as doenças mais relevantes em Portugal e as suas abordagens terapêuticas</p></div><div class="f-logos"><div class="f-logo">ULisboa</div><div class="f-logo">Fac. Farm.</div></div></footer>
@@ -778,6 +784,7 @@ var DIMG = {
   ansiedade: '',
   depressao: '',
   bipolar: '',
+  litiase: '',
   hipotiroidismo: '',
   epilepsia: '',
   alzheimer: '',
@@ -794,8 +801,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', pac:'resp', dm1:'metab', dm2:'metab', ansiedade:'mental', depressao:'mental', bipolar:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', pac:'Pneumonia Adquirida na Comunidade', dm1:'Diabetes Mellitus Tipo 1', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', bipolar:'Perturbação Bipolar', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', pac:'resp', dm1:'metab', dm2:'metab', ansiedade:'mental', depressao:'mental', bipolar:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', litiase:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', pac:'Pneumonia Adquirida na Comunidade', dm1:'Diabetes Mellitus Tipo 1', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', bipolar:'Perturbação Bipolar', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', litiase:'Litíase Renal', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -874,6 +881,11 @@ var DINTRO = {
     'A perturbação bipolar é uma doença psiquiátrica crónica caracterizada por alterações extremas do humor, alternando entre episódios de mania ou hipomania e episódios de depressão. Estas alterações podem afetar significativamente o comportamento, o pensamento, o sono, a energia e a capacidade funcional do doente. Em Portugal, é uma das principais causas de incapacidade associada à doença mental, afetando uma parte significativa da população adulta.',
     'Os episódios de mania caracterizam-se por euforia intensa, aumento de energia, diminuição da necessidade de sono, fala acelerada, pensamentos rápidos, impulsividade e comportamentos de risco. A hipomania é uma forma mais leve com sintomas menos graves. Os episódios depressivos manifestam-se por tristeza persistente, fadiga, perda de interesse, alterações do sono, dificuldade de concentração e, em casos graves, ideação suicida.',
     'A doença surge frequentemente no final da adolescência ou início da idade adulta e necessita de tratamento prolongado e acompanhamento psiquiátrico regular. O tratamento combina estabilizadores do humor, antipsicóticos e psicoterapia, sendo fundamental a adesão terapêutica para prevenir recaídas. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
+  ],
+  litiase: [
+    'A litíase renal, vulgarmente conhecida como pedras nos rins, é uma doença caracterizada pela formação de cálculos no trato urinário devido à acumulação e cristalização de substâncias presentes na urina, como cálcio, oxalato ou ácido úrico. Os cálculos podem localizar-se nos rins, ureteres ou bexiga, provocando obstrução do fluxo urinário e dor intensa. É uma doença frequente em Portugal, com elevada taxa de recorrência, sendo mais comum em adultos entre os 30 e os 60 anos.',
+    'Os sintomas mais característicos incluem dor intensa na região lombar (cólica renal), frequentemente irradiada para o abdómen ou virilha, sangue na urina (hematúria), náuseas, vómitos, ardor ao urinar e necessidade frequente de urinar. Em casos mais graves, pode surgir febre e infeção urinária associada, o que constitui uma situação de urgência médica.',
+    'O tratamento depende da gravidade dos sintomas, do tamanho e localização do cálculo e da presença de complicações. O controlo da dor é a prioridade imediata, seguido de medidas para facilitar a expulsão do cálculo e, a longo prazo, a prevenção de recorrências. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
   ],
   hipotiroidismo: [
     'O hipotiroidismo é uma doença endócrina caracterizada pela <strong>produção insuficiente de hormonas tiroideias</strong> pela glândula tiroide, levando a uma diminuição generalizada do metabolismo. A causa mais frequente é a <strong>tiroidite de Hashimoto</strong>, uma doença autoimune, embora também possa resultar de cirurgia da tiroide, défice de iodo ou efeito de determinados medicamentos. Afeta sobretudo mulheres e aumenta de prevalência com a idade.',
@@ -1080,6 +1092,16 @@ var Qu = {
   bp_family:   q('bp_family',  'Tem antecedentes familiares de doença bipolar?', [o('A','Sim',{bp_family:true}),o('B','Não',{bp_family:false})]),
   bp_meds:     q('bp_meds',    'Já tomou medicação estabilizadora do humor?', [o('A','Sim',{bp_meds:true}),o('B','Não',{bp_meds:false})]),
   bp_suicidal: q('bp_suicidal','Tem pensamentos autolesivos ou ideação suicida?', [o('A','Sim',{bp_suicidal:true}),o('B','Não',{bp_suicidal:false})]),
+  lr_prev:   q('lr_prev',  'Já teve pedras nos rins anteriormente?', [o('A','Sim',{lr_prev:true}),o('B','Não',{lr_prev:false})]),
+  lr_pain:   q('lr_pain',  'Tem dor intensa na região lombar?', [o('A','Sim',{lr_pain:true}),o('B','Não',{lr_pain:false})]),
+  lr_irrad:  q('lr_irrad', 'A dor irradia para a virilha ou abdómen?', [o('A','Sim',{lr_irrad:true}),o('B','Não',{lr_irrad:false})]),
+  lr_blood:  q('lr_blood', 'Tem sangue na urina?', [o('A','Sim',{lr_blood:true}),o('B','Não',{lr_blood:false})]),
+  lr_nausea: q('lr_nausea','Tem náuseas ou vómitos?', [o('A','Sim',{lr_nausea:true}),o('B','Não',{lr_nausea:false})]),
+  lr_burn:   q('lr_burn',  'Tem dificuldade ou ardor ao urinar?', [o('A','Sim',{lr_burn:true}),o('B','Não',{lr_burn:false})]),
+  lr_fever:  q('lr_fever', 'Tem febre associada à dor urinária?', [o('A','Sim',{lr_fever:true}),o('B','Não',{lr_fever:false})]),
+  lr_water:  q('lr_water', 'Consome pouca água diariamente?', [o('A','Sim',{lr_water:true}),o('B','Não',{lr_water:false})]),
+  lr_family: q('lr_family','Tem antecedentes familiares de cálculos renais?', [o('A','Sim',{lr_family:true}),o('B','Não',{lr_family:false})]),
+  lr_hosp:   q('lr_hosp',  'Já necessitou de tratamento hospitalar por cólica renal?', [o('A','Sim',{lr_hosp:true}),o('B','Não',{lr_hosp:false})]),
   ht_diag:    q('ht_diag',    'Já foi diagnosticado com hipotiroidismo?', [o('A','Sim',{ht_diag:true}),o('B','Não',{ht_diag:false})]),
   ht_symptoms:q('ht_symptoms','Tem sintomas como cansaço, aumento de peso ou intolerância ao frio?', [o('A','Sim',{ht_symptoms:true}),o('B','Não ou poucos sintomas',{ht_symptoms:false})]),
   ht_preg:    q('ht_preg',    'Está grávida ou a tentar engravidar?', [o('A','Sim',{ht_preg:true}),o('B','Não',{ht_preg:false})]),
@@ -1188,6 +1210,7 @@ var DQ = {
   ansiedade: ['ax_freq','ax_control','ax_physical','ax_sleep','ax_daily','ax_diag','ax_meds','ax_alcohol'],
   depressao:      ['dep_sad','dep_anhed','dep_fatigue','dep_sleep','dep_appetite','dep_concent','dep_diag','dep_suicidal'],
   bipolar:        ['bp_diag','bp_mania','bp_sleep','bp_depres','bp_impuls','bp_mood','bp_psych','bp_irrit','bp_family','bp_meds','bp_suicidal'],
+  litiase:        ['lr_prev','lr_pain','lr_irrad','lr_blood','lr_nausea','lr_burn','lr_fever','lr_water','lr_family','lr_hosp'],
   hipotiroidismo: ['ht_diag','ht_symptoms','ht_preg','ht_age65','ht_cardiac','ht_meds','ht_fasting','ht_interact'],
   epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence'],
   alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds'],
@@ -1277,6 +1300,7 @@ function getOutcome() {
   if (id==='ansiedade') return ansiedadeO(t);
   if (id==='depressao') return depressaoO(t);
   if (id==='bipolar') return bipolarO(t);
+  if (id==='litiase') return litiaseO(t);
   if (id==='hipotiroidismo') return hipotiroidismoO(t);
   if (id==='epilepsia') return epilepsiaO(t);
   if (id==='alzheimer') return alzheimerO(t);
@@ -1798,6 +1822,176 @@ function bipolarO(t) {
     ['Litemia a cada 3-6 meses (mais frequente no início e em ajustes; sempre 12h após última toma)','Função renal (creatinina, TFGe) — anualmente ou a cada 6 meses','TSH e cálcio — anualmente (lítio pode causar hipotiroidismo e hiperparatiroidismo)','Peso e perímetro abdominal','ECG basal e em ajustes (em doentes com risco cardiovascular)'],
     {costNote: 'Lítio é dos estabilizadores mais económicos (~5-15€/mês) e plenamente comparticipado pelo SNS. Vigilância laboratorial regular é o principal custo associado.'},
     'ATENÇÃO: margem terapêutica muito estreita. Em caso de tremor grosseiro, confusão, vómitos persistentes ou ataxia, suspeitar de toxicidade e dirigir-se à urgência. Em mulheres em idade fértil: planeamento de gravidez obrigatório (lítio tem risco teratogénico — anomalia de Ebstein).'
+  );
+}
+
+function litiaseO(t) {
+  var hasPrev   = (t.lr_prev === true);
+  var hasPain   = (t.lr_pain === true);
+  var hasIrrad  = (t.lr_irrad === true);
+  var hasNausea = (t.lr_nausea === true);
+  var hasFever  = (t.lr_fever === true);
+  var hasHosp   = (t.lr_hosp === true);
+  var lowWater  = (t.lr_water === true);
+  var hasWater  = (t.lr_water === false);
+  var hasFamily = (t.lr_family === true);
+
+  /* Resultado 6 — Infeção urinária associada — URGÊNCIA */
+  if (hasFever && hasPain) return res(
+    'Resultado 6: Litíase Renal com Infeção — Urgência Médica',
+    'Antibioterapia + drenagem urgente — pielonefrite obstrutiva é emergência',
+    [drug(
+      'Amoxicilina + Ácido Clavulânico',
+      'Antibiótico beta-lactâmico + inibidor de beta-lactamase',
+      'Litíase renal com febre constitui uma EMERGÊNCIA MÉDICA — a combinação de obstrução urinária e infeção (pielonefrite obstrutiva) pode evoluir rapidamente para sepsis urinária com risco de vida. A amoxicilina + ácido clavulânico cobre a maioria dos uropatógenos (E. coli, Klebsiella, Proteus) e é uma opção de primeira linha em pielonefrite não complicada. Em sepsis ou intolerância oral, administração IV em ambiente hospitalar.',
+      'Oral: 875/125 mg 2x/dia durante 7-14 dias; IV hospitalar se sepsis ou intolerância oral',
+      'Oral com alimento (reduz desconforto gástrico); IV em internamento',
+      'Avaliação hospitalar urgente obrigatória. Completar SEMPRE o ciclo antibiótico. Se não houver melhoria em 48-72h, reavaliação urgente.',
+      'Baixo a moderado (genérico disponível, comparticipado pelo SNS)',
+      'Diarreia frequente — associar probiótico se necessário. Hepatotoxicidade rara mas possível. Reações alérgicas em doentes com hipersensibilidade a penicilinas. Completar sempre o ciclo. Se não houver melhoria em 48-72h, reavaliação urgente.'
+    )],
+    ['Ciprofloxacina 500 mg 2x/dia oral — excelente penetração no trato urinário, preferida em pielonefrite não complicada','DESOBSTRUÇÃO URGENTE: cateter ureteral JJ ou nefrostomia percutânea — drenagem mesmo antes de iniciar antibiótico se obstrução confirmada','Ceftriaxona 1-2 g IV/dia (hospitalar) — se sepsis','Analgesia adjuvante com paracetamol ou opioide se dor intensa'],
+    ['Adiar avaliação hospitalar — risco de sepsis','AINEs em insuficiência renal aguda por obstrução','Antibioterapia sem desobstrução em obstrução confirmada — sem drenagem o antibiótico não controla a infeção','Suspender o antibiótico antes do final do ciclo'],
+    '7-14 dias de antibiótico oral; ciclo prolongado se complicação. Internamento se sepsis.',
+    ['Hidratação abundante (oral ou IV em internamento)','Repouso','Vigilância apertada da temperatura e estado geral','Após resolução: investigação metabólica para prevenção de recorrência'],
+    ['Temperatura corporal','Análise de urina de controlo (urocultura)','Hemograma, PCR e procalcitonina','Função renal (creatinina, TFGe)','Hemoculturas se sepsis'],
+    {costNote: 'Antibiótico genérico de custo baixo. A intervenção urológica (JJ, nefrostomia, ureteroscopia) é o principal custo associado — coberto pelo SNS em contexto de urgência.'},
+    'EMERGÊNCIA: cólica renal com febre é critério de admissão hospitalar imediata. Risco de sepsis urinária com mortalidade significativa. Avaliação em urgência hospitalar OBRIGATÓRIA — não tratar em ambulatório.'
+  );
+
+  /* Resultado 2 — Dor intensa não controlada / necessidade de tratamento hospitalar */
+  if (hasPain && hasNausea && hasHosp) return res(
+    'Resultado 2: Dor Intensa Não Controlada — Cólica Renal Refratária',
+    'Analgésico opioide — segundo escalão da OMS',
+    [drug(
+      'Tramadol',
+      'Analgésico opioide — agonista parcial µ + inibidor da recaptação de serotonina/noradrenalina',
+      'Ação central sobre os recetores opioides µ e modulação das vias de dor descendentes via inibição da recaptação de serotonina e noradrenalina. Indicado quando a dor não é controlada com AINE em monoterapia. Em dor severa refratária ao tramadol, considerar morfina IV (ambiente hospitalar) e avaliação urológica para intervenção (litotrícia ou ureteroscopia).',
+      '50-100 mg oral ou IV a cada 4-6 horas conforme necessidade; máximo 400 mg/dia',
+      'Oral, IV ou IM — sempre que possível em paralelo com AINE (sinergismo analgésico)',
+      'Tomar com alimento para reduzir náuseas. Associar antiemético (metoclopramida ou ondansetrom). Não conduzir. Não combinar com álcool ou outros depressores do SNC. Reduzir dose em insuficiência renal ou hepática.',
+      'Baixo a moderado (genérico disponível)',
+      'Sonolência e tonturas — não conduzir. Náuseas e vómitos frequentes — associar antiemético (metoclopramida ou ondansetrom). Risco de dependência com uso prolongado. NÃO usar com IMAOs (risco de síndrome serotoninérgica). Reduzir dose em insuficiência renal e hepática. Em ambiente hospitalar: morfina IV para dor refratária.'
+    ),
+    drug(
+      'Diclofenac (associar)',
+      'AINE — efeito sinérgico com o opioide',
+      'A combinação AINE + opioide proporciona alívio analgésico superior à monoterapia, permitindo doses mais baixas de opioide e menos efeitos adversos. O diclofenac também reduz o espasmo ureteral, contribuindo para o alívio mecânico da cólica.',
+      '50-75 mg IM (início rápido) ou 50 mg oral 3x/dia em paralelo com tramadol',
+      'IM (preferível na crise aguda) ou oral com alimento',
+      'Tomar com alimento. Associar IBP se uso prolongado. Evitar se insuficiência renal aguda suspeita.',
+      'Muito baixo (genérico disponível)',
+      'Irritação gastrointestinal. Precaução em insuficiência renal. Não associar a outro AINE.'
+    )],
+    ['Morfina IV (5-10 mg) — para dor refratária em ambiente hospitalar','Cetorolac 30 mg IM — AINE potente injetável','Avaliação urológica para intervenção: litotrícia extracorporal (ESWL) para cálculos >10 mm, ureteroscopia para cálculos encravados','Petidina (meperidina) — alternativa opioide histórica, mas menos preferida'],
+    ['Conduzir sob efeito de opioide','Combinar opioides com álcool ou benzodiazepinas — risco de depressão respiratória','Adiar avaliação urológica se a dor não cede em 48h','Uso prolongado de opioides em ambulatório sem reavaliação'],
+    'Curta duração — alívio sintomático até resolução da cólica ou intervenção urológica.',
+    ['Repouso em posição confortável','Hidratação oral se tolerada','Calor local na região lombar','Filtrar a urina para identificar e analisar o cálculo expelido'],
+    ['Intensidade da dor (escala EVA)','Sedação e nível de consciência','Náuseas e vómitos','Função renal e diurese','Avaliação imagiológica (ecografia, TC) se dor persistente'],
+    {costNote: 'Tramadol genérico de custo baixo. A litotrícia extracorporal ou ureteroscopia (intervenções urológicas) são procedimentos comparticipados pelo SNS.'},
+    'NOTA: se a dor não cede com tramadol em ambiente hospitalar, avaliar necessidade de intervenção urológica urgente (litotrícia extracorporal, ureteroscopia ou colocação de cateter JJ).'
+  );
+
+  /* Resultado 3 — Facilitação da expulsão (cálculo ureteral distal sem infeção) */
+  if (hasPain && hasIrrad && !hasFever) return res(
+    'Resultado 3: Facilitação da Expulsão do Cálculo',
+    'Alfa-1 bloqueador — terapêutica expulsiva médica (MET)',
+    [drug(
+      'Tansulosina',
+      'Alfa-1 bloqueador seletivo (alfa-1A)',
+      'Bloqueia os recetores alfa-1A adrenérgicos no ureter distal, promovendo o relaxamento da musculatura lisa ureteral e facilitando a progressão e expulsão espontânea do cálculo. Reduz a frequência e intensidade das cólicas durante o período de expulsão. Eficácia maior para cálculos ureterais distais inferiores a 10 mm — aumenta a taxa de expulsão espontânea em 20-30%.',
+      '0,4 mg/dia oral ao deitar durante 4-6 semanas (ou até expulsão do cálculo)',
+      'Oral, uma vez ao dia — SEMPRE ao deitar (efeito hipotensor)',
+      'Tomar 30 minutos após a mesma refeição todos os dias. Levantar lentamente da cama nas primeiras semanas (hipotensão ortostática). Filtrar a urina para identificar o cálculo expelido. Cumprir o período de tratamento mesmo após alívio da dor.',
+      'Moderado (genérico disponível, comparticipado)',
+      'Hipotensão ortostática — tomar sempre ao deitar; tonturas no início. Ejaculação retrógrada (nos homens) — efeito reversível com a suspensão. Interação com inibidores da PDE-5 (sildenafil) — risco de hipotensão grave; aguardar 4-6h entre fármacos. Cefaleias.'
+    ),
+    drug(
+      'Diclofenac (controlo da dor durante a expulsão)',
+      'AINE — analgesia em paralelo',
+      'Durante o período de terapêutica expulsiva (4-6 semanas), associar AINE em SOS para controlo das cólicas que possam ocorrer com a progressão do cálculo.',
+      '50 mg oral 3x/dia em SOS conforme necessidade',
+      'Oral com alimento — apenas em SOS',
+      'Apenas quando há dor. Não exceder dose máxima. Associar IBP se uso frequente.',
+      'Muito baixo (genérico disponível)',
+      'Irritação gastrointestinal. Precaução em insuficiência renal. Não associar a outro AINE.'
+    )],
+    ['Nifedipina — alternativa à tansulosina (bloqueador dos canais de cálcio, eficácia ligeiramente inferior)','Hidratação abundante (3 L/dia) — facilita a progressão','Litotrícia extracorporal (ESWL) se ausência de expulsão em 4-6 semanas','Ureteroscopia para cálculos encravados ou >10 mm'],
+    ['Cálculos muito grandes (>10 mm) — baixa probabilidade de expulsão espontânea, melhor abordagem urológica imediata','Combinar tansulosina com sildenafil — risco de hipotensão grave','Suspender o fármaco antes da expulsão confirmada por filtração da urina'],
+    '4-6 semanas (ou até expulsão do cálculo, o que ocorrer primeiro).',
+    ['Hidratação abundante (>2,5-3 L/dia)','Filtrar TODA a urina com gaze ou peneira fina para identificar o cálculo','Atividade física moderada (caminhar) pode ajudar a progressão','Após expulsão: enviar cálculo para análise mineralógica — permite prevenção dirigida'],
+    ['Eliminação do cálculo (filtração da urina)','Sintomas urinários (dor, hematúria, ardor)','Tensão arterial (especialmente nas primeiras 2 semanas)','Imagiologia de controlo (radiografia ou ecografia) ao final de 4-6 semanas'],
+    {costNote: 'Tansulosina genérica de custo moderado e comparticipada pelo SNS na indicação de hiperplasia benigna da próstata; uso "off-label" para terapêutica expulsiva é prática habitual.'},
+    ''
+  );
+
+  /* Resultado 5 — Prevenção de cálculos de cálcio recorrentes (bem hidratado + família — hipercalciúria suspeita) */
+  if (hasPrev && hasWater && hasFamily) return res(
+    'Resultado 5: Prevenção de Cálculos de Cálcio Recorrentes',
+    'Diurético tiazídico — redução da excreção urinária de cálcio',
+    [drug(
+      'Hidroclorotiazida',
+      'Diurético tiazídico — redução da hipercalciúria',
+      'Inibe a reabsorção de sódio no túbulo distal, aumentando paradoxalmente a reabsorção de cálcio. Reduz a excreção urinária de cálcio (efeito hipocalciúrico) e, consequentemente, a formação de cálculos de cálcio em doentes com hipercalciúria documentada. Dose baixa é suficiente para o efeito hipocalciúrico — não é necessária a dose anti-hipertensora plena.',
+      '12,5-25 mg/dia oral pela manhã',
+      'Oral, uma vez ao dia — pela manhã (evita nictúria)',
+      'Confirmar hipercalciúria com análise de urina de 24h antes de iniciar. Associar suplementação de potássio ou citrato de potássio (compensa a hipocaliemia e tem efeito anti-litogénico aditivo). Monitorizar ionograma. Proteção solar (fotossensibilidade).',
+      'Muito baixo (genérico, comparticipado pelo SNS)',
+      'Hipocaliemia — associar suplementação de potássio ou citrato de potássio. Hiponatremia (especialmente em idosos). Hiperuricemia — pode precipitar gota; monitorizar ácido úrico. Hiperglicemia (precaução em diabéticos). Fotossensibilidade — usar protetor solar. Monitorizar tensão arterial.'
+    )],
+    ['Citrato de potássio em associação — corrige hipocaliemia e potencia o efeito antilítico','Indapamida — alternativa tiazídica com melhor perfil metabólico','Amilorida — diurético poupador de potássio em alternativa para evitar hipocaliemia','Restrição moderada de sódio na dieta (potencia o efeito hipocalciúrico da tiazida)'],
+    ['Iniciar tiazida sem confirmar hipercalciúria (urina 24h)','Combinar tiazida com lítio sem ajustar dose — aumenta toxicidade do lítio','Restrição excessiva de cálcio na dieta (paradoxalmente aumenta a absorção intestinal de oxalato e o risco de cálculos)','Suplementos de vitamina D em doses elevadas sem indicação'],
+    'Crónico — manutenção prolongada com revisões anuais.',
+    ['Hidratação abundante (>2,5 L/dia) — medida preventiva nº 1','Reduzir sal na dieta (reduz excreção urinária de cálcio)','Moderar proteínas animais e purinas','Cálcio dietético normal (não restringir; 1000-1200 mg/dia)','Reduzir alimentos ricos em oxalato (espinafres, frutos secos, chocolate, beterraba) se cálculos de oxalato'],
+    ['Ionograma (sódio, potássio, magnésio) ao mês de tratamento, depois cada 6 meses','Função renal (creatinina, TFGe)','Ácido úrico (risco de precipitar gota)','Glicemia em jejum (diabéticos)','Tensão arterial','Análise de urina de 24h (cálcio, oxalato, citrato) ao ano','Imagiologia (ecografia) anual para recorrência'],
+    {costNote: 'Hidroclorotiazida é dos diuréticos mais económicos e plenamente comparticipada pelo SNS. Análise de urina de 24h é o exame chave (acessível, repetível).'},
+    'NOTA: confirmar hipercalciúria com urina de 24h ANTES de iniciar tiazida. Em mulheres pós-menopausa, ponderar densitometria óssea — o efeito hipocalciúrico das tiazidas pode beneficiar a densidade óssea.'
+  );
+
+  /* Resultado 4 — Prevenção (recorrência com pouca hidratação — corrigir e alcalinizar) */
+  if (hasPrev && lowWater) return res(
+    'Resultado 4: Prevenção de Recorrência — Alcalinização Urinária',
+    'Alcalinizante urinário — citrato de potássio',
+    [drug(
+      'Citrato de Potássio',
+      'Alcalinizante urinário',
+      'Alcaliniza a urina (aumenta o pH urinário), reduzindo a cristalização de ácido úrico e oxalato de cálcio. Dissolve parcialmente cálculos de ácido úrico já existentes. Indicado especialmente em cálculos de ácido úrico (pH urinário alvo 6,5-7,0) e cálculos de oxalato de cálcio com hipocitratúria documentada na urina de 24h.',
+      '30-60 mEq/dia em 2-3 tomas, durante as refeições',
+      'Oral — comprimidos efervescentes (melhor tolerados) ou granulado; sempre com alimento',
+      'Cumprir todas as tomas diárias. Manter ingestão hídrica abundante (>2,5 L/dia). Vigiar ionograma — risco de hipercalemia. Contraindicado em insuficiência renal grave.',
+      'Moderado',
+      'Hipercalemia — CONTRAINDICADO em insuficiência renal grave e em doentes a tomar poupadores de potássio (espironolactona, eplerenona) ou IECAs/ARAs. Monitorizar ionograma. Sabor desagradável — comprimidos efervescentes ou granulado são melhor tolerados. Irritação gastrointestinal — tomar com alimento.'
+    )],
+    ['Bicarbonato de sódio — alternativa alcalinizante (mas adiciona sódio — pior em hipertensos)','Alopurinol em cálculos de ácido úrico com hiperuricosúria','Hidratação intensa (água) — a medida preventiva mais importante','Análise mineralógica do cálculo expelido — direciona a prevenção'],
+    ['Iniciar citrato de potássio sem confirmar tipo de cálculo','Combinar com IECAs/ARAs ou poupadores de potássio sem monitorizar potássio','Restrição rigorosa de cálcio (paradoxalmente aumenta o risco)','Suplementação excessiva de vitamina C (>1 g/dia — converte-se em oxalato)'],
+    'Crónico — manutenção prolongada com revisões anuais.',
+    ['Ingestão hídrica abundante (>2,5 L/dia; objetivo urinário >2 L/dia) — medida preventiva nº 1 universal','Reduzir sal (reduz excreção urinária de cálcio)','Moderar proteínas animais e purinas (reduz produção de ácido úrico)','Cálcio dietético normal (1000-1200 mg/dia)','Reduzir oxalato dietético se cálculos de oxalato (espinafres, frutos secos, chocolate, rúibarbo)','Atividade física regular','Reduzir consumo de bebidas açucaradas (aumentam o risco de cálculos)'],
+    ['pH urinário (fitas reagentes — alvo 6,5-7,0 em cálculos de ácido úrico)','Ionograma (potássio em especial), função renal','Ácido úrico sérico','Análise de urina de 24h (cálcio, oxalato, citrato, ácido úrico) inicial e anual','Imagiologia (ecografia) anual para recorrência'],
+    {costNote: 'Citrato de potássio em comprimidos efervescentes é de custo moderado. A medida preventiva mais económica e eficaz é a hidratação abundante.'},
+    ''
+  );
+
+  /* Resultado 1 — Cólica renal ligeira a moderada (default) */
+  return res(
+    'Resultado 1: Cólica Renal Ligeira a Moderada — Início de Tratamento',
+    'AINE — analgésico de primeira linha na cólica renal',
+    [drug(
+      'Diclofenac',
+      'AINE — anti-inflamatório não esteroide',
+      'Inibe a COX-1 e COX-2, reduzindo a síntese de prostaglandinas — diminui a inflamação, a dor e o espasmo ureteral. É o analgésico de primeira linha na cólica renal por ser tão eficaz como os opioides e com menos efeitos adversos. A formulação IM oferece início de ação muito rápido (15-30 minutos), sendo preferida na crise aguda.',
+      '50-75 mg IM (início rápido) ou 50 mg oral 3x/dia; supositório 100 mg 2x/dia como alternativa',
+      'IM (preferível na crise aguda), oral ou retal',
+      'Tomar com alimento. Associar IBP (omeprazol ou pantoprazol) se uso prolongado. Hidratar abundantemente. Repouso. Calor local. Filtrar a urina.',
+      'Muito baixo (genérico disponível)',
+      'Irritação gastrointestinal — tomar com alimento. Precaução em insuficiência renal — nefrotóxico em uso prolongado. Evitar em doença ulcerosa péptica ativa. Associar IBP se uso prolongado. EVITAR se suspeita de insuficiência renal aguda por obstrução. Cuidado em doentes anticoagulados (aumenta risco hemorrágico).'
+    )],
+    ['Ibuprofeno 400-600 mg oral 3-4x/dia — alternativa AINE oral','Cetorolac 30 mg IM (mais potente, uso hospitalar)','Paracetamol 1 g 4x/dia — em doentes com contraindicação para AINE','Metamizol — alternativa analgésica não opioide','Tansulosina 0,4 mg/dia se cálculo ureteral distal — facilita expulsão'],
+    ['Combinar dois AINEs em simultâneo','Uso prolongado de AINE em insuficiência renal sem monitorização','AINEs em doentes anticoagulados sem reavaliação','Ignorar sinais de alarme (febre, anúria, dor refratária) — referenciar urgência'],
+    'Curta duração — até resolução da cólica (habitualmente dias).',
+    ['Hidratação oral abundante (2-3 L/dia) — facilita a progressão e expulsão do cálculo','Repouso em posição confortável','Calor local na região lombar','Filtrar a urina para identificar e analisar o cálculo expelido','Imagiologia (ecografia/TC) se primeira crise ou dor refratária','Após expulsão: investigação metabólica (urina 24h) para prevenção'],
+    ['Intensidade da dor (escala EVA)','Função renal (creatinina, TFGe)','Diurese e características da urina','Imagiologia se persistência ou recorrência','Análise mineralógica do cálculo expelido — direciona prevenção'],
+    {costNote: 'Diclofenac genérico em qualquer formulação (oral, IM, supositório) é de custo muito baixo e comparticipado pelo SNS.'},
+    'IR À URGÊNCIA se: febre + cólica renal, dor não controlada com analgésicos orais, rim único, gravidez, anúria. Recursos: Associação Portuguesa de Urologia — www.apurologia.pt.'
   );
 }
 
