@@ -465,6 +465,7 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
           <span style="background:#fce7f3;color:#db2777;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Ansiedade</span>
           <span style="background:#fce7f3;color:#db2777;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Depressão</span>
+          <span style="background:#fce7f3;color:#db2777;border-radius:20px;padding:3px 12px;font-size:11px;font-weight:600">Perturbação Bipolar</span>
         </div>
         <button class="btn-purple" style="background:#db2777" onclick="showPage('mental')">Explorar &rarr;</button>
       </div>
@@ -634,6 +635,11 @@ footer p{font-size:12px;color:#475569;line-height:1.9}
       <p>A depressão é uma das principais causas de incapacidade a nível mundial. Manifesta-se por humor deprimido persistente, perda de interesse ou prazer, alterações do sono e do apetite, fadiga e sentimentos de inutilidade. Em Portugal, estima-se que afete cerca de 8% da população adulta, sendo mais prevalente em mulheres.</p>
       <button class="btn-purple" style="background:#db2777" onclick="openDisease('depressao')">Saber Mais</button>
     </div><div class="d-vis" style="background:#fce7f3;min-height:220px;border:3px solid #f9a8d4;border-radius:12px"><img src="/images/doenca_depressao.png" style="width:100%;height:100%;object-fit:contain;padding:12px;box-sizing:border-box"/></div></div>
+    <div class="d-row"><div class="d-vis" style="background:#fce7f3;min-height:220px;border:3px solid #f9a8d4;border-radius:12px"><img src="/images/doenca_bipolar.png" style="width:100%;height:100%;object-fit:contain;padding:12px;box-sizing:border-box"/></div><div class="d-inf">
+      <h2 style="color:#db2777">Perturbação Bipolar</h2>
+      <p>A perturbação bipolar é uma doença psiquiátrica crónica caracterizada por alterações extremas do humor, alternando entre episódios de mania ou hipomania e episódios de depressão. Surge frequentemente no final da adolescência ou início da idade adulta e necessita de tratamento prolongado e acompanhamento psiquiátrico regular.</p>
+      <button class="btn-purple" style="background:#db2777" onclick="openDisease('bipolar')">Saber Mais</button>
+    </div></div>
   </div>
   <div class="quote-band"><p class="qt">&ldquo;Wherever the art of medicine is loved, there is also a love of humanity.&rdquo;</p><p class="qa">&mdash; Hipocrates</p></div>
   <footer><div><p>Faculdade de Farmácia da Universidade de Lisboa</p><p>Labirinto de Fármacos | Seminário II &mdash; 2025/2026</p><p>Projeto educativo interativo sobre as doenças mais relevantes em Portugal e as suas abordagens terapêuticas</p></div><div class="f-logos"><div class="f-logo">ULisboa</div><div class="f-logo">Fac. Farm.</div></div></footer>
@@ -771,6 +777,7 @@ var DIMG = {
   dm2: '',
   ansiedade: '',
   depressao: '',
+  bipolar: '',
   hipotiroidismo: '',
   epilepsia: '',
   alzheimer: '',
@@ -787,8 +794,8 @@ var DIMG = {
   dap: "/images/img_dap.png",
   tvp: "/images/img_tvp.png"
 };
-var DGROUP = { asma:'resp', dpoc:'resp', pac:'resp', dm1:'metab', dm2:'metab', ansiedade:'mental', depressao:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
-var DNAME  = { asma:'Asma', dpoc:'DPOC', pac:'Pneumonia Adquirida na Comunidade', dm1:'Diabetes Mellitus Tipo 1', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
+var DGROUP = { asma:'resp', dpoc:'resp', pac:'resp', dm1:'metab', dm2:'metab', ansiedade:'mental', depressao:'mental', bipolar:'mental', hipotiroidismo:'metab', epilepsia:'neuro', alzheimer:'neuro', parkinson:'neuro', drc:'renal', gota:'renal', artrite:'reuma', osteoporose:'reuma', hta:'dc', eam:'dc', ic:'dc', fa:'dc', dap:'dc', tvp:'dc' };
+var DNAME  = { asma:'Asma', dpoc:'DPOC', pac:'Pneumonia Adquirida na Comunidade', dm1:'Diabetes Mellitus Tipo 1', dm2:'Diabetes Mellitus Tipo 2', ansiedade:'Ansiedade', depressao:'Depressão', bipolar:'Perturbação Bipolar', hipotiroidismo:'Hipotiroidismo', epilepsia:'Epilepsia', alzheimer:'Alzheimer e Demências', parkinson:'Doença de Parkinson', drc:'Doença Renal Crónica', gota:'Gota', artrite:'Artrite Reumatoide', osteoporose:'Osteoporose', hta:'Hipertensão Arterial', eam:'Enfarte Agudo do Miocárdio', ic:'Insuficiência Cardíaca', fa:'Fibrilhação Auricular', dap:'Doença Arterial Periférica', tvp:'Trombose Venosa Profunda' };
 var DCOLOR = {
   dc:     '#e11d48',   /* cardiovascular — vermelho */
   resp:   '#0891b2',   /* respiratorio — ciano */
@@ -862,6 +869,11 @@ var DINTRO = {
     'A depressão é uma perturbação mental caracterizada por um <strong>estado persistente de tristeza, perda de interesse ou prazer</strong> nas atividades diárias e diminuição da energia. Pode afetar profundamente o funcionamento pessoal, social e profissional. Em Portugal, estima-se que afete cerca de <strong>8% da população adulta</strong>, sendo mais prevalente em mulheres e muitas vezes subdiagnosticada.',
     'Os sintomas incluem humor deprimido, fadiga, alterações do sono e do apetite, dificuldade de concentração, sentimentos de culpa ou inutilidade e, em casos mais graves, <strong>pensamentos suicidas</strong>. A sua origem é multifatorial, envolvendo fatores biológicos, psicológicos e sociais que interagem de forma complexa.',
     'O tratamento baseia-se numa abordagem integrada, combinando <strong>psicoterapia</strong> (sobretudo terapia cognitivo-comportamental) e <strong>terapêutica farmacológica</strong>. A escolha do tratamento depende da gravidade dos sintomas e das características individuais. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
+  ],
+  bipolar: [
+    'A perturbação bipolar é uma doença psiquiátrica crónica caracterizada por alterações extremas do humor, alternando entre episódios de mania ou hipomania e episódios de depressão. Estas alterações podem afetar significativamente o comportamento, o pensamento, o sono, a energia e a capacidade funcional do doente. Em Portugal, é uma das principais causas de incapacidade associada à doença mental, afetando uma parte significativa da população adulta.',
+    'Os episódios de mania caracterizam-se por euforia intensa, aumento de energia, diminuição da necessidade de sono, fala acelerada, pensamentos rápidos, impulsividade e comportamentos de risco. A hipomania é uma forma mais leve com sintomas menos graves. Os episódios depressivos manifestam-se por tristeza persistente, fadiga, perda de interesse, alterações do sono, dificuldade de concentração e, em casos graves, ideação suicida.',
+    'A doença surge frequentemente no final da adolescência ou início da idade adulta e necessita de tratamento prolongado e acompanhamento psiquiátrico regular. O tratamento combina estabilizadores do humor, antipsicóticos e psicoterapia, sendo fundamental a adesão terapêutica para prevenir recaídas. Use o quiz abaixo para perceber qual a abordagem mais adequada ao seu perfil.'
   ],
   hipotiroidismo: [
     'O hipotiroidismo é uma doença endócrina caracterizada pela <strong>produção insuficiente de hormonas tiroideias</strong> pela glândula tiroide, levando a uma diminuição generalizada do metabolismo. A causa mais frequente é a <strong>tiroidite de Hashimoto</strong>, uma doença autoimune, embora também possa resultar de cirurgia da tiroide, défice de iodo ou efeito de determinados medicamentos. Afeta sobretudo mulheres e aumenta de prevalência com a idade.',
@@ -1057,6 +1069,17 @@ var Qu = {
   dep_concent: q('dep_concent','Tem dificuldade de concentração ou tomada de decisões?', [o('A','Sim',{dep_concent:true}),o('B','Não',{dep_concent:false})]),
   dep_diag:    q('dep_diag',   'Já foi diagnosticado com depressão anteriormente?', [o('A','Sim',{dep_diag:true}),o('B','Não',{dep_diag:false})]),
   dep_suicidal:q('dep_suicidal','Tem pensamentos negativos persistentes ou pensamentos de autoagressão?', [o('A','Sim',{dep_suicidal:true}),o('B','Não',{dep_suicidal:false})]),
+  bp_diag:     q('bp_diag',    'Tem diagnóstico de perturbação bipolar?', [o('A','Sim',{bp_diag:true}),o('B','Não',{bp_diag:false})]),
+  bp_mania:    q('bp_mania',   'Tem períodos de aumento anormal de energia ou euforia?', [o('A','Sim',{bp_mania:true}),o('B','Não',{bp_mania:false})]),
+  bp_sleep:    q('bp_sleep',   'Tem necessidade reduzida de sono sem sentir cansaço?', [o('A','Sim',{bp_sleep:true}),o('B','Não',{bp_sleep:false})]),
+  bp_depres:   q('bp_depres',  'Tem fases de tristeza intensa ou perda de interesse?', [o('A','Sim',{bp_depres:true}),o('B','Não',{bp_depres:false})]),
+  bp_impuls:   q('bp_impuls',  'Já teve comportamentos impulsivos ou de risco?', [o('A','Sim',{bp_impuls:true}),o('B','Não',{bp_impuls:false})]),
+  bp_mood:     q('bp_mood',    'Tem alterações frequentes e intensas do humor?', [o('A','Sim',{bp_mood:true}),o('B','Não',{bp_mood:false})]),
+  bp_psych:    q('bp_psych',   'Já necessitou de acompanhamento psiquiátrico?', [o('A','Sim',{bp_psych:true}),o('B','Não',{bp_psych:false})]),
+  bp_irrit:    q('bp_irrit',   'Tem crises de irritabilidade intensa?', [o('A','Sim',{bp_irrit:true}),o('B','Não',{bp_irrit:false})]),
+  bp_family:   q('bp_family',  'Tem antecedentes familiares de doença bipolar?', [o('A','Sim',{bp_family:true}),o('B','Não',{bp_family:false})]),
+  bp_meds:     q('bp_meds',    'Já tomou medicação estabilizadora do humor?', [o('A','Sim',{bp_meds:true}),o('B','Não',{bp_meds:false})]),
+  bp_suicidal: q('bp_suicidal','Tem pensamentos autolesivos ou ideação suicida?', [o('A','Sim',{bp_suicidal:true}),o('B','Não',{bp_suicidal:false})]),
   ht_diag:    q('ht_diag',    'Já foi diagnosticado com hipotiroidismo?', [o('A','Sim',{ht_diag:true}),o('B','Não',{ht_diag:false})]),
   ht_symptoms:q('ht_symptoms','Tem sintomas como cansaço, aumento de peso ou intolerância ao frio?', [o('A','Sim',{ht_symptoms:true}),o('B','Não ou poucos sintomas',{ht_symptoms:false})]),
   ht_preg:    q('ht_preg',    'Está grávida ou a tentar engravidar?', [o('A','Sim',{ht_preg:true}),o('B','Não',{ht_preg:false})]),
@@ -1164,6 +1187,7 @@ var DQ = {
   tvp: ['age','sex','preg','tvpLoc','tvpProv','tvpRec','tvpBleed','renal','cost'],
   ansiedade: ['ax_freq','ax_control','ax_physical','ax_sleep','ax_daily','ax_diag','ax_meds','ax_alcohol'],
   depressao:      ['dep_sad','dep_anhed','dep_fatigue','dep_sleep','dep_appetite','dep_concent','dep_diag','dep_suicidal'],
+  bipolar:        ['bp_diag','bp_mania','bp_sleep','bp_depres','bp_impuls','bp_mood','bp_psych','bp_irrit','bp_family','bp_meds','bp_suicidal'],
   hipotiroidismo: ['ht_diag','ht_symptoms','ht_preg','ht_age65','ht_cardiac','ht_meds','ht_fasting','ht_interact'],
   epilepsia:      ['ep_diag','ep_type','ep_freq','ep_preg','ep_age65','ep_liver','ep_meds','ep_adverse','ep_adherence'],
   alzheimer:      ['alz_memory','alz_daily','alz_early','alz_behavior','alz_adherence','alz_age65','alz_comorbid','alz_meds'],
@@ -1252,6 +1276,7 @@ function getOutcome() {
   if (id==='tvp') return tvpO(t);
   if (id==='ansiedade') return ansiedadeO(t);
   if (id==='depressao') return depressaoO(t);
+  if (id==='bipolar') return bipolarO(t);
   if (id==='hipotiroidismo') return hipotiroidismoO(t);
   if (id==='epilepsia') return epilepsiaO(t);
   if (id==='alzheimer') return alzheimerO(t);
@@ -1624,6 +1649,155 @@ function ansiedadeO(t) {
     ['Avaliação clínica dos sintomas de ansiedade (escala GAD-7)','Efeitos adversos nas primeiras 2-4 semanas','Reavaliação da resposta terapêutica ao fim de 4-6 semanas','Vigilância de pensamentos depressivos associados'],
     {costNote: 'Custo baixo a moderado. Genéricos de sertralina e escitalopram disponíveis, tornando o tratamento acessível. Comparticipados pelo SNS.'},
     ''
+  );
+}
+
+function bipolarO(t) {
+  var hasDiag    = (t.bp_diag === true);
+  var hasMania   = (t.bp_mania === true);
+  var hasSleep   = (t.bp_sleep === true);
+  var hasDepres  = (t.bp_depres === true);
+  var hasImpuls  = (t.bp_impuls === true);
+  var hasMood    = (t.bp_mood === true);
+  var hasIrrit   = (t.bp_irrit === true);
+  var hasMeds    = (t.bp_meds === true);
+
+  /* Resultado 6 — Psicoterapia e educação terapêutica (doente estável já medicado) */
+  if (hasDiag && hasMeds && !hasMood) return res(
+    'Resultado 6: Psicoterapia e Educação Terapêutica',
+    'Abordagem não farmacológica complementar — essencial no doente estabilizado',
+    [drug(
+      'Psicoterapia e Educação Terapêutica',
+      'Intervenção psicossocial estruturada',
+      'A psicoterapia é um "fármaco" de primeira linha não farmacológico em todos os doentes com perturbação bipolar estabilizada. Combina psicoeducação (reconhecimento precoce de prodromes, adesão terapêutica, gestão de triggers — reduz hospitalizações em 30-50%), Terapia Cognitivo-Comportamental (modificação de padrões disfuncionais; gestão de episódios depressivos), Terapia Interpessoal e de Ritmo Social — IPSRT (regulação dos ritmos circadianos e sociais: sono regular, horários de refeições, atividade física) e Mindfulness (redução do stress e melhoria da consciência emocional).',
+      'Sessões semanais ou quinzenais; programas de psicoeducação em grupo (8-12 sessões); IPSRT em períodos de instabilidade',
+      'Presencial — psicólogo clínico, psiquiatra ou equipa multidisciplinar',
+      'Manter sempre em paralelo com a medicação prescrita pelo psiquiatra. Comparecer regularmente. Envolver familiares na psicoeducação sempre que possível.',
+      'Variável — verificar comparticipação SNS, ADSE e seguros de saúde',
+      'Não substitui o tratamento farmacológico. A irregularidade do sono é um trigger major — manter rotinas. Evitar álcool e substâncias psicoativas — desestabilizam o humor.'
+    )],
+    ['Programas de psicoeducação em grupo (ADEB e centros de saúde)','Terapia Familiar — envolvimento da rede de suporte','Grupos de pares e associações de doentes','Aplicações de monitorização do humor (mood charts)'],
+    ['Abandonar a medicação por se sentir bem — risco elevado de recaída','Privação de sono e turnos noturnos','Consumo de álcool e substâncias psicoativas','Interromper psicoterapia precocemente'],
+    'Crónico — psicoterapia regular durante a manutenção; intensificar em períodos de risco.',
+    ['Rotinas regulares de sono (horários fixos; 7-9 horas)','Atividade física regular (30 min/dia, 5x/semana)','Alimentação equilibrada e horários regulares','Rede de suporte familiar e social ativa','Evitar álcool e substâncias psicoativas','Monitorizar humor diariamente (diário ou app)'],
+    ['Avaliação periódica do humor (escalas YMRS para mania, HAM-D ou PHQ-9 para depressão)','Adesão terapêutica e padrões de sono','Função tiroideia e renal (se sob lítio)','Avaliação de prodromes em consultas regulares'],
+    {costNote: 'Recursos: Associação de Apoio aos Doentes Depressivos e Bipolares — www.adeb.pt. Verificar comparticipação SNS e seguros de saúde para psicoterapia.'},
+    ''
+  );
+
+  /* Resultado 2 — Episódio maníaco agudo (mania franca com impulsividade) */
+  if (hasMania && hasSleep && hasImpuls) return res(
+    'Resultado 2: Episódio Maníaco Agudo',
+    'Antipsicótico atípico — controlo rápido da mania',
+    [drug(
+      'Olanzapina',
+      'Antipsicótico atípico — antagonista D2/5-HT2A',
+      'Bloqueia os recetores dopaminérgicos D2 e serotonérgicos 5-HT2A, reduzindo rapidamente a agitação, euforia e pensamento desorganizado característicos da mania aguda. Efeito clínico evidente em 24-72 horas. Deve ser usado em conjunto com um estabilizador do humor (lítio ou valproato) para tratamento de manutenção — não em monoterapia a longo prazo.',
+      '10-20 mg/dia oral; formas de libertação rápida (orodispersível ou IM) para controlo agudo',
+      'Oral, uma vez ao dia — habitualmente ao deitar pelo efeito sedativo',
+      'Tomar ao deitar para aproveitar a sedação. Não conduzir nem operar maquinaria durante a fase inicial. Monitorizar peso semanalmente nas primeiras 6 semanas.',
+      'Custo moderado (genérico disponível)',
+      'Aumento de peso significativo — monitorizar IMC mensalmente. Síndrome metabólica (diabetes, dislipidemia) — vigiar glicemia e perfil lipídico. Sedação marcada — precaução na condução. NÃO usar como monoterapia a longo prazo sem estabilizador do humor associado.'
+    )],
+    ['Quetiapina 400-800 mg/dia — alternativa também eficaz em mania','Risperidona 2-6 mg/dia — alternativa antipsicótica','Aripiprazol 15-30 mg/dia — perfil metabólico mais favorável','Associar lítio ou valproato como estabilizador de manutenção'],
+    ['Antidepressivos isolados — podem agravar ou desencadear mania','Estimulantes (cafeína, anfetaminas)','Privação de sono e jet-lag','Suspender abruptamente sem orientação psiquiátrica'],
+    'Fase aguda: 2-6 semanas. Manutenção combinada com estabilizador do humor.',
+    ['Ambiente calmo, com estímulos reduzidos','Restabelecer o sono — fundamental para resolver a mania','Suspender estimulantes e álcool','Envolvimento de familiar de referência na vigilância'],
+    ['Peso, IMC e perímetro abdominal mensalmente','Glicemia em jejum e perfil lipídico no início e a cada 3-6 meses','Tensão arterial em todas as consultas','ECG (prolongamento QT) na introdução','Escala YMRS para monitorizar a resolução da mania'],
+    {costNote: 'Olanzapina genérica é de custo moderado e comparticipada pelo SNS na indicação da perturbação bipolar.'},
+    'ATENÇÃO: em episódio maníaco com agitação grave ou risco para o próprio/terceiros, considerar urgência psiquiátrica e eventual internamento. Em condução: contraindicada durante episódio maníaco ativo.'
+  );
+
+  /* Resultado 4 — Agitação e insónia aguda (irritabilidade + insónia sem diagnóstico estabelecido) */
+  if (hasIrrit && hasSleep && !hasDiag) return res(
+    'Resultado 4: Agitação e Insónia Aguda — Controlo Sintomático',
+    'Benzodiazepina de curta duração — uso estritamente temporário',
+    [drug(
+      'Lorazepam',
+      'Benzodiazepina — ansiolítico e sedativo',
+      'Potencia o efeito do GABA, principal neurotransmissor inibitório do SNC, produzindo efeito ansiolítico e sedativo rápido. Indicado para controlo sintomático de agitação, ansiedade e insónia em contexto agudo — NÃO é tratamento de fundo da perturbação bipolar. Deve servir como "ponte" enquanto se procede a uma avaliação psiquiátrica completa e se inicia tratamento estabilizador adequado.',
+      '1-2 mg oral conforme necessidade; máximo 4 mg/dia; APENAS curta duração (dias a poucas semanas)',
+      'Oral — conforme necessidade, preferencialmente à noite para a insónia',
+      'Tomar apenas quando necessário, na dose mínima eficaz. Não conduzir. Não combinar com álcool. Procurar avaliação psiquiátrica para tratamento de fundo.',
+      'Muito baixo (~3€/embalagem de 60 comprimidos — Lorazepam Labesfal 1 mg)',
+      'Risco de dependência física e psicológica — uso estritamente limitado no tempo. Sedação — não conduzir. Não combinar com álcool. Síndrome de abstinência se suspensão abrupta após uso prolongado. Em idosos: risco de quedas e confusão.'
+    )],
+    ['Diazepam 5-10 mg — alternativa de semivida mais longa','Higiene do sono e técnicas de relaxamento','Avaliação psiquiátrica urgente para iniciar estabilizador do humor se confirmado diagnóstico'],
+    ['Uso prolongado de benzodiazepinas (> 2-4 semanas) — risco de dependência','Combinar com álcool — risco de depressão respiratória','Automedicação — medicamento sujeito a receita médica','Conduzir ou operar maquinaria sob benzodiazepina'],
+    'Máximo 2-4 semanas. Reavaliação psiquiátrica obrigatória.',
+    ['Higiene do sono — horário regular, evitar ecrãs antes de dormir','Reduzir cafeína, álcool e estimulantes','Atividade física regular','Procurar consulta de psiquiatria para avaliação diagnóstica'],
+    ['Sinais de dependência ou tolerância','Sonolência diurna e quedas (sobretudo em idosos)','Evolução dos sintomas para investigar diagnóstico subjacente'],
+    {costNote: 'Custo muito baixo. Medicamento sujeito a receita médica — não automedicar.'},
+    'IMPORTANTE: a benzodiazepina é apenas para alívio sintomático temporário. Procurar avaliação psiquiátrica para diagnóstico diferencial e início de tratamento estabilizador adequado.'
+  );
+
+  /* Resultado 5 — Episódio depressivo bipolar (depressão em doente com diagnóstico) */
+  if (hasDepres && hasDiag) return res(
+    'Resultado 5: Episódio Depressivo Bipolar',
+    'Antipsicótico atípico com ação antidepressiva',
+    [drug(
+      'Quetiapina',
+      'Antipsicótico atípico com ação antidepressiva',
+      'Antagonismo D2/5-HT2A com ação adicional sobre recetores histaminérgicos e adrenérgicos. O metabolito ativo norquetiapina inibe a recaptação da noradrenalina, contribuindo para o efeito antidepressivo. Aprovado especificamente para depressão bipolar (única indicação isolada com aprovação formal), sendo também eficaz como estabilizador de manutenção. Evita o risco de virar para mania associado aos antidepressivos isolados.',
+      '50-300 mg/dia ao deitar (iniciar com dose baixa — sedação intensa nas primeiras semanas)',
+      'Oral, uma vez ao dia — ao deitar (sedação marcada)',
+      'Tomar sempre ao deitar. Iniciar com dose baixa e aumentar gradualmente. Pode demorar 1-2 semanas a estabilizar o efeito sedativo. Não interromper abruptamente.',
+      'Custo moderado (genérico disponível)',
+      'Sedação marcada — tomar sempre ao deitar; não conduzir nas primeiras semanas. Aumento de peso e síndrome metabólica — vigiar glicemia e perfil lipídico. Hipotensão ortostática no início — levantar lentamente. NÃO substituir por antidepressivo isolado — risco de virar para mania.'
+    )],
+    ['Lurasidona 20-120 mg/dia — alternativa com melhor perfil metabólico','Lamotrigina como manutenção em paralelo (prevenção de novos episódios depressivos)','Olanzapina + fluoxetina (combinação aprovada para depressão bipolar)','Psicoterapia (TCC e IPSRT) em paralelo'],
+    ['Antidepressivos isolados (ISRS, IRSN) — risco elevado de virar para mania ou desencadear ciclagem rápida','Tricíclicos — alto risco de virar maníaco','Suspender o estabilizador do humor de manutenção','Privação de sono'],
+    'Fase aguda: 6-8 semanas; manutenção em conjunto com estabilizador.',
+    ['Rotinas regulares de sono e alimentação','Exposição à luz natural (terapia da luz pode complementar)','Atividade física regular','Suporte familiar e psicoterapia em paralelo','Evitar álcool e substâncias psicoativas'],
+    ['Sonolência diurna, peso e perímetro abdominal','Glicemia e perfil lipídico na introdução e a cada 3-6 meses','Tensão arterial em todas as consultas','ECG (prolongamento QT) na introdução e em ajustes de dose','Escalas HAM-D ou PHQ-9 para monitorizar a remissão'],
+    {costNote: 'Quetiapina genérica é de custo moderado e comparticipada pelo SNS.'},
+    'ATENÇÃO: nunca tratar uma depressão bipolar com antidepressivo isolado — risco de desencadear mania. Se ideação suicida activa, considerar avaliação em urgência psiquiátrica.'
+  );
+
+  /* Resultado 3 — Estabilização a longo prazo / prevenção de episódios depressivos (lamotrigina) */
+  if (hasDepres && hasMeds) return res(
+    'Resultado 3: Estabilização a Longo Prazo — Prevenção de Episódios Depressivos',
+    'Antiepilético / estabilizador do humor — perfil depressivo predominante',
+    [drug(
+      'Lamotrigina',
+      'Antiepilético / estabilizador do humor',
+      'Inibe canais de sódio voltagem-dependentes, reduzindo a libertação de glutamato. Particularmente eficaz na prevenção de episódios depressivos bipolares — é o estabilizador de eleição em doentes com perfil depressivo predominante. Menos eficaz na prevenção de episódios maníacos, pelo que pode necessitar de associação a outro estabilizador (lítio ou valproato) em doentes com mania marcada.',
+      'INTRODUÇÃO MUITO GRADUAL OBRIGATÓRIA: 25 mg/dia 2 semanas → 50 mg/dia 2 semanas → aumento lento até 100-200 mg/dia',
+      'Oral, uma vez ao dia',
+      'Cumprir RIGOROSAMENTE o esquema gradual de introdução — a rapidez determina o risco de rash grave. Qualquer rash cutâneo deve levar à suspensão imediata e avaliação médica urgente. Em associação com valproato, reduzir dose de lamotrigina para metade.',
+      'Custo moderado (genérico disponível)',
+      'RISCO DE SÍNDROME DE STEVENS-JOHNSON (rash grave, potencialmente fatal) se introdução demasiado rápida — qualquer rash deve levar à suspensão imediata e avaliação médica urgente. Interação com valproato (reduzir dose de lamotrigina para metade). Menos eficaz na prevenção de episódios maníacos. NÃO usar antidepressivos isolados na depressão bipolar — risco de desencadear mania ou ciclagem rápida.'
+    )],
+    ['Lítio em combinação — para reforçar a prevenção de mania','Quetiapina como complemento em fases depressivas','Psicoterapia (IPSRT) — regulação dos ritmos circadianos','Lurasidona — alternativa especialmente para fases depressivas'],
+    ['Introdução rápida de lamotrigina — RISCO DE STEVENS-JOHNSON','Antidepressivos isolados — risco de virar para mania','Ignorar rash cutâneo durante as primeiras 8 semanas','Combinar com valproato sem ajuste de dose'],
+    'Crónico — manutenção prolongada com revisões regulares.',
+    ['Rotinas regulares de sono e ritmos circadianos','Vigilância apertada da pele nas primeiras 8 semanas — qualquer rash exige avaliação','Atividade física regular','Psicoterapia em paralelo (IPSRT, TCC)','Evitar álcool e substâncias psicoativas'],
+    ['Reações cutâneas (especialmente nas primeiras 8 semanas)','Evolução do humor e episódios','Adesão ao esquema gradual de titulação','Hemograma e função hepática se sintomas sugestivos'],
+    {costNote: 'Lamotrigina genérica disponível, custo moderado. Comparticipada pelo SNS.'},
+    'ATENÇÃO: introdução muito gradual obrigatória pelo risco de Stevens-Johnson. Qualquer rash cutâneo nas primeiras 8 semanas deve levar à suspensão imediata e avaliação médica urgente.'
+  );
+
+  /* Resultado 1 — Lítio (estabilização — default) */
+  return res(
+    'Resultado 1: Lítio — Estabilizador do Humor de Referência',
+    'Estabilizador do humor de primeira linha — único com evidência de redução do risco de suicídio',
+    [drug(
+      'Lítio',
+      'Estabilizador do humor — ião monovalente',
+      'Modula múltiplas vias de sinalização intracelular (inibição da GSK-3β, modulação de segundos mensageiros), reduzindo a excitabilidade neuronal e estabilizando o humor. É o único fármaco com evidência robusta de redução do risco de suicídio na perturbação bipolar, sendo eficaz tanto na prevenção de episódios maníacos como depressivos. Considerado o estabilizador de referência em qualquer fase da doença.',
+      '600-1200 mg/dia em doses divididas; ajuste pela litemia (alvo: 0,6-1,0 mEq/L em manutenção; 0,8-1,2 mEq/L em fase aguda)',
+      'Oral, em doses divididas (2-3x/dia) ou formulação de libertação prolongada',
+      'Tomar sempre à mesma hora. Manter ingestão hídrica constante (1,5-2 L/dia) — desidratação aumenta a litemia e o risco de toxicidade. Evitar AINEs e diuréticos sem orientação médica. Realizar litemia 12h após a última toma.',
+      'Baixo a moderado (~5-15€/mês — comparticipado pelo SNS)',
+      'MARGEM TERAPÊUTICA MUITO ESTREITA — toxicidade começa acima de 1,5 mEq/L. Sinais de toxicidade: tremor grosseiro, confusão, ataxia, vómitos — ir à urgência. Hidratação adequada OBRIGATÓRIA — desidratação aumenta litemia. Evitar AINEs e diuréticos (aumentam litemia). Função renal e tiroideia monitorizadas regularmente.'
+    )],
+    ['Valproato — alternativa estabilizadora (CONTRAINDICADO ou fortemente restringido em mulheres em idade fértil pelo risco teratogénico — espinha bífida, malformações cardíacas; contracepção obrigatória se usado)','Carbamazepina — alternativa com muitas interações medicamentosas (indutor enzimático potente)','Lamotrigina — particularmente útil em perfil depressivo predominante','Quetiapina ou aripiprazol como antipsicóticos atípicos coadjuvantes'],
+    ['Desidratação, dietas hipossódicas drásticas','AINEs e diuréticos tiazídicos sem ajuste de dose','Suspensão abrupta — risco elevado de recaída e suicídio','Gravidez não planeada — lítio com risco teratogénico (Ebstein); planeamento obrigatório com psiquiatra'],
+    'Crónico — habitualmente para toda a vida. Reavaliar litemia regularmente.',
+    ['Ingestão hídrica constante e regular (1,5-2 L/dia)','Rotinas regulares de sono e alimentação','Atividade física moderada — evitar desidratação por exercício intenso sem hidratar','Evitar álcool e substâncias psicoativas','Educação terapêutica sobre sinais de toxicidade'],
+    ['Litemia a cada 3-6 meses (mais frequente no início e em ajustes; sempre 12h após última toma)','Função renal (creatinina, TFGe) — anualmente ou a cada 6 meses','TSH e cálcio — anualmente (lítio pode causar hipotiroidismo e hiperparatiroidismo)','Peso e perímetro abdominal','ECG basal e em ajustes (em doentes com risco cardiovascular)'],
+    {costNote: 'Lítio é dos estabilizadores mais económicos (~5-15€/mês) e plenamente comparticipado pelo SNS. Vigilância laboratorial regular é o principal custo associado.'},
+    'ATENÇÃO: margem terapêutica muito estreita. Em caso de tremor grosseiro, confusão, vómitos persistentes ou ataxia, suspeitar de toxicidade e dirigir-se à urgência. Em mulheres em idade fértil: planeamento de gravidez obrigatório (lítio tem risco teratogénico — anomalia de Ebstein).'
   );
 }
 
